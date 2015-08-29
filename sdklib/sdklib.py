@@ -44,11 +44,17 @@ class SdkBase(object):
     API_PROXY = None
     API_PROXY_PORT = 8080
 
-    USER_AGENT_HEADER_NAME = "user-agent"
+    USER_AGENT_HEADER_NAME = "User-Agent"
     PRAGMA_HEADER_NAME = "Pragma"
     CONTENT_TYPE_HEADER_NAME = "Content-Type"
     CONTENT_LENGTH_HEADER_NAME = "Content-Length"
     ACCEPT_HEADER_NAME = "Accept"
+    ACCEPT_LANGUAGE_HEADER_NAME = "Accept-Language"
+    ACCEPT_ENCODING_HEADER_NAME = "Accept-Encoding"
+    CACHE_CONTROL_HEADER_NAME = "Cache-Control"
+    CONNECTION_HEADER_NAME = "Connection"
+    REFERRER_HEADER_NAME = "Referer"
+
 
     CONTENT_TYPE_JSON = "application/json"
     CONTENT_TYPE_OCTET = "application/octet-stream"
