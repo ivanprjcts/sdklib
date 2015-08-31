@@ -116,17 +116,20 @@ class SdkBase(object):
         content_type = 'multipart/form-data; boundary=%s' % BOUNDARY
         return content_type, body
 
-    @staticmethod
-    def default_headers():
+    def default_headers(self):
         return dict()
 
-    def _http(self, method, url, headers=None, form_params=None, query_params=None, ssl_verified=False, form_urlencoding=True):
+    def _http(self, method, url, headers=None, form_params=None, query_params=None, ssl_verified=False,
+              form_urlencoding=True):
         """
-        internal method to do http requests.
+        Internal method to do http requests.
         :param method:
         :param url:
         :param headers:
         :param form_params:
+        :param query_params:
+        :param ssl_verified:
+        :param form_urlencoding:
         :return:
         """
         context = None
