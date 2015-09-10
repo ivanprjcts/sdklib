@@ -6,7 +6,7 @@ except ImportError:
 
 setup(
     name = 'sdklib',
-    version = '0.3',
+    version = '0.4',
     description = 'SDK helper library',
     author='Ivan Martin',
     author_email='ivanmar_91@hotmail.com',
@@ -17,6 +17,7 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
     ],
-    py_modules = ['sdklib.util.parser', 'sdklib.sdklib', 'sdklib.util.bytearray', 'sdklib.util.urlvalidator', 'sdklib.util.timetizer'],
+    py_modules = ['sdklib.util.parser', 'sdklib.sdklib', 'sdklib.util.bytearray', 'sdklib.util.urlvalidator',
+                  'sdklib.util.timetizer'],
     packages=['sdklib', 'sdklib.util'],
 )
