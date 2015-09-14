@@ -26,3 +26,7 @@ class MySDK(SdkBase):
     
 * Sdklib 0.4
     - Add safe_add_end_slash function.
+
+* Sdklib 0.4.1
+    - Add parameters to strf timetizer functions.
+    
