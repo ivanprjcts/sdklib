@@ -23,3 +23,6 @@ class MySDK(SdkBase):
 
 * Sdklib 0.3
     - Initial version.
+    
+* Sdklib 0.4
+    - Add safe_add_end_slash function.

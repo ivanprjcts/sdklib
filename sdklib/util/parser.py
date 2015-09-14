@@ -22,3 +22,11 @@ def safe_add_slash(item):
     else:
         to_return = ""
     return to_return
+
+
+def safe_add_end_slash(item):
+    if item is not None:
+        to_return = str(item) +"/"
+    else:
+        to_return = ""
+    return to_return
