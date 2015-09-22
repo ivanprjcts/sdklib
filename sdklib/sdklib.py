@@ -26,6 +26,7 @@ class SdkResponse(object):
 
     def __init__(self, data):
         try:
+            print(data)
             self.data = json.loads(data)
         except ValueError:
             self.data = data
@@ -185,8 +186,7 @@ class SdkBase(object):
 
         status = response.status
         resHeaders = response.getheaders()
-        resData = response.read()
-        #resData = response.read().encode('utf-8')
+        resData = response.read().decode('utf-8')
 
         conn.close()
 

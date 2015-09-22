@@ -9,19 +9,19 @@ def get_current_utc(time_format="%Y-%m-%d %H:%M:%S"):
     return time.strftime(time_format, time.gmtime())
 
 
-def today_strf():
+def today_strf(format="%d/%m/%Y"):
     t = datetime.date.today()
-    return t.strftime("%d/%m/%Y")
+    return t.strftime(format)
 
 
-def tomorrow_strf():
+def tomorrow_strf(format="%d/%m/%Y"):
     t = datetime.date.today() + datetime.timedelta(days=1)
-    return t.strftime("%d/%m/%Y")
+    return t.strftime(format)
 
 
-def yesterday_strf():
+def yesterday_strf(format="%d/%m/%Y"):
     t = datetime.date.today() - datetime.timedelta(days=1)
-    return t.strftime("%d/%m/%Y")
+    return t.strftime(format)
 
 
 def seconds_to_milliseconds_timestamp(seconds_timestamp):
