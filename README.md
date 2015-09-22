@@ -27,7 +27,7 @@ class MySDK(SdkBase):
 * Sdklib 0.4
     - Add safe_add_end_slash function.
     - Add file functions.
-    - Add parse as tuple list function.    - Add safe_add_end_slash function.
+    - Add parse as tuple list function.
 
 * Sdklib 0.4.1
     - Add parameters to strf timetizer functions.
