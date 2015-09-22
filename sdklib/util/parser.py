@@ -16,6 +16,18 @@ def parse_args(**kwargs):
     return to_return
 
 
+def parse_args_as_tuple_list(**kwargs):
+    to_return = []
+    for elem in kwargs:
+        if kwargs[elem] is not None:
+            if isinstance(kwargs[elem], list):
+                for list_elem in kwargs[elem]:
+                    to_return.append((elem, list_elem))
+            else:
+                to_return.append((elem, kwargs[elem]))
+    return to_return
+
+
 def safe_add_slash(item):
     if item is not None:
         to_return = "/" + str(item)

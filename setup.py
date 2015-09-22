@@ -18,6 +18,6 @@ setup(
         'Programming Language :: Python',
     ],
     py_modules = ['sdklib.util.parser', 'sdklib.sdklib', 'sdklib.util.bytearray', 'sdklib.util.urlvalidator',
-                  'sdklib.util.timetizer'],
+                  'sdklib.util.timetizer', 'sdklib.util.file'],
     packages=['sdklib', 'sdklib.util'],
 )
