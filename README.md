@@ -4,11 +4,18 @@ SDK Helper Library
 - Make easier sdk libraries implementation.
 
 
+## PREREQUISITES
+
+* Python 2.7.+.
+* Python 3.4.3+.
+
+
 ## INSTALL
 
 ```
 python setup.py install
 ```
+
 
 ## USAGE
 
