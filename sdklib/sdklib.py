@@ -19,6 +19,7 @@ import collections
 
 from .util.urlvalidator import urlsplit
 from .util.decorators import deprecated
+from .util.file import get_filename_stream
 
 
 class SdkResponse(object):
@@ -103,13 +104,14 @@ class SdkBase(object):
             L.append('Content-Disposition: form-data; name=%s' % key)
             L.append('Content-Type: %s' % SdkBase.CONTENT_TYPE_JSON)
             L.append('')
-            L.append(value)
+            L.append(str(value))
         for (key, value) in files:
+            filename, stream = get_filename_stream(value)
             L.append('--' + BOUNDARY)
-            L.append('Content-Disposition: form-data; name=%s' % (key))
+            L.append('Content-Disposition: form-data; name=%s; filename=%s' % (key, filename))
             L.append('Content-Type: %s' % SdkBase.CONTENT_TYPE_OCTET)
             L.append('')
-            L.append(value)
+            L.append(stream)
         L.append('--' + BOUNDARY + '--')
         L.append('')
         body = CRLF.join(L)
@@ -182,13 +184,16 @@ class SdkBase(object):
         response = conn.getresponse()
 
         status = response.status
-        resHeaders = response.getheaders()
-        resData = response.read()
-        #resData = response.read().encode('utf-8')
+        res_headers = response.getheaders()
+        read_data = response.read()
+        try:
+            res_data = read_data.decode('utf-8')
+        except UnicodeDecodeError:
+            res_data = read_data.decode('utf-8', 'ignore')
 
         conn.close()
 
-        return status, resData, dict(resHeaders)
+        return status, res_data, dict(res_headers)
 
 
 @deprecated
