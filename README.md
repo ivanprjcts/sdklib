@@ -32,3 +32,6 @@ class MySDK(SdkBase):
 * Sdklib 0.4.1
     - Add parameters to strf timetizer functions.
     
+    
+* Sdklib 0.4.2 beta
+    - Add get_url_query_params function to parser.

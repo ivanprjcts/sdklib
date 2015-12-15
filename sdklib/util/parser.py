@@ -1,3 +1,7 @@
+try:
+    from urllib.parse import urlencode
+except:
+    from urllib import urlencode
 
 
 def parse_params(vars):
@@ -42,3 +46,7 @@ def safe_add_end_slash(item):
     else:
         to_return = ""
     return to_return
+
+
+def get_url_query_params(params):
+    return "?%s" % (urlencode(params))
