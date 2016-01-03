@@ -16,11 +16,23 @@ def parse_args(**kwargs):
     return to_return
 
 
-def parse_args_as_tuple_list(**kwargs):
+def parse_params_as_tuple_list(params, separate_list_elements=True):
+    to_return = []
+    for elem in params:
+        if params[elem] is not None:
+            if isinstance(params[elem], list) and separate_list_elements:
+                for list_elem in params[elem]:
+                    to_return.append((elem, list_elem))
+            else:
+                to_return.append((elem, params[elem]))
+    return to_return
+
+
+def parse_args_as_tuple_list(separate_list_elements=True, **kwargs):
     to_return = []
     for elem in kwargs:
         if kwargs[elem] is not None:
-            if isinstance(kwargs[elem], list):
+            if isinstance(kwargs[elem], list) and separate_list_elements:
                 for list_elem in kwargs[elem]:
                     to_return.append((elem, list_elem))
             else:

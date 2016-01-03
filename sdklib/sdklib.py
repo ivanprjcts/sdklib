@@ -20,6 +20,7 @@ import collections
 from .util.urlvalidator import urlsplit
 from .util.decorators import deprecated
 from .util.file import get_filename_stream
+from .util.parser import parse_params_as_tuple_list
 
 
 class SdkResponse(object):
@@ -56,10 +57,11 @@ class SdkBase(object):
     CONNECTION_HEADER_NAME = "Connection"
     REFERRER_HEADER_NAME = "Referer"
 
-
     CONTENT_TYPE_JSON = "application/json"
+    CONTENT_TYPE_URL_ENCODED = "application/x-www-form-urlencoded"
     CONTENT_TYPE_OCTET = "application/octet-stream"
     CONTENT_TYPE_PLAIN_TEXT = "text/plain; charset=utf-8"
+    CONTENT_TYPE_MULTIPART_FORM_DATA = "multipart/form-data"
 
     @classmethod
     def set_host(cls, hostname):
@@ -115,14 +117,14 @@ class SdkBase(object):
         L.append('--' + BOUNDARY + '--')
         L.append('')
         body = CRLF.join(L)
-        content_type = 'multipart/form-data; boundary=%s' % BOUNDARY
+        content_type = '%s; boundary=%s' % (SdkBase.CONTENT_TYPE_MULTIPART_FORM_DATA, BOUNDARY)
         return content_type, body
 
     def default_headers(self):
         return dict()
 
     def _http(self, method, url, headers=None, form_params=None, query_params=None, ssl_verified=False,
-              form_urlencoding=True):
+              form_urlencoding=True, files=None):
         """
         Internal method to do http requests.
         :param method:
@@ -163,20 +165,28 @@ class SdkBase(object):
             else:
                 conn = http.HTTPConnection(self.API_HOST, self.API_PORT)
 
-        if (method == "POST" or method == "PUT") and form_urlencoding:
-            xHeaders["Content-Type"] = "application/x-www-form-urlencoded"
-
         if query_params:
             url += "?%s" % (urlencode(query_params))
 
-        if form_params and form_urlencoding:
-            parameters = urlencode(form_params)
-            conn.request(method, url, parameters, headers=xHeaders)
-        elif form_params and isinstance(form_params, collections.Mapping):
+        if form_urlencoding:
+            if form_params is not None:
+                parameters = urlencode(form_params)
+            else:
+                parameters = ""
+            xHeaders[self.CONTENT_TYPE_HEADER_NAME] = self.CONTENT_TYPE_URL_ENCODED
+        elif files:
+            fields = parse_params_as_tuple_list(form_params)
+            files = parse_params_as_tuple_list(files)
+            parameters = self.encode_multipart_formdata(fields=fields, files=files)
+            xHeaders[self.CONTENT_TYPE_HEADER_NAME] = self.CONTENT_TYPE_MULTIPART_FORM_DATA
+        elif isinstance(form_params, collections.Mapping):
             parameters = json.dumps(form_params)
-            conn.request(method, url, parameters, headers=xHeaders)
-        elif form_params:
+            xHeaders[self.CONTENT_TYPE_HEADER_NAME] = self.CONTENT_TYPE_JSON
+        else:
             parameters = form_params
+            xHeaders[self.CONTENT_TYPE_HEADER_NAME] = self.CONTENT_TYPE_PLAIN_TEXT
+
+        if parameters is not None:
             conn.request(method, url, parameters, headers=xHeaders)
         else:
             conn.request(method, url, headers=xHeaders)
