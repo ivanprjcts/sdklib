@@ -32,3 +32,7 @@ class MySDK(SdkBase):
 * Sdklib 0.4.1
     - Add parameters to strf timetizer functions.
     
+* Sdklib 0.5
+    - Add new parse as tuple list function.
+    - Add files parameter to http method.
+    - Infer content type header in all requests.
