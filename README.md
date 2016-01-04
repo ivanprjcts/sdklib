@@ -36,3 +36,6 @@ class MySDK(SdkBase):
     - Add new parse as tuple list function.
     - Add files parameter to http method.
     - Infer content type header in all requests.
+    
+* Sdklib 0.5.1
+    - Bug fixing.

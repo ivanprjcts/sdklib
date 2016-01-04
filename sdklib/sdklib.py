@@ -63,6 +63,8 @@ class SdkBase(object):
     CONTENT_TYPE_PLAIN_TEXT = "text/plain; charset=utf-8"
     CONTENT_TYPE_MULTIPART_FORM_DATA = "multipart/form-data"
 
+    BOUNDARY = '----------ThIs_Is_tHe_bouNdaRY_$'
+
     @classmethod
     def set_host(cls, hostname):
         """
@@ -98,27 +100,25 @@ class SdkBase(object):
         files is a sequence of (name, value) elements for data to be uploaded as files
         Return (content_type, body) ready for httplib.HTTP instance
         """
-        BOUNDARY = '----------ThIs_Is_tHe_bouNdaRY_$'
         CRLF = '\r\n'
         L = []
         for (key, value) in fields:
-            L.append('--' + BOUNDARY)
+            L.append('--' + SdkBase.BOUNDARY)
             L.append('Content-Disposition: form-data; name=%s' % key)
             L.append('Content-Type: %s' % SdkBase.CONTENT_TYPE_JSON)
             L.append('')
             L.append(str(value))
         for (key, value) in files:
             filename, stream = get_filename_stream(value)
-            L.append('--' + BOUNDARY)
+            L.append('--' + SdkBase.BOUNDARY)
             L.append('Content-Disposition: form-data; name=%s; filename=%s' % (key, filename))
             L.append('Content-Type: %s' % SdkBase.CONTENT_TYPE_OCTET)
             L.append('')
             L.append(stream)
-        L.append('--' + BOUNDARY + '--')
+        L.append('--' + SdkBase.BOUNDARY + '--')
         L.append('')
         body = CRLF.join(L)
-        content_type = '%s; boundary=%s' % (SdkBase.CONTENT_TYPE_MULTIPART_FORM_DATA, BOUNDARY)
-        return content_type, body
+        return body
 
     def default_headers(self):
         return dict()
@@ -178,7 +178,8 @@ class SdkBase(object):
             fields = parse_params_as_tuple_list(form_params)
             files = parse_params_as_tuple_list(files)
             parameters = self.encode_multipart_formdata(fields=fields, files=files)
-            xHeaders[self.CONTENT_TYPE_HEADER_NAME] = self.CONTENT_TYPE_MULTIPART_FORM_DATA
+            xHeaders[self.CONTENT_TYPE_HEADER_NAME] = '%s; boundary=%s' % (self.CONTENT_TYPE_MULTIPART_FORM_DATA,
+                                                                           self.BOUNDARY)
         elif isinstance(form_params, collections.Mapping):
             parameters = json.dumps(form_params)
             xHeaders[self.CONTENT_TYPE_HEADER_NAME] = self.CONTENT_TYPE_JSON
