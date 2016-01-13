@@ -200,7 +200,7 @@ class SdkBase(object):
         try:
             res_data = read_data.decode('utf-8')
         except UnicodeDecodeError:
-            res_data = read_data.decode('utf-8', 'ignore')
+            res_data = read_data
 
         conn.close()
 
