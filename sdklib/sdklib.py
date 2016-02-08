@@ -111,7 +111,7 @@ class SdkBase(object):
         for (key, value) in files:
             filename, stream = get_filename_stream(value)
             L.append('--' + SdkBase.BOUNDARY)
-            L.append('Content-Disposition: form-data; name=%s; filename=%s' % (key, filename))
+            L.append('Content-Disposition: form-data; name=%s; filename="%s"' % (key, filename))
             L.append('Content-Type: %s' % SdkBase.CONTENT_TYPE_OCTET)
             L.append('')
             L.append(stream)
