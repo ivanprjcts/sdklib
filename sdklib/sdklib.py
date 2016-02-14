@@ -168,18 +168,24 @@ class SdkBase(object):
         if query_params:
             url += "?%s" % (urlencode(query_params))
 
-        if form_urlencoding:
+        if files:
+            try:
+                files = parse_params_as_tuple_list(files)
+            except TypeError:
+                pass
+            try:
+                fields = parse_params_as_tuple_list(form_params)
+            except TypeError:
+                fields = form_params
+            parameters = self.encode_multipart_formdata(fields=fields, files=files)
+            xHeaders[self.CONTENT_TYPE_HEADER_NAME] = '%s; boundary=%s' % (self.CONTENT_TYPE_MULTIPART_FORM_DATA,
+                                                                           self.BOUNDARY)
+        elif form_urlencoding:
             if form_params is not None:
                 parameters = urlencode(form_params)
             else:
                 parameters = ""
             xHeaders[self.CONTENT_TYPE_HEADER_NAME] = self.CONTENT_TYPE_URL_ENCODED
-        elif files:
-            fields = parse_params_as_tuple_list(form_params)
-            files = parse_params_as_tuple_list(files)
-            parameters = self.encode_multipart_formdata(fields=fields, files=files)
-            xHeaders[self.CONTENT_TYPE_HEADER_NAME] = '%s; boundary=%s' % (self.CONTENT_TYPE_MULTIPART_FORM_DATA,
-                                                                           self.BOUNDARY)
         elif isinstance(form_params, collections.Mapping):
             parameters = json.dumps(form_params)
             xHeaders[self.CONTENT_TYPE_HEADER_NAME] = self.CONTENT_TYPE_JSON

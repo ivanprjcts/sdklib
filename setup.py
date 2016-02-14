@@ -6,7 +6,7 @@ except ImportError:
 
 setup(
     name='sdklib',
-    version='0.5.1.2',
+    version='0.5.2',
     description = 'SDK helper library',
     author='Ivan Martin',
     author_email='ivanmar_91@hotmail.com',
