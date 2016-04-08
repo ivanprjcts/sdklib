@@ -10,7 +10,3 @@ class TestUtil(unittest.TestCase):
         res = get_dict_from_list(test_list, Id=1)
 
         self.assertEqual(res, {"Id": 1, "key2": ""})
-
-
-if __name__ == '__main__':
-    unittest.main()
