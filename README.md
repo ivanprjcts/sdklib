@@ -44,9 +44,12 @@ class MySDK(SdkBase):
     - Bug fixing.
     - Allow passing files and form_parameters as tuples when request is encoded multipart
     
+* Sdklib 0.6
+    - Find packages automatically.
+    - Support Python3 (TODO).
+    
 * Sdklib 0.5.2.1
     - Bug fixing.
-    
     
 * Sdklib 1.0
     - Use urlib3.

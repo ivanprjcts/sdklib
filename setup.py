@@ -1,15 +1,14 @@
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup, find_packages
 
+
+EXCLUDE_FROM_PACKAGES = []
 
 setup(
     name='sdklib',
-    version='0.5.2.1',
-    description = 'SDK helper library',
+    version='0.6',
+    description='SDK helper library',
     author='Ivan Martin',
-    author_email='ivanmar_91@hotmail.com',
+    author_email='ivanprjcts@gmail.com',
     url='https://github.com/ivanprjcts/sdklib',
     classifiers=[
         'Intended Audience :: Developers',
@@ -18,7 +17,6 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
     ],
-    py_modules=['sdklib.util.parser', 'sdklib.sdklib', 'sdklib.util.bytearray', 'sdklib.util.urlvalidator',
-                'sdklib.util.timetizer', 'sdklib.util.file'],
-    packages=['sdklib', 'sdklib.util'],
+    packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
+    zip_safe=False
 )

@@ -69,7 +69,7 @@ class SdkBase(object):
     def set_host(cls, hostname):
         """
         Set hostname.
-        @param $host The host to be connected with, e.g. (http://hostname) or (https://X.X.X.X:port)
+        @param $hostname The host to be connected with, e.g. (http://hostname) or (https://X.X.X.X:port)
         """
         scheme, host, port = urlsplit(hostname)
         if scheme == 'http':
