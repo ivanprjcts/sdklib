@@ -187,7 +187,10 @@ class SdkBase(object):
                 parameters = ""
             xHeaders[self.CONTENT_TYPE_HEADER_NAME] = self.CONTENT_TYPE_URL_ENCODED
         elif isinstance(form_params, collections.Mapping):
-            parameters = json.dumps(form_params)
+            try:
+                parameters = json.dumps(form_params)
+            except:
+                parameters = json.dumps(form_params, encoding='latin-1')
             xHeaders[self.CONTENT_TYPE_HEADER_NAME] = self.CONTENT_TYPE_JSON
         else:
             parameters = form_params
