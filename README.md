@@ -46,3 +46,7 @@ class MySDK(SdkBase):
     
 * Sdklib 0.5.2.1
     - Bug fixing.
+    
+    
+* Sdklib 1.0
+    - Use urlib3.
