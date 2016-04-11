@@ -43,3 +43,6 @@ class MySDK(SdkBase):
 * Sdklib 0.5.2
     - Bug fixing.
     - Allow passing files and form_parameters as tuples when request is encoded multipart
+    
+* Sdklib 0.5.2.1
+    - Bug fixing.
