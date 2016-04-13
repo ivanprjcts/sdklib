@@ -1,0 +1,5 @@
+APPLICATION_JSON = "application/json"
+APPLICATION_URL_ENCODED = "application/x-www-form-urlencoded"
+APPLICATION_OCTET_STREAM = "application/octet-stream"
+TEXT_PLAIN = "text/plain; charset=utf-8"
+MULTIPART_FORM_DATA = "multipart/form-data"
