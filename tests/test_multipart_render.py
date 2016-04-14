@@ -11,7 +11,7 @@ class TestMultiPartRender(unittest.TestCase):
         data = {"param1": "value1", "param2": "value2"}
 
         r = MultiPartRender()
-        body, content_type = r.encode_multipart_formdata(data, files)
+        body, content_type = r.encode_params(data, files)
         self.assertEqual(content_type, "multipart/form-data; boundary=----------ThIs_Is_tHe_bouNdaRY_$")
         self.assertIn("param1", body)
         self.assertIn("value1", body)
@@ -31,7 +31,7 @@ class TestMultiPartRender(unittest.TestCase):
         data = {"param1": "value1", "param2": "value2"}
 
         r = MultiPartRender()
-        body, content_type = r.encode_multipart_formdata(data, files)
+        body, content_type = r.encode_params(data, files)
         self.assertEqual(content_type, "multipart/form-data; boundary=----------ThIs_Is_tHe_bouNdaRY_$")
         self.assertIn("param1", body)
         self.assertIn("value1", body)
@@ -50,7 +50,7 @@ class TestMultiPartRender(unittest.TestCase):
         data = {"param1": "value1", "param2": "value2"}
 
         r = MultiPartRender()
-        body, content_type = r.encode_multipart_formdata(data, files)
+        body, content_type = r.encode_params(data, files)
         self.assertEqual(content_type, "multipart/form-data; boundary=----------ThIs_Is_tHe_bouNdaRY_$")
         self.assertIn("param1", body)
         self.assertIn("value1", body)
@@ -66,7 +66,7 @@ class TestMultiPartRender(unittest.TestCase):
         data = {"param1": "value1", "param2": "value2"}
 
         r = MultiPartRender()
-        body, content_type = r.encode_multipart_formdata(data, files)
+        body, content_type = r.encode_params(data, files)
         self.assertEqual(content_type, "multipart/form-data; boundary=----------ThIs_Is_tHe_bouNdaRY_$")
         self.assertIn("param1", body)
         self.assertIn("value1", body)
@@ -82,7 +82,7 @@ class TestMultiPartRender(unittest.TestCase):
         files = {"file_upload": "resources/file.pdf"}
 
         r = MultiPartRender()
-        body, content_type = r.encode_multipart_formdata(None, files)
+        body, content_type = r.encode_params(None, files)
         self.assertEqual(content_type, "multipart/form-data; boundary=----------ThIs_Is_tHe_bouNdaRY_$")
         self.assertIn("file_upload", body)
         self.assertIn("file.pdf", body)
@@ -92,7 +92,7 @@ class TestMultiPartRender(unittest.TestCase):
         data = {"param1": "value1", "param2": "value2"}
 
         r = MultiPartRender()
-        body, content_type = r.encode_multipart_formdata(data, None)
+        body, content_type = r.encode_params(data, None)
         self.assertEqual(content_type, "multipart/form-data; boundary=----------ThIs_Is_tHe_bouNdaRY_$")
         self.assertIn("param1", body)
         self.assertIn("value1", body)
@@ -104,7 +104,7 @@ class TestMultiPartRender(unittest.TestCase):
         data = {"param1": "value1", "param2": "value2"}
 
         r = MultiPartRender("custom_boundary")
-        body, content_type = r.encode_multipart_formdata(data, files)
+        body, content_type = r.encode_params(data, files)
         self.assertEqual(content_type, "multipart/form-data; boundary=custom_boundary")
         self.assertIn("param1", body)
         self.assertIn("value1", body)
@@ -114,7 +114,7 @@ class TestMultiPartRender(unittest.TestCase):
         self.assertIn("file.pdf", body)
         self.assertIn("Content-Type: application/pdf", body)
 
-        body, content_type = r.encode_multipart_formdata(data, files)
+        body, content_type = r.encode_params(data, files)
         self.assertEqual(content_type, "multipart/form-data; boundary=custom_boundary")
         self.assertIn("param1", body)
         self.assertIn("value1", body)
@@ -129,7 +129,7 @@ class TestMultiPartRender(unittest.TestCase):
         data = {"param1": "value1", "param2": "value2"}
 
         r = MultiPartRender()
-        body, content_type = r.encode_multipart_formdata(data, files, boundary="custom_boundary")
+        body, content_type = r.encode_params(data, files, boundary="custom_boundary")
         self.assertEqual(content_type, "multipart/form-data; boundary=custom_boundary")
         self.assertIn("param1", body)
         self.assertIn("value1", body)
@@ -139,7 +139,7 @@ class TestMultiPartRender(unittest.TestCase):
         self.assertIn("file.pdf", body)
         self.assertIn("Content-Type: application/pdf", body)
 
-        body, content_type = r.encode_multipart_formdata(data, files)
+        body, content_type = r.encode_params(data, files)
         self.assertEqual(content_type, "multipart/form-data; boundary=----------ThIs_Is_tHe_bouNdaRY_$")
         self.assertIn("param1", body)
         self.assertIn("value1", body)
