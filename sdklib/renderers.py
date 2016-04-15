@@ -1,8 +1,10 @@
+from urllib import quote_plus
+
 from urllib3.filepost import encode_multipart_formdata
 from urllib3.fields import RequestField, guess_content_type
 
 from .util.file import guess_filename_stream
-from .util.dictionay import to_key_val_list
+from .util.structures import to_key_val_list, to_key_val_dict
 from .compat import urlencode
 
 
@@ -76,8 +78,68 @@ class MultiPartRender(object):
 
 class FormRender(object):
 
-    def __init__(self):
+    VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes', 'encoded']
+    COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
+
+    def __init__(self, collection_format='multi'):
         self.content_type = 'application/x-www-form-urlencoded'
+        self.collection_format = collection_format
+
+    @property
+    def collection_format(self):
+        return self._collection_format
+
+    @collection_format.setter
+    def collection_format(self, value):
+        assert value in self.VALID_COLLECTION_FORMATS
+
+        self._collection_format = value
+
+    def encode_params(self, data=None, **kwargs):
+        """Encode parameters in a piece of data.
+        Will successfully encode parameters when passed as a dict or a list of
+        2-tuples. Order is retained if data is a list of 2-tuples but arbitrary
+        if parameters are supplied as a dict.
+        """
+        collection_format = kwargs.get("collection_format", self.collection_format)
+
+        if data is None:
+            return "", self.content_type
+        elif isinstance(data, (str, bytes)):
+            return data, self.content_type
+        elif hasattr(data, 'read'):
+            return data, self.content_type
+        elif collection_format == 'multi' and hasattr(data, '__iter__'):
+            result = []
+            for k, vs in to_key_val_list(data):
+                if isinstance(vs, basestring) or not hasattr(vs, '__iter__'):
+                    vs = [vs]
+                for v in vs:
+                    if v is not None:
+                        result.append(
+                            (k.encode('utf-8') if isinstance(k, str) else k,
+                             v.encode('utf-8') if isinstance(v, str) else v))
+            return urlencode(result, doseq=True), self.content_type
+        elif collection_format == 'encoded' and hasattr(data, '__iter__'):
+            return urlencode(data, doseq=False), self.content_type
+        elif hasattr(data, '__iter__'):
+            results = []
+            for k, vs in to_key_val_dict(data).items():
+                if isinstance(vs, list):
+                    v = self.COLLECTION_SEPARATORS[collection_format].join(quote_plus(e) for e in vs)
+                else:
+                    v = quote_plus(vs)
+                results.append("%s=%s" % (k, v))
+
+            return '&'.join(results), self.content_type
+        else:
+            return data, self.content_type
+
+
+class PlainTextRender(object):
+
+    def __init__(self, doseq=True):
+        self.content_type = 'text/plain'
 
     def encode_params(self, data=None, **kwargs):
         """Encode parameters in a piece of data.
@@ -101,7 +163,7 @@ class FormRender(object):
                         result.append(
                             (k.encode('utf-8') if isinstance(k, str) else k,
                              v.encode('utf-8') if isinstance(v, str) else v))
-            return urlencode(result, doseq=True), self.content_type
+            return urlencode(result, doseq=self.doseq), self.content_type
         else:
             return data, self.content_type
 

@@ -164,7 +164,7 @@ class SdkBase(object):
             else:
                 parameters = ""
             xHeaders[self.CONTENT_TYPE_HEADER_NAME] = self.CONTENT_TYPE_URL_ENCODED
-        elif isinstance(body_params, collections.Mapping):
+        elif isinstance(body_params, structures.Mapping):
             try:
                 parameters = json.dumps(body_params)
             except:
