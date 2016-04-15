@@ -127,9 +127,11 @@ class FormRender(object):
             for k, vs in to_key_val_dict(data).items():
                 if isinstance(vs, list):
                     v = self.COLLECTION_SEPARATORS[collection_format].join(quote_plus(e) for e in vs)
+                    key = k + '[]'
                 else:
                     v = quote_plus(vs)
-                results.append("%s=%s" % (k, v))
+                    key = k
+                results.append("%s=%s" % (key, v))
 
             return '&'.join(results), self.content_type
         else:
