@@ -10,6 +10,6 @@ is_py2 = (_ver[0] == 2)
 is_py3 = (_ver[0] == 3)
 
 if is_py2:
-    from urllib import urlencode
+    from urllib import urlencode, quote_plus
 elif is_py3:
-    from urllib.parse import urlencode
+    from urllib.parse import urlencode, quote_plus

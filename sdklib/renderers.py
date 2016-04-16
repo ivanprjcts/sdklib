@@ -1,11 +1,9 @@
-from urllib import quote_plus
-
 from urllib3.filepost import encode_multipart_formdata
 from urllib3.fields import RequestField, guess_content_type
 
 from .util.file import guess_filename_stream
 from .util.structures import to_key_val_list, to_key_val_dict
-from .compat import urlencode
+from .compat import urlencode, quote_plus
 
 
 class MultiPartRender(object):
@@ -96,7 +94,8 @@ class FormRender(object):
         self._collection_format = value
 
     def encode_params(self, data=None, **kwargs):
-        """Encode parameters in a piece of data.
+        """
+        Encode parameters in a piece of data.
         Will successfully encode parameters when passed as a dict or a list of
         2-tuples. Order is retained if data is a list of 2-tuples but arbitrary
         if parameters are supplied as a dict.
@@ -140,34 +139,28 @@ class FormRender(object):
 
 class PlainTextRender(object):
 
-    def __init__(self, doseq=True):
-        self.content_type = 'text/plain'
+    def __init__(self, charset='utf-8'):
+        self.charset = charset
+
+    def get_content_type(self, charset=None):
+        if charset is None:
+            charset = self.charset
+        if charset:
+            return "text/plain; charset=%s" % self.charset
+        return 'text/plain'
 
     def encode_params(self, data=None, **kwargs):
-        """Encode parameters in a piece of data.
-        Will successfully encode parameters when passed as a dict or a list of
-        2-tuples. Order is retained if data is a list of 2-tuples but arbitrary
-        if parameters are supplied as a dict.
         """
+        Encode to plain text.
+        """
+        charset = kwargs.get("charset", self.charset)
+
         if data is None:
-            return "", self.content_type
-        elif isinstance(data, (str, bytes)):
-            return data, self.content_type
-        elif hasattr(data, 'read'):
-            return data, self.content_type
-        elif hasattr(data, '__iter__'):
-            result = []
-            for k, vs in to_key_val_list(data):
-                if isinstance(vs, basestring) or not hasattr(vs, '__iter__'):
-                    vs = [vs]
-                for v in vs:
-                    if v is not None:
-                        result.append(
-                            (k.encode('utf-8') if isinstance(k, str) else k,
-                             v.encode('utf-8') if isinstance(v, str) else v))
-            return urlencode(result, doseq=self.doseq), self.content_type
+            return "", self.get_content_type(charset=charset)
+        elif self.charset:
+            return unicode(data).encode(charset), self.get_content_type(charset=charset)
         else:
-            return data, self.content_type
+            return unicode(data), self.get_content_type(charset=charset)
 
 
 class JSONRender(object):

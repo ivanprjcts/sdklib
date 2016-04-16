@@ -5,7 +5,7 @@ from sdklib.renderers import FormRender
 
 class TestFormRender(unittest.TestCase):
 
-    def test_form_data_files(self):
+    def test_encode_form_data_files(self):
         files = {"file_upload": "resources/file.pdf", "file_upload2": "resources/file.png"}
         data = {"param1": "value1", "param2": "value2"}
 
@@ -16,7 +16,7 @@ class TestFormRender(unittest.TestCase):
         self.assertIn("param1=value1", body)
         self.assertNotIn("file_upload", body)
 
-    def test_encode_multipart_data_as_2tuple_parameter(self):
+    def test_encode_form_data_as_2tuple_parameter(self):
         data = [("param1", "value1"), ("param2", "value2"), ("param2", "value3")]
 
         r = FormRender()
@@ -24,13 +24,13 @@ class TestFormRender(unittest.TestCase):
         self.assertEqual(content_type, "application/x-www-form-urlencoded")
         self.assertEqual(body, "param1=value1&param2=value2&param2=value3")
 
-    def test_encode_multipart_no_data(self):
+    def test_encode_form_data_no_data(self):
         r = FormRender()
         body, content_type = r.encode_params()
         self.assertEqual(content_type, "application/x-www-form-urlencoded")
         self.assertEqual(body, "")
 
-    def test_form_data_array_default(self):
+    def test_encode_form_data_array_default(self):
         data = {"param1": "value 1", "param2": ["value2", "value3"]}
 
         r = FormRender()
@@ -40,7 +40,7 @@ class TestFormRender(unittest.TestCase):
         self.assertIn("param1=value+1", body)
         self.assertIn("param2=value3", body)
 
-    def test_form_data_array_multi(self):
+    def test_encode_form_data_array_multi(self):
         data = {"param1": "value 1", "param2": ["value2", "value3"]}
 
         r = FormRender(collection_format='multi')
@@ -50,7 +50,7 @@ class TestFormRender(unittest.TestCase):
         self.assertIn("param1=value+1", body)
         self.assertIn("param2=value3", body)
 
-    def test_form_data_array_encoded(self):
+    def test_encode_form_data_array_encoded(self):
         data = {"param1": "value 1", "param2": ["value2","value3"]}
 
         r = FormRender(collection_format='encoded')
@@ -59,7 +59,7 @@ class TestFormRender(unittest.TestCase):
         self.assertIn("param2=%5B%27value2%27%2C+%27value3%27%5D", body)
         self.assertIn("param1=value+1", body)
 
-    def test_form_data_array_csv(self):
+    def test_encode_form_data_array_csv(self):
         data = {"param1": "value 1", "param2": ["value2", "value3"]}
 
         r = FormRender(collection_format='csv')
@@ -68,7 +68,7 @@ class TestFormRender(unittest.TestCase):
         self.assertIn("param2[]=value2,value3", body)
         self.assertIn("param1=value+1", body)
 
-    def test_form_data_array_ssv(self):
+    def test_encode_form_data_array_ssv(self):
         data = {"param1": "value 1", "param2": ["value2", "value3"]}
 
         r = FormRender(collection_format='ssv')
@@ -77,7 +77,7 @@ class TestFormRender(unittest.TestCase):
         self.assertIn("param2[]=value2 value3", body)
         self.assertIn("param1=value+1", body)
 
-    def test_form_data_array_tsv(self):
+    def test_encode_form_data_array_tsv(self):
         data = {"param1": "value 1", "param2": ["value2", "value3"]}
 
         r = FormRender(collection_format='tsv')
@@ -86,7 +86,7 @@ class TestFormRender(unittest.TestCase):
         self.assertIn("param2[]=value2\tvalue3", body)
         self.assertIn("param1=value+1", body)
 
-    def test_form_data_array_pipes(self):
+    def test_encode_form_data_array_pipes(self):
         data = {"param1": "value 1", "param2": ["value2", "value3"]}
 
         r = FormRender(collection_format='pipes')
