@@ -138,9 +138,22 @@ class FormRender(object):
 
 
 class PlainTextRender(object):
+    VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes']
+    COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
 
-    def __init__(self, charset='utf-8'):
+    def __init__(self, charset='utf-8', collection_format='multi'):
         self.charset = charset
+        self.collection_format = collection_format
+
+    @property
+    def collection_format(self):
+        return self._collection_format
+
+    @collection_format.setter
+    def collection_format(self, value):
+        assert value in self.VALID_COLLECTION_FORMATS
+
+        self._collection_format = value
 
     def get_content_type(self, charset=None):
         if charset is None:
@@ -152,15 +165,44 @@ class PlainTextRender(object):
     def encode_params(self, data=None, **kwargs):
         """
         Encode to plain text.
+        Will successfully encode parameters when passed as a dict or a list of
+        2-tuples. Order is retained if data is a list of 2-tuples but arbitrary
+        if parameters are supplied as a dict.
         """
         charset = kwargs.get("charset", self.charset)
+        collection_format = kwargs.get("collection_format", self.collection_format)
 
         if data is None:
-            return "", self.get_content_type(charset=charset)
-        elif self.charset:
-            return unicode(data).encode(charset), self.get_content_type(charset=charset)
+            return "", self.get_content_type(charset)
+        elif isinstance(data, (str, bytes)):
+            return data, self.get_content_type(charset)
+        elif hasattr(data, 'read'):
+            return data, self.get_content_type(charset)
+        elif collection_format == 'multi' and hasattr(data, '__iter__'):
+            result = []
+            for k, vs in to_key_val_list(data):
+                if isinstance(vs, basestring) or not hasattr(vs, '__iter__'):
+                    vs = [vs]
+                for v in vs:
+                    if v is not None:
+                        result.append("%s=%s" %
+                            (unicode(k).encode(charset) if charset else unicode(k),
+                             unicode(v).encode(charset) if charset else unicode(v)))
+            return '\n'.join(result), self.get_content_type(charset)
+        elif hasattr(data, '__iter__'):
+            results = []
+            for k, vs in to_key_val_dict(data).items():
+                if isinstance(vs, list):
+                    v = self.COLLECTION_SEPARATORS[collection_format].join(e for e in vs)
+                    key = k + '[]'
+                else:
+                    v = vs
+                    key = k
+                results.append("%s=%s" % (key, v))
+
+            return '\n'.join(results), self.get_content_type(charset)
         else:
-            return unicode(data), self.get_content_type(charset=charset)
+            return unicode(data).encode(charset) if charset else unicode(data), self.get_content_type(charset)
 
 
 class JSONRender(object):
