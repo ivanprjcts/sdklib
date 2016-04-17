@@ -138,7 +138,7 @@ class FormRender(object):
 
 
 class PlainTextRender(object):
-    VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes']
+    VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes', 'plain']
     COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
 
     def __init__(self, charset='utf-8', collection_format='multi'):
@@ -161,6 +161,10 @@ class PlainTextRender(object):
         if charset:
             return "text/plain; charset=%s" % self.charset
         return 'text/plain'
+
+    @staticmethod
+    def _encode(data, charset=None):
+        return unicode(data).encode(charset) if charset else unicode(data)
 
     def encode_params(self, data=None, **kwargs):
         """
@@ -185,10 +189,14 @@ class PlainTextRender(object):
                     vs = [vs]
                 for v in vs:
                     if v is not None:
-                        result.append("%s=%s" %
-                            (unicode(k).encode(charset) if charset else unicode(k),
-                             unicode(v).encode(charset) if charset else unicode(v)))
+                        result.append("%s=%s" % (self._encode(k, charset), self._encode(v, charset)))
             return '\n'.join(result), self.get_content_type(charset)
+        elif collection_format == 'plain' and hasattr(data, '__iter__'):
+            results = []
+            for k, vs in to_key_val_dict(data).items():
+                results.append("%s=%s" % (self._encode(k, charset), self._encode(vs, charset)))
+
+            return '\n'.join(results), self.get_content_type(charset)
         elif hasattr(data, '__iter__'):
             results = []
             for k, vs in to_key_val_dict(data).items():
@@ -198,7 +206,7 @@ class PlainTextRender(object):
                 else:
                     v = vs
                     key = k
-                results.append("%s=%s" % (key, v))
+                results.append("%s=%s" % (self._encode(key, charset), self._encode(v, charset)))
 
             return '\n'.join(results), self.get_content_type(charset)
         else:

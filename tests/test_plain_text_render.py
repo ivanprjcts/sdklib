@@ -67,3 +67,49 @@ class TestPlainTextRender(unittest.TestCase):
         body, content_type = r.encode_params(data)
         self.assertEqual(content_type, "text/plain")
         self.assertEqual(u"Hello! I'm Iv\xe1n Mart\xedn!", body)
+
+    def test_encode_plain_data_array_csv(self):
+        data = {"param1": "value 1", "param2": ["value2", "value3"]}
+
+        r = PlainTextRender(collection_format='csv')
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "text/plain; charset=utf-8")
+        self.assertIn("param1=value 1", body)
+        self.assertIn("param2[]=value2,value3", body)
+
+    def test_encode_plain_data_array_ssv(self):
+        data = {"param1": "value 1", "param2": ["value2", "value3"]}
+
+        r = PlainTextRender(collection_format='ssv')
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "text/plain; charset=utf-8")
+        self.assertIn("param1=value 1", body)
+        self.assertIn("param2[]=value2 value3", body)
+
+    def test_encode_plain_data_array_tsv(self):
+        data = {"param1": "value 1", "param2": ["value2", "value3"]}
+
+        r = PlainTextRender(collection_format='tsv')
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "text/plain; charset=utf-8")
+        self.assertIn("param1=value 1", body)
+        self.assertIn("param2[]=value2\tvalue3", body)
+
+    def test_encode_plain_data_array_pipes(self):
+        data = {"param1": "value 1", "param2": ["value2", "value3"]}
+
+        r = PlainTextRender(collection_format='pipes')
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "text/plain; charset=utf-8")
+        self.assertIn("param1=value 1", body)
+        self.assertIn("param2[]=value2|value3", body)
+
+    def test_encode_plain_data_array_plain(self):
+        data = {"param1": "value 1", "param2": ["value2", "value3"]}
+
+        r = PlainTextRender(collection_format='plain')
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "text/plain; charset=utf-8")
+        self.assertIn("param1=value 1", body)
+        self.assertIn("param2=['value2', 'value3']", body)
+
