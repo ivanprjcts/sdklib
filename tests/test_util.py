@@ -22,3 +22,9 @@ class TestUtil(unittest.TestCase):
         res = to_key_val_dict(json_obj)
 
         self.assertEqual(res, {"Id": 0, "key2": "", "key3": ""})
+
+    def test_to_key_val_dict_tuple_list(self):
+        json_obj = [("Id", 0), ("key2", ""), ("key2", "val")]
+        res = to_key_val_dict(json_obj)
+
+        self.assertEqual(res, {"Id": 0, "key2": ["", "val"]})

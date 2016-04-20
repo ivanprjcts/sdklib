@@ -1,3 +1,5 @@
+import json
+
 from urllib3.filepost import encode_multipart_formdata
 from urllib3.fields import RequestField, guess_content_type
 
@@ -215,27 +217,23 @@ class PlainTextRender(object):
 
 class JSONRender(object):
 
-    def __init__(self, boundary="----------ThIs_Is_tHe_bouNdaRY_$"):
-        self.boundary = boundary
+    def __init__(self):
+        pass
 
     def encode_params(self, data=None, files=None, **kwargs):
         """
-        Build the body for a multipart/form-data request.
+        Build the body for a application/json request.
         Will successfully encode files when passed as a dict or a list of
         tuples. Order is retained if data is a list of tuples but arbitrary
         if parameters are supplied as a dict.
-        The tuples may be string (filepath), 2-tuples (filename, fileobj), 3-tuples (filename, fileobj, contentype)
-        or 4-tuples (filename, fileobj, contentype, custom_headers).
+        The tuples may be string (filepath), 2-tuples (filename, fileobj).
         """
         if isinstance(data, basestring):
             raise ValueError("Data must not be a string.")
 
-        # optional args
-        boundary = kwargs.get("boundary", None)
-
         new_fields = []
-        fields = to_key_val_list(data or {})
-        files = to_key_val_list(files or {})
+        fields = to_key_val_dict(data or {})
+        files = to_key_val_dict(files or {})
 
         for field, val in fields:
             if isinstance(val, basestring) or not hasattr(val, '__iter__'):
@@ -274,8 +272,9 @@ class JSONRender(object):
             rf.make_multipart(content_type=ft)
             new_fields.append(rf)
 
-        if boundary is None:
-            boundary = self.boundary
-        body, content_type = encode_multipart_formdata(new_fields, boundary=boundary)
+        try:
+            body = json.dumps(form_params)
+        except:
+            body = json.dumps(form_params, encoding='latin-1')
 
         return body, content_type

@@ -38,7 +38,7 @@ def to_key_val_list(value):
     return list(value)
 
 
-def to_key_val_dict(value):
+def to_key_val_dict(values):
     """
     Take an object and test to see if it can be represented as a
     dictionary. If it can be, return a list of tuples, e.g.,
@@ -50,13 +50,22 @@ def to_key_val_dict(value):
         >>> to_key_val_dict('string')
         ValueError: dictionary update sequence element.
     """
-    if value is None:
-        return None
+    if values is None:
+        return {}
 
-    if isinstance(value, (str, bytes, bool, int)):
+    if isinstance(values, (str, bytes, bool, int)):
         raise ValueError('cannot encode objects that are not 2-tuples')
 
-    if isinstance(value, collections.Mapping):
-        value = value.items()
+    if isinstance(values, collections.Mapping):
+        values = values.items()
 
-    return dict(value)
+    dict_to_return = dict()
+    for k, v in values:
+        if k in dict_to_return and isinstance(dict_to_return[k], list):
+            dict_to_return[k].append(v)
+        elif k in dict_to_return:
+            dict_to_return[k] = [dict_to_return[k], v]
+        else:
+            dict_to_return[k] = v
+
+    return dict_to_return
