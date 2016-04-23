@@ -20,6 +20,8 @@ def from_email_message_to_json(msg):
     decode = email.Header.decode_header(msg['Subject'])[0]
     json_obj_to_return['subject'] = unicode(decode[0], encoding=decode[1])
     json_obj_to_return['date'] = msg['Date']
+    json_obj_to_return['from'] = msg['From']
+    json_obj_to_return['to'] = msg['To']
     # Now convert to local date-time
     date_tuple = email.utils.parsedate_tz(json_obj_to_return['date'])
     if date_tuple:
