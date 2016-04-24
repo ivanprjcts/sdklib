@@ -218,63 +218,19 @@ class PlainTextRender(object):
 class JSONRender(object):
 
     def __init__(self):
-        pass
+        self.content_type = 'application/json'
 
-    def encode_params(self, data=None, files=None, **kwargs):
+    def encode_params(self, data=None, **kwargs):
         """
         Build the body for a application/json request.
-        Will successfully encode files when passed as a dict or a list of
-        tuples. Order is retained if data is a list of tuples but arbitrary
-        if parameters are supplied as a dict.
-        The tuples may be string (filepath), 2-tuples (filename, fileobj).
         """
         if isinstance(data, basestring):
             raise ValueError("Data must not be a string.")
 
-        new_fields = []
         fields = to_key_val_dict(data or {})
-        files = to_key_val_dict(files or {})
-
-        for field, val in fields:
-            if isinstance(val, basestring) or not hasattr(val, '__iter__'):
-                val = [val]
-            for v in val:
-                if v is not None:
-                    # Don't call str() on bytestrings: in Py3 it all goes wrong.
-                    if not isinstance(v, bytes):
-                        v = str(v)
-
-                    new_fields.append(
-                        (field.decode('utf-8') if isinstance(field, bytes) else field,
-                         v.encode('utf-8') if isinstance(v, str) else v))
-
-        for (k, v) in files:
-            # support for explicit filename
-            ft = None
-            fh = None
-            if isinstance(v, (tuple, list)):
-                if len(v) == 2:
-                    fn, fp = v
-                elif len(v) == 3:
-                    fn, fp, ft = v
-                else:
-                    fn, fp, ft, fh = v
-            else:
-                fn, fp = guess_filename_stream(v)
-                ft = guess_content_type(fn)
-
-            if isinstance(fp, (str, bytes, bytearray)):
-                fdata = fp
-            else:
-                fdata = fp.read()
-
-            rf = RequestField(name=k, data=fdata, filename=fn, headers=fh)
-            rf.make_multipart(content_type=ft)
-            new_fields.append(rf)
-
         try:
-            body = json.dumps(form_params)
+            body = json.dumps(fields)
         except:
-            body = json.dumps(form_params, encoding='latin-1')
+            body = json.dumps(fields, encoding='latin-1')
 
-        return body, content_type
+        return body, self.content_type
