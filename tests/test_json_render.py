@@ -48,6 +48,5 @@ class TestJSONRender(unittest.TestCase):
         r = JSONRender()
         body, content_type = r.encode_params(data)
         self.assertEqual(content_type, "application/json")
-        print body
         self.assertIn('"param2": ["v\\u00e1lue", "value3"]', body)
         self.assertIn('"param1": "\\u0627\\u0644\\u0639\\u064e\\u0631\\u064e\\u0628\\u0650"', body)
