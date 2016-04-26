@@ -1,11 +1,11 @@
 """
-Library for helping SDK implementations
-Version 0.2
+Library for helping SDK implementations.
 """
 import ssl
 import sys
+import io
 import json
-import collections
+
 import urllib3
 
 from .compat import urlencode
@@ -13,22 +13,45 @@ from .util.urls import get_hostname_parameters_from_url, ensure_url_path_starts_
 from .renderers import JSONRender, MultiPartRender
 
 
-class SdkResponse(object):
+class SdkResponse(io.IOBase):
+    def __init__(self, resp):
+        self.urllib3_response = resp
+        self.status = resp.status
+        self.reason = resp.reason
+        self.data = resp.data
 
-    def __init__(self, data):
+    @property
+    def data(self):
+        return self._data
+
+    @data.setter
+    def data(self, value):
         try:
-            self.data = json.loads(data)
-        except ValueError:
-            self.data = data
+            self._data = json.loads(value)
+        except:
+            self._data = value
 
-    def get_data(self):
-        return self.data
+    def getheaders(self):
+        """
+        Returns a dictionary of the response headers.
+        """
+        return self.urllib3_response.getheaders()
+
+    def getheader(self, name, default=None):
+        """
+        Returns a given response header.
+        """
+        return self.urllib3_response.getheader(name, default)
 
 
 class SdkBase(object):
     """
     Sdk Base.
     """
+    DEFAULT_HOST = "http://127.0.0.1:80/"
+    DEFAULT_PROXY = None
+    DEFAULT_RENDER = JSONRender()
+
     USER_AGENT_HEADER_NAME = "User-Agent"
     PRAGMA_HEADER_NAME = "Pragma"
     CONTENT_TYPE_HEADER_NAME = "Content-Type"
@@ -40,9 +63,9 @@ class SdkBase(object):
     CONNECTION_HEADER_NAME = "Connection"
     REFERRER_HEADER_NAME = "Referer"
 
-    def __init__(self, host='http://127.0.0.1:80/', proxy=None, default_render=JSONRender()):
-        self.host = host
-        self.proxy = proxy
+    def __init__(self, host=None, proxy=None, default_render=DEFAULT_RENDER):
+        self.host = host or self.DEFAULT_HOST
+        self.proxy = proxy or self.DEFAULT_PROXY
         self.default_render = default_render
 
     @property
@@ -81,6 +104,25 @@ class SdkBase(object):
     def default_headers(self):
         return dict()
 
+    @property
+    def pool_manager(self):
+        if self.proxy:
+            pm = urllib3.ProxyManager(self.proxy)
+        else:
+            pm = urllib3.PoolManager(
+                num_pools=10,
+            )
+        return pm
+
+    @classmethod
+    def set_default_host(cls, value):
+        scheme, host, port = get_hostname_parameters_from_url(value)
+        cls.DEFAULT_HOST = "%s://%s:%s" % (scheme, host, port)
+
+    @classmethod
+    def set_default_proxy(cls, value):
+        cls.DEFAULT_PROXY = value
+
     def _http_request(self, method, url_path, headers=None, query_params=None, body_params=None, files=None, **kwargs):
         """
         Internal method to do http requests.
@@ -99,7 +141,7 @@ class SdkBase(object):
         """
         host = kwargs.get('host', self.host)
         proxy = kwargs.get('proxy', self.proxy)
-        render = kwargs.get('render', self.default_render)
+        render = kwargs.get('render', MultiPartRender() if files else self.default_render)
 
         method = method.upper()
         assert method in ['GET', 'HEAD', 'DELETE', 'POST', 'PUT', 'PATCH', 'OPTIONS', 'TRACE', 'CONNECT']
@@ -110,30 +152,18 @@ class SdkBase(object):
         if query_params is not None:
             url += "?%s" % (urlencode(query_params))
 
-        if files:
-            render = MultiPartRender()
-
         body, content_type = render.encode_params(body_params, files=files)
 
         if headers is None:
             headers = self.default_headers()
             headers[self.CONTENT_TYPE_HEADER_NAME] = content_type
 
-        r = self.pool_manager.request(method, url,
-                                      fields=body,
-                                      encode_multipart=True,
-                                      headers=headers)
+        r = self.pool_manager.request(method, url, body=body, headers=headers)
+        r = SdkResponse(r)
 
-        response = conn.getresponse()
+        # In the python 3, the response.data is bytes.
+        # we need to decode it to string.
+        if sys.version_info > (3,):
+            r.data = r.data.decode('utf8')
 
-        status = response.status
-        res_headers = response.getheaders()
-        read_data = response.read()
-        try:
-            res_data = read_data.decode('utf-8')
-        except UnicodeDecodeError:
-            res_data = read_data
-
-        conn.close()
-
-        return status, res_data, dict(res_headers)
+        return r

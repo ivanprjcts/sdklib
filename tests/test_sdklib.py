@@ -7,16 +7,16 @@ class TestSampleSdk(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # SampleSdk.set_proxy("localhost:8888")
+        SampleSdk.set_default_proxy("http://localhost:8080")
         cls.api = SampleSdk()
+
 
     @classmethod
     def tearDownClass(cls):
         pass
 
     def test_get_restaurants(self):
-        status, response, headers = self.api.get_restaurants()
-        self.assertEqual(status, 200)
-        res_data = response.get_data()
-        self.assertIn("results", res_data)
-        self.assertTrue(isinstance(res_data["results"], list))
+        response = self.api.get_restaurants()
+        self.assertEqual(response.status, 200)
+        self.assertIn("results", response.data)
+        self.assertTrue(isinstance(response.data["results"], list))
