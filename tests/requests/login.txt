@@ -1,0 +1,6 @@
+POST /api/1.0/auth/login/ HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 39
+Content-Type: application/json
+
+{"username": "user", "password": "123"}

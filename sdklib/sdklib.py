@@ -11,6 +11,7 @@ import urllib3
 from .compat import urlencode
 from .util.urls import get_hostname_parameters_from_url, ensure_url_path_starts_with_slash
 from .renderers import JSONRender, MultiPartRender
+from .util.parser import parse_args
 
 
 class SdkResponse(io.IOBase):
@@ -62,6 +63,8 @@ class SdkBase(object):
     CACHE_CONTROL_HEADER_NAME = "Cache-Control"
     CONNECTION_HEADER_NAME = "Connection"
     REFERRER_HEADER_NAME = "Referer"
+
+    LOGIN_URL_PATH = None
 
     def __init__(self, host=None, proxy=None, default_render=DEFAULT_RENDER):
         self.host = host or self.DEFAULT_HOST
@@ -167,3 +170,14 @@ class SdkBase(object):
             r.data = r.data.decode('utf8')
 
         return r
+
+    def login(self, **kwargs):
+        """
+        Basic Authentication method.
+        :param kwargs: parameters
+        :return: SdkResponse
+        """
+        assert self.LOGIN_URL_PATH is not None
+
+        params = parse_args(**kwargs)
+        return self._http_request('POST', self.LOGIN_URL_PATH, body_params=params)

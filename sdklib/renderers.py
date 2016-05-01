@@ -3,7 +3,7 @@ import json
 from urllib3.filepost import encode_multipart_formdata
 from urllib3.fields import RequestField, guess_content_type
 
-from .util.file import guess_filename_stream
+from .util.files import guess_filename_stream
 from .util.structures import to_key_val_list, to_key_val_dict
 from .compat import urlencode, quote_plus
 

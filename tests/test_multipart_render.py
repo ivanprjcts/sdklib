@@ -1,7 +1,7 @@
 import unittest
 
 from sdklib.renderers import MultiPartRender
-from sdklib.util.file import guess_filename_stream
+from sdklib.util.files import guess_filename_stream
 
 
 class TestMultiPartRender(unittest.TestCase):

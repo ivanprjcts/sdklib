@@ -29,6 +29,12 @@ class TestUrls(unittest.TestCase):
         self.assertEqual(host, 'myhost.com')
         self.assertEqual(port, '66')
 
+    def test_get_hostname_parameters_from_url_http_and_non_default_port(self):
+        scheme, host, port = get_hostname_parameters_from_url("http://myhost.com:66/")
+        self.assertEqual(scheme, 'http')
+        self.assertEqual(host, 'myhost.com')
+        self.assertEqual(port, '66')
+
     def test_get_hostname_parameters_from_url_without_schema(self):
         scheme, host, port = get_hostname_parameters_from_url("myhost.com/")
         self.assertEqual(scheme, 'http')

@@ -16,7 +16,7 @@ def get_hostname_parameters_from_url(url):
     scheme, host, port = urlsplit(url)
     scheme = scheme or 'http'
     host = host or '127.0.0.1'
-    port = port or '443' if scheme == 'https' else '80'
+    port = port or ('443' if scheme == 'https' else '80')
     return scheme, host, port
 
 
