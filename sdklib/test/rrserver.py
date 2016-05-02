@@ -10,7 +10,9 @@ class RequestResponseHandler(SocketServer.BaseRequestHandler):
     HTTP_200_OK_RESPONSE = """HTTP/1.1 200 OK\n\n"""
 
     @classmethod
-    def add_request_response(cls, request, response=HTTP_200_OK_RESPONSE):
+    def add_request_response(cls, request, response=None):
+        response = response or cls.HTTP_200_OK_RESPONSE
+
         processed_request = cls.process_request(request)
         cls.REQUEST_RESPONSE_JSON[processed_request] = response
 
@@ -46,12 +48,16 @@ class RequestResponseHandler(SocketServer.BaseRequestHandler):
         self.request.sendall(response)
 
 
-class RRServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
-    pass
-
-
 class RRServerManager():
     _RRSERVER = None
+
+    @staticmethod
+    def add_request_response(request, response=None):
+        RequestResponseHandler.add_request_response(request, response)
+
+    @staticmethod
+    def clear():
+        RequestResponseHandler.clear()
 
     def start_rrserver(self, host='127.0.0.1', port=0):
         if not self._RRSERVER:
@@ -71,4 +77,6 @@ class RRServerManager():
             self._RRSERVER.shutdown()
             self._RRSERVER.server_close()
 
-manager = RRServerManager()
+
+class RRServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+    manager = RRServerManager()

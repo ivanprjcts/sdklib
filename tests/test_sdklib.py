@@ -1,6 +1,6 @@
 import unittest
 
-from sdklib.test.rrserver import manager, RequestResponseHandler
+from sdklib.test.rrserver import RRServer
 from sdklib.util.files import read_file_as_string
 
 from tests.sample_sdk import SampleSdk
@@ -10,11 +10,11 @@ class TestSampleSdk(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        RequestResponseHandler.add_request_response(request=read_file_as_string('requests/get_restaurants.txt'),
+        RRServer.manager.add_request_response(request=read_file_as_string('requests/get_restaurants.txt'),
                                                     response=read_file_as_string('responses/get_restaurants.txt'))
-        RequestResponseHandler.add_request_response(request=read_file_as_string('requests/create_restaurant.txt'))
-        RequestResponseHandler.add_request_response(request=read_file_as_string('requests/login.txt'))
-        host, port = manager.start_rrserver()
+        RRServer.manager.add_request_response(request=read_file_as_string('requests/create_restaurant.txt'))
+        RRServer.manager.add_request_response(request=read_file_as_string('requests/login.txt'))
+        host, port = RRServer.manager.start_rrserver()
 
         # SampleSdk.set_default_proxy("http://localhost:8080")
         SampleSdk.set_default_host("http://%s:%s" % (host, port))
@@ -22,7 +22,7 @@ class TestSampleSdk(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        manager.close_rrserver()
+        RRServer.manager.close_rrserver()
 
     def test_get_restaurants(self):
         response = self.api.get_restaurants()
