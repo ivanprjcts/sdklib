@@ -95,6 +95,12 @@ class TestUrls(unittest.TestCase):
         self.assertEqual(host, 'myhost.com')
         self.assertEqual(port, '')
 
+    def test_urlsplit_localhost(self):
+        scheme, host, port = urlsplit("http://localhost:8080")
+        self.assertEqual(scheme, 'http')
+        self.assertEqual(host, 'localhost')
+        self.assertEqual(port, '8080')
+
     def test_ensure_url_path_starts_with_slash_empty_string(self):
         url = ensure_url_path_starts_with_slash("")
         self.assertEqual(url, "/")

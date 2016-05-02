@@ -226,8 +226,10 @@ class JSONRender(object):
         """
         if isinstance(data, basestring):
             raise ValueError("Data must not be a string.")
+        if data is None:
+            return "", self.content_type
 
-        fields = to_key_val_dict(data or {})
+        fields = to_key_val_dict(data or "")
         try:
             body = json.dumps(fields)
         except:

@@ -1,6 +1,7 @@
 import threading
 import SocketServer
 import hashlib
+import socket
 
 
 class RequestResponseHandler(SocketServer.BaseRequestHandler):
@@ -37,15 +38,30 @@ class RequestResponseHandler(SocketServer.BaseRequestHandler):
         digest = hashlib.sha1(cr).hexdigest()
         return digest
 
+    @staticmethod
+    def recv_basic(s):
+        total_data = []
+        s.settimeout(1)
+        while True:
+            try:
+                data = s.recv(1024)
+            except socket.timeout:
+                data = None
+            if not data:
+                break
+            total_data.append(data)
+        return ''.join(total_data)
+
     def handle(self):
-        data = self.request.recv(1024)
+        req = self.recv_basic(self.request)
         cur_thread = threading.current_thread()
-        processed_data = self.process_request(data)
-        if processed_data in self.REQUEST_RESPONSE_JSON:
-            response = self.REQUEST_RESPONSE_JSON[processed_data]
+        processed_request = self.process_request(req)
+        if processed_request in self.REQUEST_RESPONSE_JSON:
+            response = self.REQUEST_RESPONSE_JSON[processed_request]
         else:
             response = self.DEFAULT_RESPONSE
         self.request.sendall(response)
+        self.request.close()
 
 
 class RRServerManager():

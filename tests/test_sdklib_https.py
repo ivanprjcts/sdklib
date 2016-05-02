@@ -15,7 +15,6 @@ class TestSampleSdk(unittest.TestCase):
         pass
 
     def test_get_products(self):
-        status, response, headers = self.api.get_products()
-        self.assertEqual(status, 200)
-        res_data = response.get_data()
-        self.assertTrue(isinstance(res_data, list))
+        response = self.api.get_products()
+        self.assertEqual(response.status, 200)
+        self.assertTrue(isinstance(response.data, list))

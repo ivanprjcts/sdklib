@@ -1,10 +1,12 @@
 from sdklib import SdkBase
-from sdklib.util.parser import parse_args
+from sdklib.util.parser import parse_args, parse_args_as_tuple_list
 from sdklib.renderers import JSONRender, PlainTextRender, MultiPartRender, FormRender
 
 
 class SampleSdk(SdkBase):
-    DEFAULT_HOST = "http://demoapp.allergicucaneat.com"
+    """
+    Sample Sdk for testing purposes.
+    """
 
     API_RESTAURANTS_URL_PATH = "/api/1.0/restaurants/"
     LOGIN_URL_PATH = "/api/1.0/auth/login/"  # overwrite SdkBase 'LOGIN_URL_PATH'
@@ -23,3 +25,13 @@ class SampleSdk(SdkBase):
         """
         params = parse_args(name=name, description=description, city=city)
         return self._http_request("POST", self.API_RESTAURANTS_URL_PATH, body_params=params, render=FormRender())
+
+    def update_restaurant(self, name, main_image, description=None, city=None):
+        """
+        Update a restaurant.
+        :return: SdkResponse
+        """
+        params = parse_args(name=name, description=description, city=city)
+        files = parse_args(mainImage=main_image)
+        return self._http_request("PUT", self.API_RESTAURANTS_URL_PATH, body_params=params, files=files,
+                                  render=MultiPartRender())

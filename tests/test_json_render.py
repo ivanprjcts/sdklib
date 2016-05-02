@@ -31,7 +31,7 @@ class TestJSONRender(unittest.TestCase):
         r = JSONRender()
         body, content_type = r.encode_params()
         self.assertEqual(content_type, "application/json")
-        self.assertEqual("{}", body)
+        self.assertEqual("", body)
 
     def test_encode_json_data_including_array(self):
         data = {"param1": "value 1", "param2": ["value2", "value3"]}
