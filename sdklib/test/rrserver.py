@@ -1,5 +1,6 @@
 import threading
 import SocketServer
+import hashlib
 
 
 class RequestResponseHandler(SocketServer.BaseRequestHandler):
@@ -10,13 +11,15 @@ class RequestResponseHandler(SocketServer.BaseRequestHandler):
 
     @classmethod
     def add_request_response(cls, request, response=HTTP_200_OK_RESPONSE):
-        cls.REQUEST_RESPONSE_JSON[request] = response
+        processed_request = cls.process_request(request)
+        cls.REQUEST_RESPONSE_JSON[processed_request] = response
 
     @classmethod
     def clear(cls):
         cls.REQUEST_RESPONSE_JSON = {}
 
-    def process_request(self, request):
+    @staticmethod
+    def clean_request(request):
         pr = ""
         req = request.replace('\r\n', '\n')
         lines = req.split('\n')
@@ -25,6 +28,12 @@ class RequestResponseHandler(SocketServer.BaseRequestHandler):
                     "Accept:" not in line):
                 pr += line + '\n'
         return pr[:-1]
+
+    @classmethod
+    def process_request(cls, request):
+        cr = cls.clean_request(request)
+        digest = hashlib.sha1(cr).hexdigest()
+        return digest
 
     def handle(self):
         data = self.request.recv(1024)
