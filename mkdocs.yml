@@ -1,0 +1,13 @@
+site_name: Sdklib
+repo_url: https://github.com/ivanprjcts/sdklib
+
+pages:
+- Home: index.md
+- About:
+    - Release Notes: about/release-notes.md
+    - License: about/license.md
+
+
+copyright: Copyright &copy; 2016 <a href="https://twitter.com/ivanprojects">Ivanprojects</a>.
+
+
