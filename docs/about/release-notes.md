@@ -11,13 +11,8 @@ To upgrade Sdklib to the latest version, use pip:
 
 ## Sdklib 1.0
 
-* Use urlib3.
+* Use urllib3.
 
-
-## Sdklib 0.6
-
-* Find packages automatically.
-* Support Python3 (TODO).
 
 
 ## Sdklib 0.5.2.1

@@ -4,7 +4,12 @@
 
 ## Included projects
 
+* Urllib3 - [View license](https://github.com/shazow/urllib3/blob/master/LICENSE.txt).
+
+* Mkdocs - [View license](https://github.com/mkdocs/mkdocs/blob/master/LICENSE).
+
 Many thanks to the authors and contributors of those wonderful projects.
+
 
 ## Sdklib License (BSD)
 
