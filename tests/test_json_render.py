@@ -50,3 +50,21 @@ class TestJSONRender(unittest.TestCase):
         self.assertEqual(content_type, "application/json")
         self.assertIn('"param2": ["v\\u00e1lue", "value3"]', body)
         self.assertIn('"param1": "\\u0627\\u0644\\u0639\\u064e\\u0631\\u064e\\u0628\\u0650"', body)
+
+    def test_encode_json_data_boolean(self):
+        data = {"param1": "value 1", "param2": False}
+
+        r = JSONRender()
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "application/json")
+        self.assertIn('"param2": false', body)
+        self.assertIn('"param1": "value 1"', body)
+
+    def test_encode_json_data_none(self):
+        data = {"param1": "value 1", "param2": None}
+
+        r = JSONRender()
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "application/json")
+        self.assertIn('"param2": null', body)
+        self.assertIn('"param1": "value 1"', body)

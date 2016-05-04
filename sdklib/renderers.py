@@ -8,6 +8,17 @@ from .util.structures import to_key_val_list, to_key_val_dict
 from .compat import urlencode, quote_plus
 
 
+def to_string(value):
+    if isinstance(value, bool) and value:
+        return "true"
+    elif isinstance(value, bool):
+        return "false"
+    elif value is None:
+        return "null"
+    else:
+        return unicode(value)
+
+
 class MultiPartRender(object):
 
     def __init__(self, boundary="----------ThIs_Is_tHe_bouNdaRY_$"):
@@ -36,14 +47,13 @@ class MultiPartRender(object):
             if isinstance(val, basestring) or not hasattr(val, '__iter__'):
                 val = [val]
             for v in val:
-                if v is not None:
-                    # Don't call str() on bytestrings: in Py3 it all goes wrong.
-                    if not isinstance(v, bytes):
-                        v = str(v)
+                # Don't call str() on bytestrings: in Py3 it all goes wrong.
+                if not isinstance(v, bytes):
+                    v = to_string(v)
 
-                    new_fields.append(
-                        (field.decode('utf-8') if isinstance(field, bytes) else field,
-                         v.encode('utf-8') if isinstance(v, str) else v))
+                new_fields.append(
+                    (field.decode('utf-8') if isinstance(field, bytes) else field,
+                     v.encode('utf-8') if isinstance(v, str) else v))
 
         for (k, v) in files:
             # support for explicit filename
@@ -116,10 +126,9 @@ class FormRender(object):
                 if isinstance(vs, basestring) or not hasattr(vs, '__iter__'):
                     vs = [vs]
                 for v in vs:
-                    if v is not None:
-                        result.append(
-                            (k.encode('utf-8') if isinstance(k, str) else k,
-                             v.encode('utf-8') if isinstance(v, str) else v))
+                    result.append(
+                        (k.encode('utf-8') if isinstance(k, str) else k,
+                         v.encode('utf-8') if isinstance(v, str) else to_string(v)))
             return urlencode(result, doseq=True), self.content_type
         elif collection_format == 'encoded' and hasattr(data, '__iter__'):
             return urlencode(data, doseq=False), self.content_type
@@ -166,7 +175,7 @@ class PlainTextRender(object):
 
     @staticmethod
     def _encode(data, charset=None):
-        return unicode(data).encode(charset) if charset else unicode(data)
+        return to_string(data).encode(charset) if charset else to_string(data)
 
     def encode_params(self, data=None, **kwargs):
         """
@@ -190,8 +199,7 @@ class PlainTextRender(object):
                 if isinstance(vs, basestring) or not hasattr(vs, '__iter__'):
                     vs = [vs]
                 for v in vs:
-                    if v is not None:
-                        result.append("%s=%s" % (self._encode(k, charset), self._encode(v, charset)))
+                    result.append("%s=%s" % (self._encode(k, charset), self._encode(v, charset)))
             return '\n'.join(result), self.get_content_type(charset)
         elif collection_format == 'plain' and hasattr(data, '__iter__'):
             results = []

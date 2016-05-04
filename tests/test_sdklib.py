@@ -17,7 +17,7 @@ class TestSampleSdk(unittest.TestCase):
         RRServer.manager.add_request_response(request=read_file_as_string('requests/update_restaurant.txt'))
         host, port = RRServer.manager.start_rrserver()
 
-        #SampleSdk.set_default_proxy("http://localhost:8080")
+        # SampleSdk.set_default_proxy("http://localhost:8080")
         SampleSdk.set_default_host("http://%s:%s" % (host, port))
         cls.api = SampleSdk()
 

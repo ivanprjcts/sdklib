@@ -113,3 +113,20 @@ class TestPlainTextRender(unittest.TestCase):
         self.assertIn("param1=value 1", body)
         self.assertIn("param2=['value2', 'value3']", body)
 
+    def test_encode_plain_data_boolean(self):
+        data = {"param1": "value 1", "param2": False}
+
+        r = PlainTextRender(collection_format='plain')
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "text/plain; charset=utf-8")
+        self.assertIn("param1=value 1", body)
+        self.assertIn("param2=false", body)
+
+    def test_encode_plain_data_none(self):
+        data = {"param1": "value 1", "param2": None}
+
+        r = PlainTextRender(collection_format='plain')
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "text/plain; charset=utf-8")
+        self.assertIn("param1=value 1", body)
+        self.assertIn("param2=null", body)

@@ -95,4 +95,29 @@ class TestFormRender(unittest.TestCase):
         self.assertIn("param2[]=value2|value3", body)
         self.assertIn("param1=value+1", body)
 
+    def test_encode_form_data_boolean_false(self):
+        data = {"param1": "value 1", "param2": False}
 
+        r = FormRender()
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "application/x-www-form-urlencoded")
+        self.assertIn("param2=false", body)
+        self.assertIn("param1=value+1", body)
+
+    def test_encode_form_data_boolean_true(self):
+        data = {"param1": "value 1", "param2": True}
+
+        r = FormRender()
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "application/x-www-form-urlencoded")
+        self.assertIn("param2=true", body)
+        self.assertIn("param1=value+1", body)
+
+    def test_encode_form_data_none(self):
+        data = {"param1": "value 1", "param2": None}
+
+        r = FormRender()
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "application/x-www-form-urlencoded")
+        self.assertIn("param2=null", body)
+        self.assertIn("param1=value+1", body)
