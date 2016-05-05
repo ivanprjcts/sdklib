@@ -121,3 +121,12 @@ class TestFormRender(unittest.TestCase):
         self.assertEqual(content_type, "application/x-www-form-urlencoded")
         self.assertIn("param2=null", body)
         self.assertIn("param1=value+1", body)
+
+    def test_encode_form_data_none_csharp(self):
+        data = {"param1": "value 1", "param2": None}
+
+        r = FormRender(output_str='csharp')
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "application/x-www-form-urlencoded")
+        self.assertIn("param2=Null", body)
+        self.assertIn("param1=value+1", body)

@@ -8,7 +8,18 @@ from .util.structures import to_key_val_list, to_key_val_dict
 from .compat import urlencode, quote_plus
 
 
-def to_string(value):
+def to_string(value, lang='javascript'):
+    if lang in ['javascript', 'java', 'php']:
+        return get_primitive_as_java_string(value)
+    elif lang in ['python']:
+        return get_primitive_as_python_string(value)
+    elif lang in ['csharp', 'dotnet']:
+        return get_primitive_as_csharp_string(value)
+    else:
+        return get_primitive_as_python_string(value)
+
+
+def get_primitive_as_java_string(value):
     if isinstance(value, bool) and value:
         return "true"
     elif isinstance(value, bool):
@@ -19,10 +30,33 @@ def to_string(value):
         return unicode(value)
 
 
+def get_primitive_as_python_string(value):
+    if isinstance(value, bool) and value:
+        return "True"
+    elif isinstance(value, bool):
+        return "False"
+    elif value is None:
+        return "None"
+    else:
+        return unicode(value)
+
+
+def get_primitive_as_csharp_string(value):
+    if isinstance(value, bool) and value:
+        return "True"
+    elif isinstance(value, bool):
+        return "False"
+    elif value is None:
+        return "Null"
+    else:
+        return unicode(value)
+
+
 class MultiPartRender(object):
 
-    def __init__(self, boundary="----------ThIs_Is_tHe_bouNdaRY_$"):
+    def __init__(self, boundary="----------ThIs_Is_tHe_bouNdaRY_$", output_str='javascript'):
         self.boundary = boundary
+        self.output_str = output_str
 
     def encode_params(self, data=None, files=None, **kwargs):
         """
@@ -38,6 +72,7 @@ class MultiPartRender(object):
 
         # optional args
         boundary = kwargs.get("boundary", None)
+        output_str = kwargs.get("output_str", self.output_str)
 
         new_fields = []
         fields = to_key_val_list(data or {})
@@ -49,7 +84,7 @@ class MultiPartRender(object):
             for v in val:
                 # Don't call str() on bytestrings: in Py3 it all goes wrong.
                 if not isinstance(v, bytes):
-                    v = to_string(v)
+                    v = to_string(v, lang=output_str)
 
                 new_fields.append(
                     (field.decode('utf-8') if isinstance(field, bytes) else field,
@@ -91,9 +126,10 @@ class FormRender(object):
     VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes', 'encoded']
     COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
 
-    def __init__(self, collection_format='multi'):
+    def __init__(self, collection_format='multi', output_str='javascript'):
         self.content_type = 'application/x-www-form-urlencoded'
         self.collection_format = collection_format
+        self.output_str = output_str
 
     @property
     def collection_format(self):
@@ -113,6 +149,7 @@ class FormRender(object):
         if parameters are supplied as a dict.
         """
         collection_format = kwargs.get("collection_format", self.collection_format)
+        output_str = kwargs.get("output_str", self.output_str)
 
         if data is None:
             return "", self.content_type
@@ -128,7 +165,7 @@ class FormRender(object):
                 for v in vs:
                     result.append(
                         (k.encode('utf-8') if isinstance(k, str) else k,
-                         v.encode('utf-8') if isinstance(v, str) else to_string(v)))
+                         v.encode('utf-8') if isinstance(v, str) else to_string(v, lang=output_str)))
             return urlencode(result, doseq=True), self.content_type
         elif collection_format == 'encoded' and hasattr(data, '__iter__'):
             return urlencode(data, doseq=False), self.content_type
@@ -152,9 +189,10 @@ class PlainTextRender(object):
     VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes', 'plain']
     COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
 
-    def __init__(self, charset='utf-8', collection_format='multi'):
+    def __init__(self, charset='utf-8', collection_format='multi', output_str='javascript'):
         self.charset = charset
         self.collection_format = collection_format
+        self.output_str = output_str
 
     @property
     def collection_format(self):
@@ -174,8 +212,8 @@ class PlainTextRender(object):
         return 'text/plain'
 
     @staticmethod
-    def _encode(data, charset=None):
-        return to_string(data).encode(charset) if charset else to_string(data)
+    def _encode(data, charset=None, output_str='javascript'):
+        return to_string(data, lang=output_str).encode(charset) if charset else to_string(data, lang=output_str)
 
     def encode_params(self, data=None, **kwargs):
         """
@@ -186,6 +224,7 @@ class PlainTextRender(object):
         """
         charset = kwargs.get("charset", self.charset)
         collection_format = kwargs.get("collection_format", self.collection_format)
+        output_str = kwargs.get("output_str", self.output_str)
 
         if data is None:
             return "", self.get_content_type(charset)
@@ -199,12 +238,12 @@ class PlainTextRender(object):
                 if isinstance(vs, basestring) or not hasattr(vs, '__iter__'):
                     vs = [vs]
                 for v in vs:
-                    result.append("%s=%s" % (self._encode(k, charset), self._encode(v, charset)))
+                    result.append("%s=%s" % (self._encode(k, charset), self._encode(v, charset, output_str)))
             return '\n'.join(result), self.get_content_type(charset)
         elif collection_format == 'plain' and hasattr(data, '__iter__'):
             results = []
             for k, vs in to_key_val_dict(data).items():
-                results.append("%s=%s" % (self._encode(k, charset), self._encode(vs, charset)))
+                results.append("%s=%s" % (self._encode(k, charset), self._encode(vs, charset, output_str)))
 
             return '\n'.join(results), self.get_content_type(charset)
         elif hasattr(data, '__iter__'):
@@ -216,7 +255,7 @@ class PlainTextRender(object):
                 else:
                     v = vs
                     key = k
-                results.append("%s=%s" % (self._encode(key, charset), self._encode(v, charset)))
+                results.append("%s=%s" % (self._encode(key, charset), self._encode(v, charset, output_str)))
 
             return '\n'.join(results), self.get_content_type(charset)
         else:

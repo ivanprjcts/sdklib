@@ -198,3 +198,18 @@ class TestMultiPartRender(unittest.TestCase):
         self.assertIn("file_upload", body)
         self.assertIn("file.pdf", body)
         self.assertIn("Content-Type: application/pdf", body)
+
+    def test_encode_multipart_data_files_none_csharp(self):
+        files = {"file_upload": "resources/file.pdf"}
+        data = {"param1": "value1", "param2": None}
+
+        r = MultiPartRender()
+        body, content_type = r.encode_params(data, files, boundary="custom_boundary", output_str='csharp')
+        self.assertEqual(content_type, "multipart/form-data; boundary=custom_boundary")
+        self.assertIn("param1", body)
+        self.assertIn("value1", body)
+        self.assertIn("param2", body)
+        self.assertIn("Null", body)
+        self.assertIn("file_upload", body)
+        self.assertIn("file.pdf", body)
+        self.assertIn("Content-Type: application/pdf", body)

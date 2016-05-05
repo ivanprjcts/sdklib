@@ -130,3 +130,39 @@ class TestPlainTextRender(unittest.TestCase):
         self.assertEqual(content_type, "text/plain; charset=utf-8")
         self.assertIn("param1=value 1", body)
         self.assertIn("param2=null", body)
+
+    def test_encode_plain_data_none_csharp(self):
+        data = {"param1": "value 1", "param2": None}
+
+        r = PlainTextRender(collection_format='plain', output_str='csharp')
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "text/plain; charset=utf-8")
+        self.assertIn("param1=value 1", body)
+        self.assertIn("param2=Null", body)
+
+    def test_encode_plain_data_true_csharp(self):
+        data = {"param1": "value 1", "param2": True}
+
+        r = PlainTextRender(collection_format='plain', output_str='csharp')
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "text/plain; charset=utf-8")
+        self.assertIn("param1=value 1", body)
+        self.assertIn("param2=True", body)
+
+    def test_encode_plain_data_none_python(self):
+        data = {"param1": "value 1", "param2": None}
+
+        r = PlainTextRender(collection_format='plain', output_str='python')
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "text/plain; charset=utf-8")
+        self.assertIn("param1=value 1", body)
+        self.assertIn("param2=None", body)
+
+    def test_encode_plain_data_true_python(self):
+        data = {"param1": "value 1", "param2": True}
+
+        r = PlainTextRender(collection_format='plain', output_str='python')
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "text/plain; charset=utf-8")
+        self.assertIn("param1=value 1", body)
+        self.assertIn("param2=True", body)
