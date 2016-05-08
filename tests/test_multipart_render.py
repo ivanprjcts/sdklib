@@ -7,7 +7,7 @@ from sdklib.util.files import guess_filename_stream
 class TestMultiPartRender(unittest.TestCase):
 
     def test_encode_multipart_data_files(self):
-        files = {"file_upload": "resources/file.pdf", "file_upload2": "resources/file.png"}
+        files = {"file_upload": "tests/resources/file.pdf", "file_upload2": "tests/resources/file.png"}
         data = {"param1": "value1", "param2": "value2"}
 
         r = MultiPartRender()
@@ -25,8 +25,8 @@ class TestMultiPartRender(unittest.TestCase):
         self.assertIn("Content-Type: image/png", body)
 
     def test_encode_multipart_data_files_as_2tuple_parameter(self):
-        filename, stream = guess_filename_stream("resources/file.pdf")
-        filename2, stream2 = guess_filename_stream("resources/file.png")
+        filename, stream = guess_filename_stream("tests/resources/file.pdf")
+        filename2, stream2 = guess_filename_stream("tests/resources/file.png")
         files = {"file_upload1": (filename, stream), "file_upload2": (filename2, stream2)}
         data = {"param1": "value1", "param2": "value2"}
 
@@ -45,7 +45,7 @@ class TestMultiPartRender(unittest.TestCase):
         self.assertNotIn("Content-Type: image/png", body)
 
     def test_encode_multipart_data_files_as_3tuple_parameter(self):
-        filename, stream = guess_filename_stream("resources/file.pdf")
+        filename, stream = guess_filename_stream("tests/resources/file.pdf")
         files = {"file_upload1": (filename, stream, "application/xxx")}
         data = {"param1": "value1", "param2": "value2"}
 
@@ -61,7 +61,7 @@ class TestMultiPartRender(unittest.TestCase):
         self.assertIn("Content-Type: application/xxx", body)
 
     def test_encode_multipart_data_files_as_4tuple_parameter(self):
-        filename, stream = guess_filename_stream("resources/file.pdf")
+        filename, stream = guess_filename_stream("tests/resources/file.pdf")
         files = {"file_upload1": (filename, stream, "application/xxx", {"x-header": "value", "time": "now"})}
         data = {"param1": "value1", "param2": "value2"}
 
@@ -79,7 +79,7 @@ class TestMultiPartRender(unittest.TestCase):
         self.assertIn("time: now", body)
 
     def test_encode_multipart_data_and_no_files(self):
-        files = {"file_upload": "resources/file.pdf"}
+        files = {"file_upload": "tests/resources/file.pdf"}
 
         r = MultiPartRender()
         body, content_type = r.encode_params(None, files)
@@ -100,7 +100,7 @@ class TestMultiPartRender(unittest.TestCase):
         self.assertIn("value2", body)
 
     def test_encode_multipart_data_files_using_boundary_as_init_parameter(self):
-        files = {"file_upload": "resources/file.pdf"}
+        files = {"file_upload": "tests/resources/file.pdf"}
         data = {"param1": "value1", "param2": "value2"}
 
         r = MultiPartRender("custom_boundary")
@@ -125,7 +125,7 @@ class TestMultiPartRender(unittest.TestCase):
         self.assertIn("Content-Type: application/pdf", body)
 
     def test_encode_multipart_data_files_using_boundary_as_parameter(self):
-        files = {"file_upload": "resources/file.pdf"}
+        files = {"file_upload": "tests/resources/file.pdf"}
         data = {"param1": "value1", "param2": "value2"}
 
         r = MultiPartRender()
@@ -150,7 +150,7 @@ class TestMultiPartRender(unittest.TestCase):
         self.assertIn("Content-Type: application/pdf", body)
 
     def test_encode_multipart_data_files_boolean(self):
-        files = {"file_upload": "resources/file.pdf"}
+        files = {"file_upload": "tests/resources/file.pdf"}
         data = {"param1": "value1", "param2": True}
 
         r = MultiPartRender()
@@ -175,7 +175,7 @@ class TestMultiPartRender(unittest.TestCase):
         self.assertIn("Content-Type: application/pdf", body)
 
     def test_encode_multipart_data_files_none(self):
-        files = {"file_upload": "resources/file.pdf"}
+        files = {"file_upload": "tests/resources/file.pdf"}
         data = {"param1": "value1", "param2": None}
 
         r = MultiPartRender()
@@ -200,7 +200,7 @@ class TestMultiPartRender(unittest.TestCase):
         self.assertIn("Content-Type: application/pdf", body)
 
     def test_encode_multipart_data_files_none_csharp(self):
-        files = {"file_upload": "resources/file.pdf"}
+        files = {"file_upload": "tests/resources/file.pdf"}
         data = {"param1": "value1", "param2": None}
 
         r = MultiPartRender()

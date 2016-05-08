@@ -10,11 +10,11 @@ class TestSampleSdk(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        RRServer.manager.add_request_response(request=read_file_as_string('requests/get_restaurants.txt'),
-                                              response=read_file_as_string('responses/get_restaurants.txt'))
-        RRServer.manager.add_request_response(request=read_file_as_string('requests/create_restaurant.txt'))
-        RRServer.manager.add_request_response(request=read_file_as_string('requests/login.txt'))
-        RRServer.manager.add_request_response(request=read_file_as_string('requests/update_restaurant.txt'))
+        RRServer.manager.add_request_response(request=read_file_as_string('tests/requests/get_restaurants.txt'),
+                                              response=read_file_as_string('tests/responses/get_restaurants.txt'))
+        RRServer.manager.add_request_response(request=read_file_as_string('tests/requests/create_restaurant.txt'))
+        RRServer.manager.add_request_response(request=read_file_as_string('tests/requests/login.txt'))
+        RRServer.manager.add_request_response(request=read_file_as_string('tests/requests/update_restaurant.txt'))
         host, port = RRServer.manager.start_rrserver()
 
         # SampleSdk.set_default_proxy("http://localhost:8080")
@@ -40,5 +40,5 @@ class TestSampleSdk(unittest.TestCase):
         self.assertEqual(response.status, 200)
 
     def test_update_restaurant(self):
-        response = self.api.update_restaurant("mi restaurante", "resources/file.png", "algo", "Madrid")
+        response = self.api.update_restaurant("mi restaurante", "tests/resources/file.png", "algo", "Madrid")
         self.assertEqual(response.status, 200)

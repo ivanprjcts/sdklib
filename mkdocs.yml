@@ -10,6 +10,9 @@ pages:
     - Writing Your First SDK: tutorial/my-first-sdk.md
 - User Guide:
     - Renderers: user-guide/renderers.md
+    - Sessions: user-guide/sessions.md
+    - Authentication: user-guide/authentication.md
+    - Https: user-guide/https.md
 - About:
     - Release Notes: about/release-notes.md
     - License: about/license.md

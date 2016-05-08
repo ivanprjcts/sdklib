@@ -6,7 +6,7 @@ from sdklib.renderers import FormRender
 class TestFormRender(unittest.TestCase):
 
     def test_encode_form_data_files(self):
-        files = {"file_upload": "resources/file.pdf", "file_upload2": "resources/file.png"}
+        files = {"file_upload": "tests/resources/file.pdf", "file_upload2": "tests/resources/file.png"}
         data = {"param1": "value1", "param2": "value2"}
 
         r = FormRender()
