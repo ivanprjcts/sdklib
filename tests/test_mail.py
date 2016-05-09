@@ -1,6 +1,8 @@
 import unittest
 
-from sdklib.mail import GmailPOPlSdk, GmailIMAPlSdk
+from sdklib.mail import (
+    GmailPOPlSdk, GmailIMAPlSdk, OutlookPOPlSdk, OutlookIMAPlSdk, OutlookOffice365POPlSdk, OutlookOffice365IMAPlSdk
+)
 
 
 class TestGmailPOPSdk(unittest.TestCase):
@@ -20,11 +22,77 @@ class TestGmailPOPSdk(unittest.TestCase):
             print dir(m)
 
 
+class TestOutlookPOPSdk(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.api = OutlookPOPlSdk('sdklib.test@outlook.com', 'sdklib12345678')
+
+    @classmethod
+    def tearDownClass(cls):
+        pass
+
+    def test_read_all_mails(self):
+        messages = self.api.read_all_mails()
+        print messages
+        for m in messages:
+            print m
+
+
+class TestOutlookOffice365POPSdk(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.api = OutlookOffice365POPlSdk('USER@ACCOUNT.com', 'PASSWORD')
+
+    @classmethod
+    def tearDownClass(cls):
+        pass
+
+    def test_read_all_mails(self):
+        messages = self.api.read_all_mails()
+        print messages
+        for m in messages:
+            print m
+
+
 class TestGmailIMAPSdk(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         cls.api = GmailIMAPlSdk('sdklib.test', 'sdklib12345678')
+
+    @classmethod
+    def tearDownClass(cls):
+        pass
+
+    def test_read_all_mails(self):
+        messages = self.api.read_all_mails()
+        for m in messages:
+            print m
+
+
+class TestOutlookIMAPSdk(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.api = OutlookIMAPlSdk('sdklib.test@outlook.com', 'sdklib12345678')
+
+    @classmethod
+    def tearDownClass(cls):
+        pass
+
+    def test_read_all_mails(self):
+        messages = self.api.read_all_mails()
+        for m in messages:
+            print m
+
+
+class TestOutlookOffice365IMAPSdk(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.api = OutlookOffice365IMAPlSdk('USER@ACCOUNT.com', 'PASSWORD.')
 
     @classmethod
     def tearDownClass(cls):

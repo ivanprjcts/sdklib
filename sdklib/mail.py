@@ -18,7 +18,8 @@ def from_email_message_to_json(msg):
     json_obj_to_return = dict()
     msg = email.message_from_string(msg)
     decode = email.Header.decode_header(msg['Subject'])[0]
-    json_obj_to_return['subject'] = unicode(decode[0], encoding=decode[1])
+    encoding = decode[1] or "utf-8"
+    json_obj_to_return['subject'] = unicode(decode[0], encoding=encoding)
     json_obj_to_return['date'] = msg['Date']
     json_obj_to_return['from'] = msg['From']
     json_obj_to_return['to'] = msg['To']
@@ -72,6 +73,18 @@ class GmailPOPlSdk(POPMailSdk):
         super(GmailPOPlSdk, self).__init__('pop.gmail.com', user, password)
 
 
+class OutlookPOPlSdk(POPMailSdk):
+
+    def __init__(self, user, password):
+        super(OutlookPOPlSdk, self).__init__('pop-mail.outlook.com', user, password)
+
+
+class OutlookOffice365POPlSdk(POPMailSdk):
+
+    def __init__(self, user, password):
+        super(OutlookOffice365POPlSdk, self).__init__('outlook.office365.com', user, password)
+
+
 class IMAPMailSdk(object):
 
     def __init__(self, host, user, password):
@@ -118,3 +131,15 @@ class GmailIMAPlSdk(IMAPMailSdk):
 
     def __init__(self, user, password):
         super(GmailIMAPlSdk, self).__init__('imap.gmail.com', user, password)
+
+
+class OutlookIMAPlSdk(IMAPMailSdk):
+
+    def __init__(self, user, password):
+        super(OutlookIMAPlSdk, self).__init__('imap-mail.outlook.com', user, password)
+
+
+class OutlookOffice365IMAPlSdk(IMAPMailSdk):
+
+    def __init__(self, user, password):
+        super(OutlookOffice365IMAPlSdk, self).__init__('outlook.office365.com', user, password)
