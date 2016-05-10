@@ -66,6 +66,12 @@ class POPMailSdk(object):
         pop_conn.quit()
         return messages
 
+    def read_last_mail(self):
+        mails = self.read_all_mails()
+        if mails:
+            return mails[-1]
+        return None
+
 
 class GmailPOPlSdk(POPMailSdk):
 
