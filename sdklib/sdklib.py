@@ -66,10 +66,10 @@ class SdkBase(object):
 
     LOGIN_URL_PATH = None
 
-    def __init__(self, host=None, proxy=None, default_render=DEFAULT_RENDER):
+    def __init__(self, host=None, proxy=None, default_render=None):
         self.host = host or self.DEFAULT_HOST
         self.proxy = proxy or self.DEFAULT_PROXY
-        self.default_render = default_render
+        self.default_render = default_render or self.DEFAULT_RENDER
 
     @property
     def host(self):
