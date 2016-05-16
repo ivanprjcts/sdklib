@@ -1,7 +1,8 @@
 import unittest
 
 from sdklib.mail import (
-    GmailPOPlSdk, GmailIMAPlSdk, OutlookPOPlSdk, OutlookIMAPlSdk, OutlookOffice365POPlSdk, OutlookOffice365IMAPlSdk
+    GmailPOPlSdk, GmailIMAPlSdk, OutlookPOPlSdk, OutlookIMAPlSdk, OutlookOffice365POPlSdk, OutlookOffice365IMAPlSdk,
+    GmailSMTPlSdk
 )
 
 
@@ -102,3 +103,17 @@ class TestOutlookOffice365IMAPSdk(unittest.TestCase):
         messages = self.api.read_all_mails()
         for m in messages:
             print m
+
+
+class TestGmailSMTPSdk(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.api = GmailSMTPlSdk('sdklib.test', 'sdklib12345678')
+
+    @classmethod
+    def tearDownClass(cls):
+        pass
+
+    def test_send_email(self):
+        self.api.send_email(to_address="ivanprjcts@gmail.com", subject="Test", message="This is a test.")

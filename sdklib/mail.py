@@ -1,5 +1,6 @@
 import poplib
 import imaplib
+import smtplib
 import exceptions
 import email
 import datetime
@@ -143,3 +144,30 @@ class OutlookOffice365IMAPlSdk(IMAPMailSdk):
 
     def __init__(self, user, password):
         super(OutlookOffice365IMAPlSdk, self).__init__('outlook.office365.com', user, password)
+
+
+class SMTPMailSdk(object):
+
+    def __init__(self, host, user, password):
+        self.host = host
+        self.user = user
+        self.password = password
+
+    def send_email(self, to_address, subject, message, from_address="no@address.com"):
+        # Prepare actual message
+        msg = """\From: %s\nTo: %s\nSubject: %s\n\n%s
+        """ % (from_address, ", ".join(to_address), subject, message)
+
+        server = smtplib.SMTP(self.host)
+        server.ehlo()
+        server.starttls()
+        server.login(self.user, self.password)
+        server.sendmail(from_address, to_address, msg)
+        server.quit()
+
+
+class GmailSMTPlSdk(SMTPMailSdk):
+
+    def __init__(self, user, password):
+        super(GmailSMTPlSdk, self).__init__('smtp.gmail.com:587', user, password)
+
