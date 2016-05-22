@@ -283,3 +283,16 @@ class JSONRender(object):
             body = json.dumps(fields, encoding='latin-1')
 
         return body, self.content_type
+
+
+def get_render(name):
+    if name == 'json':
+        return JSONRender()
+    elif name == 'form':
+        return FormRender()
+    elif name == 'multipart':
+        return MultiPartRender()
+    elif name == 'plain':
+        return PlainTextRender()
+    else:
+        return JSONRender()

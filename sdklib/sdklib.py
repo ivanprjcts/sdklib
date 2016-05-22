@@ -10,33 +10,43 @@ import urllib3
 
 from .compat import urlencode
 from .util.urls import get_hostname_parameters_from_url, ensure_url_path_starts_with_slash
-from .renderers import JSONRender, MultiPartRender
+from .renderers import JSONRender, MultiPartRender, get_render
 from .util.parser import parse_args
+from .session import Cookie
 
 
 class SdkResponse(io.IOBase):
+
     def __init__(self, resp):
         self.urllib3_response = resp
-        self.status = resp.status
-        self.reason = resp.reason
-        self.data = resp.data
 
     @property
     def data(self):
-        return self._data
-
-    @data.setter
-    def data(self, value):
+        data = self.urllib3_response.data
         try:
-            self._data = json.loads(value)
+            return json.loads(data)
         except:
-            self._data = value
+            return data
 
-    def getheaders(self):
+    @property
+    def status(self):
+        return self.urllib3_response.status
+
+    @property
+    def reason(self):
+        return self.urllib3_response.reason
+
+    @property
+    def headers(self):
         """
         Returns a dictionary of the response headers.
         """
         return self.urllib3_response.getheaders()
+
+    @property
+    def cookie(self):
+        cookie = Cookie(self.headers)
+        return cookie
 
     def getheader(self, name, default=None):
         """
@@ -63,6 +73,8 @@ class SdkBase(object):
     CACHE_CONTROL_HEADER_NAME = "Cache-Control"
     CONNECTION_HEADER_NAME = "Connection"
     REFERRER_HEADER_NAME = "Referer"
+    COOKIE_HEADER_NAME = "Cookie"
+    X_CSRF_TOKEN_HEADER_NAME = "X-CSRFToken"
 
     LOGIN_URL_PATH = None
 
@@ -70,6 +82,7 @@ class SdkBase(object):
         self.host = host or self.DEFAULT_HOST
         self.proxy = proxy or self.DEFAULT_PROXY
         self.default_render = default_render or self.DEFAULT_RENDER
+        self._cookie = None
 
     @property
     def host(self):
@@ -104,16 +117,39 @@ class SdkBase(object):
         """
         self._proxy = value
 
+    @property
+    def cookie(self):
+        """
+        Get cookie.
+        :return: cookie value
+        """
+        return self._cookie
+
+    @cookie.setter
+    def cookie(self, value):
+        """
+        Set cookie.
+        :param value:
+        """
+        if value and value.output_cookie_header_value():
+            self._cookie = value
+
     def default_headers(self):
-        return dict()
+        headers = dict()
+        if self.cookie and self.cookie.output_cookie_header_value():
+            headers[self.COOKIE_HEADER_NAME] = self.cookie.output_cookie_header_value()
+        return headers
 
     @property
     def pool_manager(self):
         if self.proxy:
-            pm = urllib3.ProxyManager(self.proxy)
+            pm = urllib3.ProxyManager(
+                self.proxy,
+            )
         else:
             pm = urllib3.PoolManager(
                 num_pools=10,
+                redirect=False
             )
         return pm
 
@@ -161,13 +197,9 @@ class SdkBase(object):
             headers = self.default_headers()
             headers[self.CONTENT_TYPE_HEADER_NAME] = content_type
 
-        r = self.pool_manager.request(method, url, body=body, headers=headers)
+        r = self.pool_manager.request(method, url, body=body, headers=headers, redirect=False)
         r = SdkResponse(r)
-
-        # In the python 3, the response.data is bytes.
-        # we need to decode it to string.
-        if sys.version_info > (3,):
-            r.data = r.data.decode('utf8')
+        self.cookie = r.cookie  # update cookie
 
         return r
 
@@ -179,5 +211,7 @@ class SdkBase(object):
         """
         assert self.LOGIN_URL_PATH is not None
 
+        render_name = kwargs.pop("render", "json")
+        render = get_render(render_name)
         params = parse_args(**kwargs)
-        return self._http_request('POST', self.LOGIN_URL_PATH, body_params=params)
+        return self._http_request('POST', self.LOGIN_URL_PATH, body_params=params, render=render)
