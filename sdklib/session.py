@@ -19,14 +19,22 @@ class Cookie(object):
             self._cookie = ck
 
     def output_cookie_header_value(self):
-        output = ""
-        if self._cookie:
-            output = self._cookie.output(header="", sep=";")
-        if len(output) > 0 and output[0] == ' ':
-            output = output[1:]
+        if not self._cookie:
+            return ""
+        items = self._cookie.items()
+        if len(items) == 0:
+            return ""
+        name, morsel = items[0]
+        output = "%s=%s" % (name, morsel.value)
+        for name, morsel in items[1:]:
+            output += "; "
+            output += "%s=%s" % (name, morsel.value)
         return output
 
     def getcookie(self):
         return self._cookie
+
+    def get(self, key, default=None):
+        return self._cookie.get(key , default)
 
 
