@@ -23,3 +23,4 @@ class MySDK(SdkBase):
 
 
 [build-status-badge]: https://travis-ci.org/ivanprjcts/sdklib.svg?branch=v1.0
+[build-status]: https://travis-ci.org/ivanprjcts/sdklib
