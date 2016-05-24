@@ -5,7 +5,7 @@ from urllib3.fields import RequestField, guess_content_type
 
 from .util.files import guess_filename_stream
 from .util.structures import to_key_val_list, to_key_val_dict
-from .compat import urlencode, quote_plus, basestring
+from .compat import urlencode, quote_plus, basestring, str
 
 
 def to_string(value, lang='javascript'):
@@ -27,7 +27,7 @@ def get_primitive_as_java_string(value):
     elif value is None:
         return "null"
     else:
-        return unicode(value)
+        return str(value)
 
 
 def get_primitive_as_python_string(value):
@@ -38,7 +38,7 @@ def get_primitive_as_python_string(value):
     elif value is None:
         return "None"
     else:
-        return unicode(value)
+        return str(value)
 
 
 def get_primitive_as_csharp_string(value):
@@ -49,7 +49,7 @@ def get_primitive_as_csharp_string(value):
     elif value is None:
         return "Null"
     else:
-        return unicode(value)
+        return str(value)
 
 
 class MultiPartRender(object):
@@ -259,7 +259,7 @@ class PlainTextRender(object):
 
             return '\n'.join(results), self.get_content_type(charset)
         else:
-            return unicode(data).encode(charset) if charset else unicode(data), self.get_content_type(charset)
+            return str(data).encode(charset) if charset else str(data), self.get_content_type(charset)
 
 
 class JSONRender(object):

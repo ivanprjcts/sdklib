@@ -14,9 +14,11 @@ if is_py2:
     from urllib import urlencode, quote_plus
 
     basestring = basestring
+    str = unicode
 elif is_py3:
     from urllib.parse import urlencode, quote_plus
     from http import cookies
 
     basestring = (str, bytes)
+    str = str
 
