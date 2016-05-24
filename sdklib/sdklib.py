@@ -1,8 +1,6 @@
 """
 Library for helping SDK implementations.
 """
-import ssl
-import sys
 import io
 import json
 
@@ -19,6 +17,7 @@ class SdkResponse(io.IOBase):
 
     def __init__(self, resp):
         self.urllib3_response = resp
+        self._cookie = None
 
     @property
     def data(self):
@@ -45,8 +44,11 @@ class SdkResponse(io.IOBase):
 
     @property
     def cookie(self):
-        cookie = Cookie(self.headers)
-        return cookie
+        if not self._cookie:
+            self._cookie = Cookie(self.headers)
+        else:
+            self._cookie.load_from_headers(self.headers)
+        return self._cookie
 
     def getheader(self, name, default=None):
         """
@@ -131,13 +133,14 @@ class SdkBase(object):
         Set cookie.
         :param value:
         """
-        if value and value.output_cookie_header_value():
+        if value and not value.is_empty():
             self._cookie = value
 
     def default_headers(self):
         headers = dict()
-        if self.cookie and self.cookie.output_cookie_header_value():
-            headers[self.COOKIE_HEADER_NAME] = self.cookie.output_cookie_header_value()
+        headers[self.ACCEPT_HEADER_NAME] = "*/*"
+        if self.cookie and self.cookie.as_cookie_header_value():
+            headers[self.COOKIE_HEADER_NAME] = self.cookie.as_cookie_header_value()
         return headers
 
     @property
@@ -145,11 +148,11 @@ class SdkBase(object):
         if self.proxy:
             pm = urllib3.ProxyManager(
                 self.proxy,
+                num_pools=10,
             )
         else:
             pm = urllib3.PoolManager(
                 num_pools=10,
-                redirect=False
             )
         return pm
 
