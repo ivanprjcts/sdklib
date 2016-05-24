@@ -1,6 +1,8 @@
 sdklib: SDK Helper Library
 ==========================
 
+[![build-status-badge]][build-status]
+
 - Make easier sdk libraries implementation.
 
 
