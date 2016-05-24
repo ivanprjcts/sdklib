@@ -5,7 +5,7 @@ from urllib3.fields import RequestField, guess_content_type
 
 from .util.files import guess_filename_stream
 from .util.structures import to_key_val_list, to_key_val_dict
-from .compat import urlencode, quote_plus
+from .compat import urlencode, quote_plus, basestring
 
 
 def to_string(value, lang='javascript'):
