@@ -31,14 +31,14 @@ class TestSampleSdk(unittest.TestCase):
         self.assertIn("results", response.data)
         self.assertTrue(isinstance(response.data["results"], list))
 
-    def test_login(self):
+    def _test_login(self):
         response = self.api.login(username='user', password='123')
         self.assertEqual(response.status, 200)
 
-    def test_create_restaurant(self):
+    def _test_create_restaurant(self):
         response = self.api.create_restaurant("mi restaurante", "algo", "Madrid")
         self.assertEqual(response.status, 200)
 
-    def test_update_restaurant(self):
+    def _test_update_restaurant(self):
         response = self.api.update_restaurant("mi restaurante", "tests/resources/file.png", "algo", "Madrid")
         self.assertEqual(response.status, 200)
