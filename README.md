@@ -1,7 +1,11 @@
 sdklib: SDK Helper Library
 ==========================
 
-[![build-status-badge]][build-status]
+|Build Status|
+
+
+.. |Build Status| image:: https://travis-ci.org/ivanprjcts/sdklib.svg?branch=v1.0
+   :target: https://travis-ci.org/ivanprjcts/sdklib
 
 - Make easier sdk libraries implementation.
 
