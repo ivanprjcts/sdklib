@@ -1,10 +1,11 @@
 import threading
-import SocketServer
 import hashlib
 import socket
 
+from sdklib.compat import socketserver
 
-class RequestResponseHandler(SocketServer.BaseRequestHandler):
+
+class RequestResponseHandler(socketserver.BaseRequestHandler):
 
     REQUEST_RESPONSE_JSON = {}
     DEFAULT_RESPONSE = """HTTP/1.1 404 OK\n\n"""
@@ -94,5 +95,5 @@ class RRServerManager():
             self._RRSERVER.server_close()
 
 
-class RRServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+class RRServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     manager = RRServerManager()
