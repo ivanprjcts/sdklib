@@ -1,69 +1,15 @@
-"""
-Library for helping SDK implementations.
-"""
-import io
-import json
-
 import urllib3
 
-from .compat import urlencode
-from .util.urls import get_hostname_parameters_from_url, ensure_url_path_starts_with_slash
-from .renderers import JSONRender, MultiPartRender, get_render
-from .util.parser import parse_args
-from .session import Cookie
+from sdklib.http.renderers import JSONRender, MultiPartRender, get_render
+from sdklib.compat import urlencode
+from sdklib.util.parser import parse_args
+from sdklib.util.urls import get_hostname_parameters_from_url, ensure_url_path_starts_with_slash
+from sdklib.http.response import HttpResponse
 
 
-class SdkResponse(io.IOBase):
-
-    def __init__(self, resp):
-        self.urllib3_response = resp
-        self._cookie = None
-
-    @property
-    def data(self):
-        data = self.urllib3_response.data
-        try:
-            decoded_data = data.decode()
-        except:
-            decoded_data = data
-        try:
-            return json.loads(decoded_data)
-        except:
-            return decoded_data
-
-    @property
-    def status(self):
-        return self.urllib3_response.status
-
-    @property
-    def reason(self):
-        return self.urllib3_response.reason
-
-    @property
-    def headers(self):
-        """
-        Returns a dictionary of the response headers.
-        """
-        return self.urllib3_response.getheaders()
-
-    @property
-    def cookie(self):
-        if not self._cookie:
-            self._cookie = Cookie(self.headers)
-        else:
-            self._cookie.load_from_headers(self.headers)
-        return self._cookie
-
-    def getheader(self, name, default=None):
-        """
-        Returns a given response header.
-        """
-        return self.urllib3_response.getheader(name, default)
-
-
-class SdkBase(object):
+class HttpSdk(object):
     """
-    Sdk Base.
+    Http sdk class.
     """
     DEFAULT_HOST = "http://127.0.0.1:80/"
     DEFAULT_PROXY = None
@@ -205,7 +151,7 @@ class SdkBase(object):
             headers[self.CONTENT_TYPE_HEADER_NAME] = content_type
 
         r = self.pool_manager.request(method, url, body=body, headers=headers, redirect=False)
-        r = SdkResponse(r)
+        r = HttpResponse(r)
         self.cookie = r.cookie  # update cookie
 
         return r

@@ -1,6 +1,6 @@
 import unittest
 
-from sdklib.renderers import MultiPartRender
+from sdklib.http.renderers import MultiPartRender
 from sdklib.util.files import guess_filename_stream
 
 

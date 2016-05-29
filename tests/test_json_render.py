@@ -2,7 +2,7 @@
 
 import unittest
 
-from sdklib.renderers import JSONRender
+from sdklib.http.renderers import JSONRender
 
 
 class TestJSONRender(unittest.TestCase):

@@ -1,7 +1,7 @@
-from sdklib import SdkBase
+from sdklib.http import HttpSdk
 
 
-class SampleHttpsSdk(SdkBase):
+class SampleHttpsHttpSdk(HttpSdk):
 
     DEFAULT_HOST = "https://www.carniceriasdejuan.com"
 

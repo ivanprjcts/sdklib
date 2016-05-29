@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .compat import cookies
+from sdklib.compat import cookies
 
 
 class Cookie(object):

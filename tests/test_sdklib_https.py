@@ -1,14 +1,14 @@
 import unittest
 
-from tests.sample_sdk_https import SampleHttpsSdk
+from tests.sample_sdk_https import SampleHttpsHttpSdk
 
 
 class TestSampleSdk(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # SampleHttpsSdk.set_default_proxy("localhost:8080")
-        cls.api = SampleHttpsSdk()
+        # SampleHttpsHttpSdk.set_default_proxy("localhost:8080")
+        cls.api = SampleHttpsHttpSdk()
 
     @classmethod
     def tearDownClass(cls):

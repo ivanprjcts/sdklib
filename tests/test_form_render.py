@@ -1,6 +1,6 @@
 import unittest
 
-from sdklib.renderers import FormRender
+from sdklib.http.renderers import FormRender
 
 
 class TestFormRender(unittest.TestCase):

@@ -2,7 +2,7 @@
 
 import unittest
 
-from sdklib.renderers import PlainTextRender
+from sdklib.http.renderers import PlainTextRender
 
 
 class TestPlainTextRender(unittest.TestCase):

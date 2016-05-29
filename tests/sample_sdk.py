@@ -1,15 +1,15 @@
-from sdklib import SdkBase
-from sdklib.util.parser import parse_args, parse_args_as_tuple_list
-from sdklib.renderers import JSONRender, PlainTextRender, MultiPartRender, FormRender
+from sdklib.http import HttpSdk
+from sdklib.http.renderers import MultiPartRender, FormRender
+from sdklib.util.parser import parse_args
 
 
-class SampleSdk(SdkBase):
+class SampleHttpSdk(HttpSdk):
     """
     Sample Sdk for testing purposes.
     """
 
     API_RESTAURANTS_URL_PATH = "/api/1.0/restaurants/"
-    LOGIN_URL_PATH = "/api/1.0/auth/login/"  # overwrite SdkBase 'LOGIN_URL_PATH'
+    LOGIN_URL_PATH = "/api/1.0/auth/login/"  # overwrite HttpSdk 'LOGIN_URL_PATH'
 
     def get_restaurants(self):
         """

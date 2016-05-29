@@ -3,7 +3,7 @@ import unittest
 from sdklib.test.rrserver import RRServer
 from sdklib.util.files import read_file_as_string
 
-from tests.sample_sdk import SampleSdk
+from tests.sample_sdk import SampleHttpSdk
 
 
 class TestSampleSdk(unittest.TestCase):
@@ -17,9 +17,9 @@ class TestSampleSdk(unittest.TestCase):
         RRServer.manager.add_request_response(request=read_file_as_string('tests/requests/update_restaurant.txt'))
         host, port = RRServer.manager.start_rrserver()
 
-        # SampleSdk.set_default_proxy("http://localhost:8080")
-        SampleSdk.set_default_host("http://%s:%s" % (host, port))
-        cls.api = SampleSdk()
+        # SampleHttpSdk.set_default_proxy("http://localhost:8080")
+        SampleHttpSdk.set_default_host("http://%s:%s" % (host, port))
+        cls.api = SampleHttpSdk()
 
     @classmethod
     def tearDownClass(cls):
