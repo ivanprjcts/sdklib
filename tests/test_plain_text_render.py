@@ -101,7 +101,6 @@ class TestPlainTextRender(unittest.TestCase):
         r = PlainTextRender(collection_format='pipes')
         body, content_type = r.encode_params(data)
         self.assertEqual(content_type, "text/plain; charset=utf-8")
-        print(body)
         self.assertIn(b"param1=value 1", body)
         self.assertIn(b"param2[]=value2|value3", body)
 
