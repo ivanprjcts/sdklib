@@ -8,8 +8,8 @@ from sdklib.compat import socketserver
 class RequestResponseHandler(socketserver.BaseRequestHandler):
 
     REQUEST_RESPONSE_JSON = {}
-    DEFAULT_RESPONSE = """HTTP/1.1 404 OK\n\n"""
-    HTTP_200_OK_RESPONSE = """HTTP/1.1 200 OK\n\n"""
+    DEFAULT_RESPONSE = b"""HTTP/1.1 404 OK\n\n"""
+    HTTP_200_OK_RESPONSE = b"""HTTP/1.1 200 OK\n\n"""
 
     @classmethod
     def add_request_response(cls, request, response=None):
@@ -51,7 +51,7 @@ class RequestResponseHandler(socketserver.BaseRequestHandler):
             if not data:
                 break
             total_data.append(data)
-        return ''.join(total_data)
+        return b''.join(total_data)
 
     def handle(self):
         req = self.recv_basic(self.request)
