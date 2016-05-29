@@ -10,6 +10,6 @@ def guess_filename_stream(path_to_file):
 
 
 def read_file_as_string(file_path):
-    with open(file_path, 'r') as myfile:
+    with open(file_path, 'rb') as myfile:
         data = myfile.read()
     return data

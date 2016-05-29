@@ -24,13 +24,13 @@ class RequestResponseHandler(socketserver.BaseRequestHandler):
 
     @staticmethod
     def clean_request(request):
-        pr = ""
-        req = request.replace('\r\n', '\n')
-        lines = req.split('\n')
+        pr = b""
+        req = request.replace(b'\r\n', b'\n')
+        lines = req.split(b'\n')
         for line in lines:
-            if ("Host:" not in line and
-                    "Accept:" not in line):
-                pr += line + '\n'
+            if (b"Host:" not in line and
+                    b"Accept:" not in line):
+                pr += line + b'\n'
         return pr[:-1]
 
     @classmethod

@@ -23,7 +23,7 @@ class SdkResponse(io.IOBase):
     def data(self):
         data = self.urllib3_response.data
         try:
-            return json.loads(data)
+            return json.loads(data.decode())
         except:
             return data
 

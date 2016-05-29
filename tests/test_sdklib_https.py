@@ -7,7 +7,7 @@ class TestSampleSdk(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # SampleSdk.set_proxy("localhost:8888")
+        #SampleHttpsSdk.set_default_proxy("localhost:8080")
         cls.api = SampleHttpsSdk()
 
     @classmethod
@@ -16,5 +16,6 @@ class TestSampleSdk(unittest.TestCase):
 
     def test_get_products(self):
         response = self.api.get_products()
+        print(response.data)
         self.assertEqual(response.status, 200)
         self.assertTrue(isinstance(response.data, list))
