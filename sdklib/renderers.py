@@ -238,12 +238,12 @@ class PlainTextRender(object):
                 if isinstance(vs, basestring) or not hasattr(vs, '__iter__'):
                     vs = [vs]
                 for v in vs:
-                    result.append(b"%s=%s" % (self._encode(k, charset), self._encode(v, charset, output_str)))
+                    result.append(b"=".join([self._encode(k, charset), self._encode(v, charset, output_str)]))
             return b'\n'.join(result), self.get_content_type(charset)
         elif collection_format == 'plain' and hasattr(data, '__iter__'):
             results = []
             for k, vs in to_key_val_dict(data).items():
-                results.append(b"%s=%s" % (self._encode(k, charset), self._encode(vs, charset, output_str)))
+                results.append(b"=".join([self._encode(k, charset), self._encode(vs, charset, output_str)]))
 
             return b'\n'.join(results), self.get_content_type(charset)
         elif hasattr(data, '__iter__'):
@@ -255,9 +255,9 @@ class PlainTextRender(object):
                 else:
                     v = vs
                     key = k
-                results.append(b"%s=%s" % (self._encode(key, charset), self._encode(v, charset, output_str)))
+                results.append(b"=".join([self._encode(key, charset), self._encode(v, charset, output_str)]))
 
-            return b'\n'.join(results), self.get_content_type(charset)
+            return b"\n".join(results), self.get_content_type(charset)
         else:
             return str(data).encode(charset) if charset else str(data), self.get_content_type(charset)
 
