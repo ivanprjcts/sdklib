@@ -1,12 +1,12 @@
 # sdklib
 
-SDK Helper Library.
+Sdklib helps you to write you own client library which will consume a specific service.
 
 
 ## Highlights
 
-* Http client sdk.
-* Use proxy.
+* Python 2.7+ or 3.3+.
+* Only http/https protocol is currently supported.
 
 
 ## Installation
