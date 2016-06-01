@@ -51,11 +51,11 @@ Once that's done we can create project structure that we'll use to create a simp
 
 We'll need to edit our `first_sdk/first_sdk.py` file:
 
-    from sdklib import SdkBase
+    from sdklib.http import HttpSdk
     from sdklib.util.parser import safe_add_end_slash, parse_args
     
     
-    class FirstSdk(SdkBase):
+    class FirstSdk(HttpSdk):
         """
         My First Sdk.
         """

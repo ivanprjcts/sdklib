@@ -217,7 +217,7 @@ class PlainTextRender(object):
 
     def encode_params(self, data=None, **kwargs):
         """
-        Encode to plain text.
+        Build the body for a text/plain request.
         Will successfully encode parameters when passed as a dict or a list of
         2-tuples. Order is retained if data is a list of 2-tuples but arbitrary
         if parameters are supplied as a dict.
