@@ -39,10 +39,6 @@ pip install sdklib
 python setup.py install
 ```
 
-## Requirements
-
-* Urllib3 (1.10+)
-
 
 ## Run the tests
 

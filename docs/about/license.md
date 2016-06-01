@@ -8,7 +8,7 @@
 
 * Mkdocs - [View license](https://github.com/mkdocs/mkdocs/blob/master/LICENSE).
 
-Many thanks to the authors and contributors of those wonderful projects.
+Many thanks to the authors and contributors of those projects.
 
 
 ## Sdklib License (BSD)
