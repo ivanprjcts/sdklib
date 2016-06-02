@@ -1,28 +1,37 @@
-from sdklib import SdkBase, SdkResponse
+from sdklib.http import HttpSdk
+from sdklib.http.renderers import MultiPartRender, FormRender
 from sdklib.util.parser import parse_args
 
 
-class SampleSdk(SdkBase):
+class SampleHttpSdk(HttpSdk):
+    """
+    Sample Sdk for testing purposes.
+    """
 
-    API_HOST = "ajax.googleapis.com"
-    API_SCHEME = "http"
-    API_PORT = 80
+    API_RESTAURANTS_URL_PATH = "/api/1.0/restaurants/"
+    LOGIN_URL_PATH = "/api/1.0/auth/login/"  # overwrite HttpSdk 'LOGIN_URL_PATH'
 
-    API_SEARCH_WEB_PATH = "/ajax/services/search/web"
-
-    def _http(self, method, url, headers=None, form_params=None, query_params=None, ssl_verified=False,
-              form_urlencoding=True):
-        status, content, headers = super(SampleSdk, self)._http(method, url, headers=headers, form_params=form_params,
-                                                                query_params=query_params, ssl_verified=ssl_verified,
-                                                                form_urlencoding=form_urlencoding)
-        return status, SdkResponse(content), headers
-
-    def search(self, query, version=None):
+    def get_restaurants(self):
         """
-        Search web pages.
-        :param query:
-        :param version:
-        :return: status, data, headers
+        Get all restaurants.
+        :return: SdkResponse
         """
-        query_params = parse_args(q=query, v=version)
-        return self._http("GET", self.API_SEARCH_WEB_PATH, query_params=query_params)
+        return self._http_request("GET", self.API_RESTAURANTS_URL_PATH)
+
+    def create_restaurant(self, name, description=None, city=None):
+        """
+        Create a restaurant.
+        :return: SdkResponse
+        """
+        params = parse_args(name=name, description=description, city=city)
+        return self._http_request("POST", self.API_RESTAURANTS_URL_PATH, body_params=params, render=FormRender())
+
+    def update_restaurant(self, name, main_image, description=None, city=None):
+        """
+        Update a restaurant.
+        :return: SdkResponse
+        """
+        params = parse_args(name=name, description=description, city=city)
+        files = parse_args(mainImage=main_image)
+        return self._http_request("PUT", self.API_RESTAURANTS_URL_PATH, body_params=params, files=files,
+                                  render=MultiPartRender())

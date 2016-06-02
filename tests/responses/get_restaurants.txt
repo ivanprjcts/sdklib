@@ -1,0 +1,27 @@
+HTTP/1.1 200 OK
+Server: nginx/1.4.6 (Ubuntu)
+Content-Type: application/json
+Connection: keep-alive
+Vary: Accept, Accept-Language, Cookie
+X-Frame-Options: SAMEORIGIN
+Content-Language: en
+Allow: GET, POST, HEAD, OPTIONS
+
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "pk": 2,
+            "name": "McDonals",
+            "isActive": true,
+            "menus": [
+                {
+                    "pk": 1,
+                    "name": "McMenu"
+                }
+            ]
+        }
+    ]
+}
