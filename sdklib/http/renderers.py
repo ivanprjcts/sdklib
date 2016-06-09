@@ -52,7 +52,7 @@ def get_primitive_as_csharp_string(value):
         return str(value)
 
 
-class MultiPartRender(object):
+class MultiPartRenderer(object):
 
     def __init__(self, boundary="----------ThIs_Is_tHe_bouNdaRY_$", output_str='javascript'):
         self.boundary = boundary
@@ -121,7 +121,7 @@ class MultiPartRender(object):
         return body, content_type
 
 
-class FormRender(object):
+class FormRenderer(object):
 
     VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes', 'encoded']
     COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
@@ -185,7 +185,7 @@ class FormRender(object):
             return data, self.content_type
 
 
-class PlainTextRender(object):
+class PlainTextRenderer(object):
     VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes', 'plain']
     COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
 
@@ -262,7 +262,7 @@ class PlainTextRender(object):
             return str(data).encode(charset) if charset else str(data), self.get_content_type(charset)
 
 
-class JSONRender(object):
+class JSONRenderer(object):
 
     def __init__(self):
         self.content_type = 'application/json'
@@ -285,14 +285,14 @@ class JSONRender(object):
         return body, self.content_type
 
 
-def get_render(name):
+def get_renderer(name):
     if name == 'json':
-        return JSONRender()
+        return JSONRenderer()
     elif name == 'form':
-        return FormRender()
+        return FormRenderer()
     elif name == 'multipart':
-        return MultiPartRender()
+        return MultiPartRenderer()
     elif name == 'plain':
-        return PlainTextRender()
+        return PlainTextRenderer()
     else:
-        return JSONRender()
+        return JSONRenderer()
