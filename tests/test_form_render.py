@@ -1,6 +1,7 @@
 import unittest
 
 from sdklib.http.renderers import FormRenderer
+from sdklib.http.renderers import url_encode
 
 
 class TestFormRender(unittest.TestCase):
@@ -130,3 +131,8 @@ class TestFormRender(unittest.TestCase):
         self.assertEqual(content_type, "application/x-www-form-urlencoded")
         self.assertIn("param2=Null", body)
         self.assertIn("param1=value+1", body)
+
+    def test_url_encode(self):
+        params = {"param1": "value1", "param0": "value0"}
+        value = url_encode(params, sort=True)
+        self.assertEqual("param0=value0&param1=value1", value)

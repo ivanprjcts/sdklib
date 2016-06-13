@@ -14,7 +14,7 @@ def get_dict_from_list(l, **kwargs):
             return e
 
 
-def to_key_val_list(value):
+def to_key_val_list(value, sort=False):
     """
     Take an object and test to see if it can be represented as a
     dictionary. If it can be, return a list of tuples, e.g.,
@@ -22,6 +22,8 @@ def to_key_val_list(value):
         >>> to_key_val_list([('key', 'val')])
         [('key', 'val')]
         >>> to_key_val_list({'key': 'val'})
+        [('key', 'val')]
+        >>> to_key_val_list({'key': 'val'}, sort=True)
         [('key', 'val')]
         >>> to_key_val_list('string')
         ValueError: cannot encode objects that are not 2-tuples.
@@ -35,7 +37,11 @@ def to_key_val_list(value):
     if isinstance(value, collections.Mapping):
         value = value.items()
 
-    return list(value)
+    if sort:
+        values = sorted(value)
+    else:
+        values = value
+    return list(values)
 
 
 def to_key_val_dict(values):

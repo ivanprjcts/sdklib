@@ -126,10 +126,11 @@ class FormRenderer(object):
     VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes', 'encoded']
     COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
 
-    def __init__(self, collection_format='multi', output_str='javascript'):
+    def __init__(self, collection_format='multi', output_str='javascript', sort=False):
         self.content_type = 'application/x-www-form-urlencoded'
         self.collection_format = collection_format
         self.output_str = output_str
+        self.sort = sort
 
     @property
     def collection_format(self):
@@ -138,7 +139,6 @@ class FormRenderer(object):
     @collection_format.setter
     def collection_format(self, value):
         assert value in self.VALID_COLLECTION_FORMATS
-
         self._collection_format = value
 
     def encode_params(self, data=None, **kwargs):
@@ -150,6 +150,7 @@ class FormRenderer(object):
         """
         collection_format = kwargs.get("collection_format", self.collection_format)
         output_str = kwargs.get("output_str", self.output_str)
+        sort = kwargs.get("sort", self.sort)
 
         if data is None:
             return "", self.content_type
@@ -159,7 +160,7 @@ class FormRenderer(object):
             return data, self.content_type
         elif collection_format == 'multi' and hasattr(data, '__iter__'):
             result = []
-            for k, vs in to_key_val_list(data):
+            for k, vs in to_key_val_list(data, sort=sort):
                 if isinstance(vs, basestring) or not hasattr(vs, '__iter__'):
                     vs = [vs]
                 for v in vs:
@@ -296,3 +297,8 @@ def get_renderer(name):
         return PlainTextRenderer()
     else:
         return JSONRenderer()
+
+
+def url_encode(params, sort=False):
+    r = get_renderer('form')
+    return r.encode_params(params, sort=sort)[0]

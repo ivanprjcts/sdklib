@@ -1,21 +1,26 @@
 from behave import given, when, then
 
-from sdklib.http.sdk_base import HttpSdk
+from sdklib.http import api, HttpRequestContextSingleton
 
 
 @given('The API endpoint "{host}"')
 def set_default_host(context, host):
-    HttpSdk.set_default_host(host)
+    http_request_context = HttpRequestContextSingleton.get_instance()
+    http_request_context.host = host
 
 
-@given('The API resource "{url_path}"')
+@given('The final API resource "{url_path}"')
 def set_url_path(context, url_path):
-    pass
+    http_request_context = HttpRequestContextSingleton.get_instance()
+    http_request_context.url_path = url_path
 
 
-@given('The API resource "{url_path_regex}" with these parameter values:')
-def set_url_path(context, url_path_regex, values):
-    pass
+@given('The API resource "{url_path_str_format}" with these parameter values')
+def set_url_path_with_params(context, url_path_str_format):
+    table_as_json = dict(context.table)
+    url_path = url_path_str_format % table_as_json
+    http_request_context = HttpRequestContextSingleton.get_instance()
+    http_request_context.url_path = url_path
 
 
 @given('Authorization-Basic with username "{username}" and password "{password}"')
@@ -30,27 +35,33 @@ def set_11path_authorization(context, app_id, secret):
 
 @given('The headers:')
 def set_headers(context, headers):
-   pass
+    http_request_context = HttpRequestContextSingleton.get_instance()
+    http_request_context.headers = headers
 
 
 @given('The query parameters:')
 def set_query_parameters(context, parameters):
-   pass
+    http_request_context = HttpRequestContextSingleton.get_instance()
+    http_request_context.query_parameters = parameters
 
 
 @given('The body parameters:')
 def set_body_parameters(context, parameters):
-   pass
+    http_request_context = HttpRequestContextSingleton.get_instance()
+    http_request_context.body_parameters = parameters
 
 
 @given('The body files:')
 def set_body_files(context, files):
-   pass
+    http_request_context = HttpRequestContextSingleton.get_instance()
+    http_request_context.files = files
 
 
-@when('I send a HTTP "{method}" request # methods: GET, POST, PUT, PATCH, DELETE')
+@when('I send a HTTP "{method}" request')
 def send_http_request(context, method):
-   assert(method in ["allowed methods variable"])
+    http_request_context = HttpRequestContextSingleton.get_instance()
+    http_request_context.method = method
+    context.api_response = api.http_request_from_context(http_request_context)
 
 
 @when('I send a HTTP "{method}" request with query parameters')
