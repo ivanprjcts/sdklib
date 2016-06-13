@@ -6,6 +6,7 @@ from sdklib.util.parser import parse_args
 from sdklib.util.urls import get_hostname_parameters_from_url, ensure_url_path_starts_with_slash
 from sdklib.http.response import HttpResponse
 from sdklib.http.methods import *
+from sdklib.http.headers import *
 
 
 class HttpRequestContext(object):
@@ -29,19 +30,6 @@ class HttpSdk(object):
     DEFAULT_HOST = "http://127.0.0.1:80/"
     DEFAULT_PROXY = None
     DEFAULT_RENDERER = JSONRenderer()
-
-    USER_AGENT_HEADER_NAME = "User-Agent"
-    PRAGMA_HEADER_NAME = "Pragma"
-    CONTENT_TYPE_HEADER_NAME = "Content-Type"
-    CONTENT_LENGTH_HEADER_NAME = "Content-Length"
-    ACCEPT_HEADER_NAME = "Accept"
-    ACCEPT_LANGUAGE_HEADER_NAME = "Accept-Language"
-    ACCEPT_ENCODING_HEADER_NAME = "Accept-Encoding"
-    CACHE_CONTROL_HEADER_NAME = "Cache-Control"
-    CONNECTION_HEADER_NAME = "Connection"
-    REFERRER_HEADER_NAME = "Referer"
-    COOKIE_HEADER_NAME = "Cookie"
-    X_CSRF_TOKEN_HEADER_NAME = "X-CSRFToken"
 
     LOGIN_URL_PATH = None
 
@@ -103,9 +91,9 @@ class HttpSdk(object):
 
     def default_headers(self):
         headers = dict()
-        headers[self.ACCEPT_HEADER_NAME] = "*/*"
+        headers[ACCEPT_HEADER_NAME] = "*/*"
         if self.cookie and self.cookie.as_cookie_header_value():
-            headers[self.COOKIE_HEADER_NAME] = self.cookie.as_cookie_header_value()
+            headers[COOKIE_HEADER_NAME] = self.cookie.as_cookie_header_value()
         return headers
 
     @property
@@ -145,7 +133,7 @@ class HttpSdk(object):
         body, content_type = context.renderer.encode_params(context.body_params, files=context.files)
         if context.headers is None:
             headers = self.default_headers()
-            headers[self.CONTENT_TYPE_HEADER_NAME] = content_type
+            headers[CONTENT_TYPE_HEADER_NAME] = content_type
         else:
             headers = context.headers
 

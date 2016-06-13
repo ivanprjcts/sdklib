@@ -7,6 +7,7 @@ from hashlib import sha1
 
 from sdklib.util.times import get_current_utc
 from sdklib.http import url_encode
+from sdklib.util.urls import ensure_url_path_starts_with_slash
 
 
 X_11PATHS_HEADER_PREFIX = "X-11paths-"
@@ -16,20 +17,17 @@ AUTHORIZATION_METHOD = "11PATHS"
 
 
 def basic_authentication(username, password):
-    combined_username_password = "%s:%s" % (username, password)
+    combined_username_password = username + b":" + password
     b64_combined = base64.b64encode(combined_username_password)
-    return "Basic %s" % b64_combined
+    return b"Basic " + b64_combined
 
 
-def x_11paths_authentication(app_id, secret, http_method, url_path_query, x_headers=None, params=None, utc=None):
+def x_11paths_authentication(app_id, secret, context, utc=None):
     """
     Calculate the authentication headers to be sent with a request to the API
     :param app_id:
     :param secret:
-    :param http_method: the HTTP Method, currently only GET is supported
-    :param url_path_query: the urlencoded string including the path (from the first forward slash) and the parameters
-    :param x_headers: HTTP headers specific to the 11-paths API. null if not needed.
-    :param params:
+    :param context
     :param utc:
     :return: array a map with the Authorization and Date headers needed to sign a Latch API request
     """
@@ -37,18 +35,23 @@ def x_11paths_authentication(app_id, secret, http_method, url_path_query, x_head
         utc = get_current_utc()
         utc = utc.strip()
 
-    string_to_sign = (http_method.upper().strip() + "\n" +
+    url_path = ensure_url_path_starts_with_slash(context.url_path)
+    url_path_query = url_path
+    if context.query_params is not None:
+        url_path_query += "?%s" % (url_encode(context.query_params))
+
+    string_to_sign = (context.method.upper().strip() + "\n" +
                       utc + "\n" +
-                      _get_serialized_headers(x_headers) + "\n" +
+                      _get_serialized_headers(context.headers) + "\n" +
                       url_path_query.strip())
 
-    if params is not None:
-        string_to_sign = string_to_sign + "\n" + url_encode(params, sort=True)
+    if context.body_params is not None:
+        string_to_sign = string_to_sign + "\n" + url_encode(context.body_params, sort=True)
 
-    authorization_header = (AUTHORIZATION_METHOD + AUTHORIZATION_HEADER_FIELD_SEPARATOR + app_id +
-                            AUTHORIZATION_HEADER_FIELD_SEPARATOR + _sign_data(secret, string_to_sign))
+    authorization_header_value = (AUTHORIZATION_METHOD + AUTHORIZATION_HEADER_FIELD_SEPARATOR + app_id +
+                                  AUTHORIZATION_HEADER_FIELD_SEPARATOR + _sign_data(secret, string_to_sign))
 
-    return authorization_header, utc
+    return authorization_header_value, utc
 
 
 def _sign_data(secret, data):
