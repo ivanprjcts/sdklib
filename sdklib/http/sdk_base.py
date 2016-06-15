@@ -11,9 +11,10 @@ from sdklib.http.headers import *
 
 class HttpRequestContext(object):
 
-    def __init__(self, host=None, method=GET_METHOD, url_path='/', headers=None, query_params=None, body_params=None,
-                 files=None, renderer=JSONRenderer()):
+    def __init__(self, host=None, proxy=None, method=GET_METHOD, url_path='/', headers=None, query_params=None,
+                 body_params=None, files=None, renderer=JSONRenderer(), authentication_instances=[]):
         self.host = host
+        self.proxy = proxy
         self.method = method
         self.url_path = url_path
         self.headers = headers
@@ -21,6 +22,7 @@ class HttpRequestContext(object):
         self.body_params = body_params
         self.files = files
         self.renderer = renderer
+        self.authentication_instances = authentication_instances
 
 
 class HttpSdk(object):
@@ -32,6 +34,8 @@ class HttpSdk(object):
     DEFAULT_RENDERER = JSONRenderer()
 
     LOGIN_URL_PATH = None
+
+    authentication_classes = ()
 
     def __init__(self, host=None, proxy=None, default_renderer=None):
         self.host = host or self.DEFAULT_HOST
@@ -96,11 +100,11 @@ class HttpSdk(object):
             headers[COOKIE_HEADER_NAME] = self.cookie.as_cookie_header_value()
         return headers
 
-    @property
-    def pool_manager(self):
-        if self.proxy:
+    @staticmethod
+    def get_pool_manager(proxy=None):
+        if proxy is not None:
             pm = urllib3.ProxyManager(
-                self.proxy,
+                proxy,
                 num_pools=10,
             )
         else:
@@ -118,10 +122,15 @@ class HttpSdk(object):
     def set_default_proxy(cls, value):
         cls.DEFAULT_PROXY = value
 
-    def http_request_from_context(self, context):
+    @staticmethod
+    def http_request_from_context(context):
         """
         Method to do http requests from context.
         """
+        authentication_instances = context.authentication_instances
+        for auth_obj in authentication_instances:
+            context = auth_obj.apply_authentication(context)
+
         method = context.method.upper()
         assert method in ALLOWED_METHODS
 
@@ -130,16 +139,12 @@ class HttpSdk(object):
         if context.query_params is not None:
             url += "?%s" % (urlencode(context.query_params))
 
+        headers = context.headers
         body, content_type = context.renderer.encode_params(context.body_params, files=context.files)
-        if context.headers is None:
-            headers = self.default_headers()
-            headers[CONTENT_TYPE_HEADER_NAME] = content_type
-        else:
-            headers = context.headers
+        headers[CONTENT_TYPE_HEADER_NAME] = content_type
 
-        r = self.pool_manager.request(method, url, body=body, headers=headers, redirect=False)
+        r = HttpSdk.get_pool_manager(context.proxy).request(method, url, body=body, headers=headers, redirect=False)
         r = HttpResponse(r)
-        self.cookie = r.cookie  # update cookie
         return r
 
     def http_request(self, method, url_path, headers=None, query_params=None, body_params=None, files=None, **kwargs):
@@ -159,11 +164,17 @@ class HttpSdk(object):
         :return:
         """
         host = kwargs.get('host', self.host)
+        proxy = kwargs.get('proxy', self.proxy)
         renderer = kwargs.get('renderer', MultiPartRenderer() if files else self.default_renderer)
 
-        context = HttpRequestContext(host=host, method=method, url_path=url_path, headers=headers,
+        if headers is None:
+            headers = self.default_headers()
+
+        context = HttpRequestContext(host=host, proxy=proxy, method=method, url_path=url_path, headers=headers,
                                      query_params=query_params, body_params=body_params, files=files, renderer=renderer)
-        return self.http_request_from_context(context)
+        res = self.http_request_from_context(context)
+        self.cookie = res.cookie
+        return res
 
     def login(self, **kwargs):
         """

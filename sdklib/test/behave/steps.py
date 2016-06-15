@@ -1,12 +1,19 @@
 from behave import given, when, then
 
 from sdklib.http import api, HttpRequestContextSingleton
+from sdklib.http.authorization import BasicAuthentication, X11PathsAuthentication
 
 
 @given('The API endpoint "{host}"')
 def set_default_host(context, host):
     http_request_context = HttpRequestContextSingleton.get_instance()
     http_request_context.host = host
+
+
+@given('The API proxy "{host}"')
+def set_default_proxy(context, host):
+    http_request_context = HttpRequestContextSingleton.get_instance()
+    http_request_context.proxy = host
 
 
 @given('The final API resource "{url_path}"')
@@ -25,34 +32,48 @@ def set_url_path_with_params(context, url_path_str_format):
 
 @given('Authorization-Basic with username "{username}" and password "{password}"')
 def set_authorization_basic(context, username, password):
-   pass
+    http_request_context = HttpRequestContextSingleton.get_instance()
+    http_request_context.authentication_instances.append(BasicAuthentication(username=username, password=password))
 
 
 @given('11Paths-Authorization with application id "{app_id}" and secret "{secret}"')
 def set_11path_authorization(context, app_id, secret):
-   pass
+    http_request_context = HttpRequestContextSingleton.get_instance()
+    http_request_context.authentication_instances.append(X11PathsAuthentication(app_id=app_id, secret=secret))
 
 
-@given('The headers:')
-def set_headers(context, headers):
+@given('The headers')
+def set_headers(context):
+    headers = dict()
+    for row in context.table:
+        headers[row["header_name"]] = row["header_value"]
     http_request_context = HttpRequestContextSingleton.get_instance()
     http_request_context.headers = headers
 
 
-@given('The query parameters:')
-def set_query_parameters(context, parameters):
+@given('The query parameters')
+def set_query_parameters(context):
+    query_params = dict()
+    for row in context.table:
+        query_params[row["param_name"]] = row["param_value"]
     http_request_context = HttpRequestContextSingleton.get_instance()
-    http_request_context.query_parameters = parameters
+    http_request_context.query_parameters = query_params
 
 
-@given('The body parameters:')
-def set_body_parameters(context, parameters):
+@given('The body parameters')
+def set_body_parameters(context):
+    body_params = dict()
+    for row in context.table:
+        body_params[row["param_name"]] = row["param_value"]
     http_request_context = HttpRequestContextSingleton.get_instance()
-    http_request_context.body_parameters = parameters
+    http_request_context.body_parameters = body_params
 
 
-@given('The body files:')
-def set_body_files(context, files):
+@given('The body files')
+def set_body_files(context):
+    files = dict()
+    for row in context.table:
+        files[row["param_name"]] = row["path_to_file"]
     http_request_context = HttpRequestContextSingleton.get_instance()
     http_request_context.files = files
 
@@ -66,79 +87,92 @@ def send_http_request(context, method):
 
 @when('I send a HTTP "{method}" request with query parameters')
 def send_http_request_with_query_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+    query_params = dict()
+    for row in context.table:
+        query_params[row["param_name"]] = row["param_value"]
+    http_request_context = HttpRequestContextSingleton.get_instance()
+    http_request_context.method = method
+    http_request_context.query_parameters = query_params
+    context.api_response = api.http_request_from_context(http_request_context)
 
 
 @when('I send a HTTP "{method}" request with body parameters')
 def send_http_request_with_body_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+    body_params = dict()
+    for row in context.table:
+        body_params[row["param_name"]] = row["param_value"]
+    http_request_context = HttpRequestContextSingleton.get_instance()
+    http_request_context.method = method
+    http_request_context.body_parameters = body_params
+    context.api_response = api.http_request_from_context(http_request_context)
 
 
 @when('I send a HTTP "{method}" request with body parameters encoded "{encoding_type}"')
-def send_http_request_with_body_parameters(context, method, encoding_type):
-   assert(method in ["allowed methods variable"])
+def send_http_request_with_body_parameters_encoded(context, method, encoding_type):
+    assert(method in ["allowed methods variable"])
 
 
 @when('I send a HTTP "{method}" request with this body "{resource_file}"')
-def send_http_request_with_body_parameters(context, method, resource_file):
-   assert(method in ["allowed methods variable"])
+def send_http_request_with_body_resource_file(context, method, resource_file):
+    assert(method in ["allowed methods variable"])
 
 
 @when('I send a HTTP "{method}" request with this JSON:')
-def send_http_request_with_body_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+def send_http_request_with_json(context, method):
+    assert(method in ["allowed methods variable"])
 
 
 @when('I send a HTTP "{method}" request with this XML:')
-def send_http_request_with_body_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+def send_http_request_with_xml(context, method):
+    assert(method in ["allowed methods variable"])
 
 
 @then('The HTTP status code should be "{code}"')
-def send_http_request_with_body_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+def http_status_code_should_be(context, code):
+    print(context.api_response.status)
+    assert(context.api_response.status == int(code))
 
 
 @then('The HTTP status code should not be "{code}"')
-def send_http_request_with_body_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+def http_status_code_not_should_be(context, code):
+    assert(context.api_response.status != int(code))
 
 
-@then('The HTTP reason phrase should be "{phrase}"')
-def send_http_request_with_body_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+@then('The HTTP reason phrase should be "{reason}"')
+def http_reason_phrase_should_be(context, reason):
+    assert(context.api_response.reason == reason)
 
 
-@then('The HTTP reason phrase should contain "{phrase}"')
-def send_http_request_with_body_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+@then('The HTTP reason phrase should contain "{reason}"')
+def http_reason_phrase_should_not_be(context, reason):
+    assert (context.api_response.reason != reason)
 
 
 @then('The response header "{header_name}" should be "{header_value}"')
 def send_http_request_with_body_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+    assert(method in ["allowed methods variable"])
 
 
 @then('The response header "{header_name}" should contain "{header_value}"')
 def send_http_request_with_body_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+    assert(method in ["allowed methods variable"])
 
 
 @then('The response body should contain this parameters:')
 def send_http_request_with_body_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+    assert(method in ["allowed methods variable"])
 
 
 @then('The response body should be this "{response_file}"')
 def send_http_request_with_body_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+    assert(method in ["allowed methods variable"])
 
 
 @then('The response body should be this JSON:')
 def send_http_request_with_body_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+    assert(method in ["allowed methods variable"])
 
 
 @then('The response body should be this XML:')
 def send_http_request_with_body_parameters(context, method):
-   assert(method in ["allowed methods variable"])
+    assert(method in ["allowed methods variable"])

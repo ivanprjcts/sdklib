@@ -8,6 +8,7 @@ from hashlib import sha1
 from sdklib.util.times import get_current_utc
 from sdklib.http import url_encode
 from sdklib.util.urls import ensure_url_path_starts_with_slash
+from sdklib.http.headers import AUTHORIZATION_HEADER_NAME, X_11PATHS_DATE_HEADER_NAME
 
 
 X_11PATHS_HEADER_PREFIX = "X-11paths-"
@@ -83,3 +84,36 @@ def _get_serialized_headers(x_headers):
         return serialized_headers.strip()
     else:
         return ""
+
+
+class AbstractAuthentication(object):
+
+    def apply_authentication(self, context):
+        return context
+
+
+class X11PathsAuthentication(AbstractAuthentication):
+
+    def __init__(self, app_id, secret):
+        self.app_id = app_id
+        self.secret = secret
+
+    def apply_authentication(self, context):
+        headers = context.headers
+        headers[AUTHORIZATION_HEADER_NAME], utc_value = x_11paths_authentication(self.app_id, self.secret, context)
+        headers[X_11PATHS_DATE_HEADER_NAME] = utc_value
+        context.headers = headers
+        return context
+
+
+class BasicAuthentication(AbstractAuthentication):
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+    def apply_authentication(self, context):
+        headers = context.headers
+        headers[AUTHORIZATION_HEADER_NAME] = basic_authentication(self.username, self.password)
+        context.headers = headers
+        return context
