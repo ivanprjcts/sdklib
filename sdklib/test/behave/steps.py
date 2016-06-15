@@ -129,7 +129,6 @@ def send_http_request_with_xml(context, method):
 
 @then('The HTTP status code should be "{code}"')
 def http_status_code_should_be(context, code):
-    print(context.api_response.status)
     assert(context.api_response.status == int(code))
 
 
