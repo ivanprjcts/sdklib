@@ -1,9 +1,15 @@
-sdklib: SDK Helper Library
-==========================
+# Sdklib: the client side framework #
 
 [![build-status-badge]][build-status]
 
-- Make easier sdk libraries implementation.
+
+Sdklib helps you to write you own client library which will consume a specific service.
+
+
+## Highlights
+
+* Python 2.7+ or 3.3+.
+* Only http/https protocol is currently supported.
 
 
 ## INSTALL
