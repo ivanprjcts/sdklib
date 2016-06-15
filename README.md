@@ -12,7 +12,7 @@ Sdklib helps you to write you own client library which will consume a specific s
 * Only http/https protocol is currently supported.
 
 
-## INSTALL
+## Install
 
 Install the `sdklib` package using pip:
 
@@ -21,7 +21,7 @@ pip install sdklib
 ```
 
 
-## USAGE
+## Usage
 
 ```
     from sdklib.http import HttpSdk
