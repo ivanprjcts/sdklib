@@ -1,3 +1,5 @@
+import json
+
 from behave import given, when, then
 
 from sdklib.http import api, HttpRequestContextSingleton
@@ -16,13 +18,13 @@ def set_default_proxy(context, host):
     http_request_context.proxy = host
 
 
-@given('The final API resource "{url_path}"')
+@given('The API resource "{url_path}"')
 def set_url_path(context, url_path):
     http_request_context = HttpRequestContextSingleton.get_instance()
     http_request_context.url_path = url_path
 
 
-@given('The API resource "{url_path_str_format}" with these parameter values')
+@given('The parameterized API resource "{url_path_str_format}" with these parameter values')
 def set_url_path_with_params(context, url_path_str_format):
     table_as_json = dict(context.table)
     url_path = url_path_str_format % table_as_json
@@ -83,6 +85,7 @@ def send_http_request(context, method):
     http_request_context = HttpRequestContextSingleton.get_instance()
     http_request_context.method = method
     context.api_response = api.http_request_from_context(http_request_context)
+    http_request_context.clear()
 
 
 @when('I send a HTTP "{method}" request with query parameters')
@@ -109,22 +112,22 @@ def send_http_request_with_body_parameters(context, method):
 
 @when('I send a HTTP "{method}" request with body parameters encoded "{encoding_type}"')
 def send_http_request_with_body_parameters_encoded(context, method, encoding_type):
-    assert(method in ["allowed methods variable"])
+    pass
 
 
 @when('I send a HTTP "{method}" request with this body "{resource_file}"')
 def send_http_request_with_body_resource_file(context, method, resource_file):
-    assert(method in ["allowed methods variable"])
+    pass
 
 
-@when('I send a HTTP "{method}" request with this JSON:')
+@when('I send a HTTP "{method}" request with this JSON')
 def send_http_request_with_json(context, method):
-    assert(method in ["allowed methods variable"])
+    pass
 
 
-@when('I send a HTTP "{method}" request with this XML:')
+@when('I send a HTTP "{method}" request with this XML')
 def send_http_request_with_xml(context, method):
-    assert(method in ["allowed methods variable"])
+    pass
 
 
 @then('The HTTP status code should be "{code}"')
@@ -148,30 +151,31 @@ def http_reason_phrase_should_not_be(context, reason):
 
 
 @then('The response header "{header_name}" should be "{header_value}"')
-def send_http_request_with_body_parameters(context, method):
-    assert(method in ["allowed methods variable"])
+def http_response_header_should_be(context, header_name, header_value):
+    pass
 
 
 @then('The response header "{header_name}" should contain "{header_value}"')
-def send_http_request_with_body_parameters(context, method):
-    assert(method in ["allowed methods variable"])
+def http_response_header_should_contain(context, header_name, header_value):
+    pass
 
 
-@then('The response body should contain this parameters:')
-def send_http_request_with_body_parameters(context, method):
-    assert(method in ["allowed methods variable"])
+@then('The response body should contain this parameters')
+def http_response_body_should_contain_this_parameters(context):
+    pass
 
 
 @then('The response body should be this "{response_file}"')
-def send_http_request_with_body_parameters(context, method):
-    assert(method in ["allowed methods variable"])
+def http_response_body_should_be_this_file(context, response_file):
+    pass
 
 
-@then('The response body should be this JSON:')
-def send_http_request_with_body_parameters(context, method):
-    assert(method in ["allowed methods variable"])
+@then('The response body should be this JSON')
+def http_response_body_should_be_this_json(context):
+    body_params = json.loads(context.text)
+    assert(body_params == context.api_response.data)
 
 
-@then('The response body should be this XML:')
-def send_http_request_with_body_parameters(context, method):
-    assert(method in ["allowed methods variable"])
+@then('The response body should be this XML')
+def http_response_body_should_be_this_xml(context):
+    pass

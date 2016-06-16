@@ -13,6 +13,7 @@ pages:
     - Sessions: user-guide/sessions.md
     - Authentication: user-guide/authentication.md
     - Https: user-guide/https.md
+    - Bahave-API: user-guide/behave-API.md
 - About:
     - Release Notes: about/release-notes.md
     - License: about/license.md

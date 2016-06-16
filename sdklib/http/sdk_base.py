@@ -11,8 +11,8 @@ from sdklib.http.headers import *
 
 class HttpRequestContext(object):
 
-    def __init__(self, host=None, proxy=None, method=GET_METHOD, url_path='/', headers=None, query_params=None,
-                 body_params=None, files=None, renderer=JSONRenderer(), authentication_instances=[]):
+    def __init__(self, host=None, proxy=None, method=None, url_path=None, headers=None, query_params=None,
+                 body_params=None, files=None, renderer=None, authentication_instances=[]):
         self.host = host
         self.proxy = proxy
         self.method = method
@@ -23,6 +23,38 @@ class HttpRequestContext(object):
         self.files = files
         self.renderer = renderer
         self.authentication_instances = authentication_instances
+
+    @property
+    def headers(self):
+        return self._headers
+
+    @headers.setter
+    def headers(self, value):
+        self._headers = value or dict()
+
+    @property
+    def renderer(self):
+        return self._renderer
+
+    @renderer.setter
+    def renderer(self, value):
+        self._renderer = value or JSONRenderer()
+
+    @property
+    def url_path(self):
+        return self._url_path
+
+    @url_path.setter
+    def url_path(self, value):
+        self._url_path = value or '/'
+
+    @property
+    def method(self):
+        return self._method
+
+    @method.setter
+    def method(self, value):
+        self._method = value or GET_METHOD
 
 
 class HttpSdk(object):
@@ -127,23 +159,27 @@ class HttpSdk(object):
         """
         Method to do http requests from context.
         """
+        context.method = context.method.upper()
+        assert context.method in ALLOWED_METHODS
+
+        context.url_path = ensure_url_path_starts_with_slash(context.url_path)
+
+        if context.body_params or context.files:
+            body, content_type = context.renderer.encode_params(context.body_params, files=context.files)
+            context.headers[CONTENT_TYPE_HEADER_NAME] = content_type
+        else:
+            body=None
+
         authentication_instances = context.authentication_instances
         for auth_obj in authentication_instances:
             context = auth_obj.apply_authentication(context)
 
-        method = context.method.upper()
-        assert method in ALLOWED_METHODS
-
-        url_path = ensure_url_path_starts_with_slash(context.url_path)
-        url = "%s%s" % (context.host, url_path)
+        url = "%s%s" % (context.host, context.url_path)
         if context.query_params is not None:
             url += "?%s" % (urlencode(context.query_params))
 
-        headers = context.headers
-        body, content_type = context.renderer.encode_params(context.body_params, files=context.files)
-        headers[CONTENT_TYPE_HEADER_NAME] = content_type
-
-        r = HttpSdk.get_pool_manager(context.proxy).request(method, url, body=body, headers=headers, redirect=False)
+        r = HttpSdk.get_pool_manager(context.proxy).request(context.method, url, body=body, headers=context.headers,
+                                                            redirect=False)
         r = HttpResponse(r)
         return r
 

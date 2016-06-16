@@ -35,12 +35,6 @@ class Singleton:
             self._instance = self._decorated()
             return self._instance
 
-    def delete_instance(self):
-        try:
-            del self._instance
-        except AttributeError:
-            pass
-
     def __call__(self):
         raise TypeError('Singletons must be accessed through `get_instance()`.')
 
