@@ -81,7 +81,7 @@ Do HTTP API requests easily using Gherkin language.
 * The HTTP reason phrase should be "{phrase}"
 * The HTTP reason phrase should contain "{phrase}"
 * The response body should be this JSON:
-
+```
 	"""
 	{
 	    "param1": "value1",
@@ -91,7 +91,7 @@ Do HTTP API requests easily using Gherkin language.
 	    }
 	}
 	"""
-
+```
 
 ## Future
 
@@ -109,7 +109,7 @@ Do HTTP API requests easily using Gherkin language.
 
 
 * I send a HTTP "{method}" request with this JSON
-
+```
    	 """
    	 {
    		 "param1": "value1",
@@ -119,9 +119,9 @@ Do HTTP API requests easily using Gherkin language.
    		 }
    	 }
    	 """
-
+```
 * I send a HTTP "{method}" request with this XML
-
+```
    	 """
 	 <xml>
 	 	<key>
@@ -130,7 +130,7 @@ Do HTTP API requests easily using Gherkin language.
 	 	</key>
 	</xml>
 	 """
-
+```
 ### Then
 
 * The response header "{header_name}" should be "{header_value}"
@@ -144,7 +144,7 @@ Do HTTP API requests easily using Gherkin language.
 
 * The response body should be this "{response_file}"
 * The response body should be this XML
-
+```
    	 """
 	 <xml>
 	 	<key>
@@ -153,3 +153,4 @@ Do HTTP API requests easily using Gherkin language.
 	 	</key>
 	</xml>
 	 """
+```
