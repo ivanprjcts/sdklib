@@ -18,19 +18,19 @@ Do HTTP API requests easily using Gherkin language.
 * The API resource "{url_path}"
 * The parameterized API resource "/path/%(key1)s/to/%(key2)s" with these parameter values                 
 
-| key   | value  |  
-|---    | ---    |
-| key1  | value1 |
-| key2  | value2 | 
+ | key   | value  |  
+ |---    | ---    |
+ | key1  | value1 |
+ | key2  | value2 | 
 
 * Authorization-Basic with username "{username}" and password "{password}"
 * 11Paths-Authorization with application id "{app_id}" and secret "{secret}"
 * The headers
 
-| header_name   | header_value  |  
-|---    | ---    |
-| header1  	| value1       |
-| header2      | value2       |
+ | header_name   | header_value  |  
+ |---    | ---    |
+ | header1  	| value1       |
+ | header2      | value2       |
 
 
 * The query parameters
@@ -82,15 +82,15 @@ Do HTTP API requests easily using Gherkin language.
 * The HTTP reason phrase should contain "{phrase}"
 * The response body should be this JSON:
 
-   	 """
-   	 {
-   		 "param1": "value1",
-   		 "param2": "value2",
-   		 "param3":{
-   			 "param31": "value31"
-   		 }
-   	 }
-   	 """
+	"""
+	{
+	    "param1": "value1",
+	    "param2": "value2",
+	    "param3":{
+	   	 "param31": "value31"
+	    }
+	}
+	"""
 
 
 ## Future
