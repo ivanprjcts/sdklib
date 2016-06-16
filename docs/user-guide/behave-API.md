@@ -18,35 +18,41 @@ Do HTTP API requests easily using Gherkin language.
 * The API resource "{url_path}"
 * The parameterized API resource "/path/%(key1)s/to/%(key2)s" with these parameter values                 
 
-     | key     |   value       |
-   	 | key1  	| value1    |
-  	 | key2		| value2    |
+| key   | value  |  
+|---    | ---    |
+| key1  | value1 |
+| key2  | value2 | 
 
 * Authorization-Basic with username "{username}" and password "{password}"
 * 11Paths-Authorization with application id "{app_id}" and secret "{secret}"
 * The headers
 
-   	 | header_name  | header_value |
-	 | header1  	| value1       |
-	 | header2      | value2       |
+| header_name   | header_value  |  
+|---    | ---    |
+| header1  	| value1       |
+| header2      | value2       |
+
 
 * The query parameters
 
-	 | param_name   | param_value  |
-	 | param1  	| value1  	    |
-         | param2 	| value2  	    |
+ | param_name   | param_value  |
+ |---    | ---    |
+ | param1  	| value1  	    |
+ | param2 	| value2  	    |
 
 * The body parameters
 
-	 | param_name   | param_value  |
-	 | param1  	| value1  	    |
-         | param2 		| value2  	    |
+ | param_name   | param_value  |
+ |---    | ---    |
+ | param1  	| value1  	    |
+ | param2 		| value2  	    |
 
 * The body files
 
-	 | param_name   | param_value  |
-	 | param1  	| value1  	    |
-         | param2 		| value2  	    |
+ | param_name   | param_value  |
+ |---    | ---    |
+ | param1  	| value1  	    |
+ | param2 		| value2  	    |
 
 
 
@@ -55,15 +61,17 @@ Do HTTP API requests easily using Gherkin language.
 * I send a HTTP "{method}" request
 * I send a HTTP "{method}" request with query parameters
 
-	 | param_name   | param_value  |
-	 | param1  	   | value1  	    |
-         | param2            | value2  	    |
+ | param_name   | param_value  |
+ |---    | ---    |
+ | param1  	   | value1  	    |
+ | param2            | value2  	    |
 
 * I send a HTTP "{method}" request with body parameters
 
-	 | param_name   | param_value  |
-	 | param1  	   | value1  	    |
-         | param2 	   | value2  	    |
+ | param_name   | param_value  |
+ |---    | ---    |
+ | param1  	   | value1  	    |
+ | param2 	   | value2  	    |
 
 
 ### Then
@@ -91,15 +99,16 @@ Do HTTP API requests easily using Gherkin language.
 
 * I send a HTTP "{method}" request with body parameters encoded "{encoding_type}"  # types: urlencoded, json, multipart, plain
 
-	 | param_name   | param_value  |
-	 | param1            | value1  	    |
-         | param2            | value2  	    |
+ | param_name   | param_value  |
+ |---    | ---    |
+ | param1            | value1  	    |
+ | param2            | value2  	    |
 
 
 * I send a HTTP "{method}" request with this body "{resource_file}"
 
 
-* I send a HTTP "{method}" request with this JSON:
+* I send a HTTP "{method}" request with this JSON
 
    	 """
    	 {
@@ -111,7 +120,7 @@ Do HTTP API requests easily using Gherkin language.
    	 }
    	 """
 
-* I send a HTTP "{method}" request with this XML:
+* I send a HTTP "{method}" request with this XML
 
    	 """
 	 <xml>
@@ -128,12 +137,13 @@ Do HTTP API requests easily using Gherkin language.
 * The response header "{header_name}" should contain "{header_value}"
 * The response body should contain this parameters:
 
-   		 | param_name    | param_value  	 |
-   		 | param1        | value1  		 |
-   		 | param2  	 | value2   	 |
+ | param_name    | param_value  	 |
+ |---    | ---    |
+ | param1        | value1  		 |
+ | param2  	 | value2   	 |
 
 * The response body should be this "{response_file}"
-* The response body should be this XML:
+* The response body should be this XML
 
    	 """
 	 <xml>
