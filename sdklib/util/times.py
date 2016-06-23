@@ -35,3 +35,10 @@ def current_milliseconds_timestamp():
 def datetime_to_milliseconds_timestamp(datetime_obj):
     seconds_timestamp = time.mktime(datetime_obj.timetuple())
     return seconds_to_milliseconds_timestamp(seconds_timestamp)
+
+
+def get_current_utc():
+    """
+    @return a string representation of the current time in UTC to be used in a Date HTTP Header
+    """
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
