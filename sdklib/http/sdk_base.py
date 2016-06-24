@@ -188,7 +188,7 @@ class HttpSdk(object):
         r = HttpResponse(r)
         return r
 
-    def http_request(self, method, url_path, headers=None, query_params=None, body_params=None, files=None, **kwargs):
+    def _http_request(self, method, url_path, headers=None, query_params=None, body_params=None, files=None, **kwargs):
         """
         Method to do http requests.
         :param method:
@@ -228,4 +228,4 @@ class HttpSdk(object):
         render_name = kwargs.pop("render", "json")
         render = get_renderer(render_name)
         params = parse_args(**kwargs)
-        return self.http_request('POST', self.LOGIN_URL_PATH, body_params=params, render=render)
+        return self._http_request('POST', self.LOGIN_URL_PATH, body_params=params, render=render)

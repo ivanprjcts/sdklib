@@ -16,7 +16,7 @@ class SampleHttpSdk(HttpSdk):
         Get all restaurants.
         :return: SdkResponse
         """
-        return self.http_request("GET", self.API_RESTAURANTS_URL_PATH)
+        return self._http_request("GET", self.API_RESTAURANTS_URL_PATH)
 
     def create_restaurant(self, name, description=None, city=None):
         """
@@ -24,7 +24,7 @@ class SampleHttpSdk(HttpSdk):
         :return: SdkResponse
         """
         params = parse_args(name=name, description=description, city=city)
-        return self.http_request("POST", self.API_RESTAURANTS_URL_PATH, body_params=params, render=FormRenderer())
+        return self._http_request("POST", self.API_RESTAURANTS_URL_PATH, body_params=params, render=FormRenderer())
 
     def update_restaurant(self, name, main_image, description=None, city=None):
         """
@@ -33,5 +33,5 @@ class SampleHttpSdk(HttpSdk):
         """
         params = parse_args(name=name, description=description, city=city)
         files = parse_args(mainImage=main_image)
-        return self.http_request("PUT", self.API_RESTAURANTS_URL_PATH, body_params=params, files=files,
-                                 render=MultiPartRenderer())
+        return self._http_request("PUT", self.API_RESTAURANTS_URL_PATH, body_params=params, files=files,
+                                  render=MultiPartRenderer())

@@ -12,4 +12,4 @@ class SampleHttpsHttpSdk(HttpSdk):
         Get all products.
         :return: SdkResponse
         """
-        return self.http_request("GET", self.API_PRODUCTS_PATH)
+        return self._http_request("GET", self.API_PRODUCTS_PATH)
