@@ -12,6 +12,7 @@ To upgrade Sdklib to the latest version, use pip:
 ## Sdklib 1.1
 
 * By default, no Content-type header in requests without body or files.
+* Add file attribute to sdk response.
 
 
 ## Sdklib 1.0

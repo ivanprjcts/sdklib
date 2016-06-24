@@ -9,6 +9,7 @@ class HttpResponse(io.IOBase):
     def __init__(self, resp):
         self.urllib3_response = resp
         self._cookie = None
+        self.file = None
 
     @property
     def data(self):
