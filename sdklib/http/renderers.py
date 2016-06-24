@@ -78,7 +78,13 @@ class MultiPartRenderer(object):
         fields = to_key_val_list(data or {})
         files = to_key_val_list(files or {})
 
-        for field, val in fields:
+        for field, value in fields:
+            ctype = None
+            if isinstance(value, (tuple, list)) and len(value) == 2:
+                val, ctype = value
+            else:
+                val = value
+
             if isinstance(val, basestring) or not hasattr(val, '__iter__'):
                 val = [val]
             for v in val:
@@ -86,9 +92,12 @@ class MultiPartRenderer(object):
                 if not isinstance(v, bytes):
                     v = to_string(v, lang=output_str)
 
-                new_fields.append(
-                    (field.decode('utf-8') if isinstance(field, bytes) else field,
-                     v.encode('utf-8') if isinstance(v, str) else v))
+                field = field.decode('utf-8') if isinstance(field, bytes) else field
+                v = v.encode('utf-8') if isinstance(v, str) else v
+
+                rf = RequestField(name=field, data=v)
+                rf.make_multipart(content_type=ctype)
+                new_fields.append(rf)
 
         for (k, v) in files:
             # support for explicit filename

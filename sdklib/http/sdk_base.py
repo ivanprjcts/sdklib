@@ -6,7 +6,6 @@ from sdklib.util.parser import parse_args
 from sdklib.util.urls import get_hostname_parameters_from_url, ensure_url_path_starts_with_slash
 from sdklib.http.response import HttpResponse
 from sdklib.http.methods import *
-from sdklib.http.headers import *
 
 
 class HttpRequestContext(object):
@@ -61,6 +60,12 @@ class HttpSdk(object):
     """
     Http sdk class.
     """
+    from sdklib.http.headers import (
+        ACCEPT_HEADER_NAME, ACCEPT_ENCODING_HEADER_NAME, ACCEPT_LANGUAGE_HEADER_NAME,
+        AUTHORIZATION_HEADER_NAME, CACHE_CONTROL_HEADER_NAME, CONNECTION_HEADER_NAME, CONTENT_LENGTH_HEADER_NAME,
+        CONTENT_TYPE_HEADER_NAME, COOKIE_HEADER_NAME, PRAGMA_HEADER_NAME, REFERRER_HEADER_NAME, USER_AGENT_HEADER_NAME
+    )
+
     DEFAULT_HOST = "http://127.0.0.1:80/"
     DEFAULT_PROXY = None
     DEFAULT_RENDERER = JSONRenderer()
@@ -127,9 +132,9 @@ class HttpSdk(object):
 
     def default_headers(self):
         headers = dict()
-        headers[ACCEPT_HEADER_NAME] = "*/*"
+        headers[self.ACCEPT_HEADER_NAME] = "*/*"
         if self.cookie and self.cookie.as_cookie_header_value():
-            headers[COOKIE_HEADER_NAME] = self.cookie.as_cookie_header_value()
+            headers[self.COOKIE_HEADER_NAME] = self.cookie.as_cookie_header_value()
         return headers
 
     @staticmethod
@@ -166,7 +171,7 @@ class HttpSdk(object):
 
         if context.body_params or context.files:
             body, content_type = context.renderer.encode_params(context.body_params, files=context.files)
-            context.headers[CONTENT_TYPE_HEADER_NAME] = content_type
+            context.headers[HttpSdk.CONTENT_TYPE_HEADER_NAME] = content_type
         else:
             body=None
 

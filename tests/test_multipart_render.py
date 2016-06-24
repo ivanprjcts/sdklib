@@ -24,6 +24,26 @@ class TestMultiPartRender(unittest.TestCase):
         self.assertIn(b"file.png", body)
         self.assertIn(b"Content-Type: image/png", body)
 
+    def test_encode_multipart_data_as_2tuple_files(self):
+        files = {"file_upload": "tests/resources/file.pdf", "file_upload2": "tests/resources/file.png"}
+        data = {"param1": ("value1", "myContentType"), "param2": "value2"}
+
+        r = MultiPartRenderer()
+        body, content_type = r.encode_params(data, files)
+        self.assertEqual(content_type, "multipart/form-data; boundary=----------ThIs_Is_tHe_bouNdaRY_$")
+        self.assertIn(
+            b'------------ThIs_Is_tHe_bouNdaRY_$\r\nContent-Disposition: form-data; name="param1"\r\nContent-Type: myContentType\r\n\r\nvalue1\r\n',
+            body)
+        self.assertIn(
+            b'------------ThIs_Is_tHe_bouNdaRY_$\r\nContent-Disposition: form-data; name="param2"\r\n\r\nvalue2\r\n',
+            body)
+        self.assertIn(b"file_upload", body)
+        self.assertIn(b"file.pdf", body)
+        self.assertIn(b"Content-Type: application/pdf", body)
+        self.assertIn(b"file_upload2", body)
+        self.assertIn(b"file.png", body)
+        self.assertIn(b"Content-Type: image/png", body)
+
     def test_encode_multipart_data_files_as_2tuple_parameter(self):
         filename, stream = guess_filename_stream("tests/resources/file.pdf")
         filename2, stream2 = guess_filename_stream("tests/resources/file.png")
