@@ -134,9 +134,10 @@ class FormRenderer(object):
 
     VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes', 'encoded']
     COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
+    DEFAULT_CONTENT_TYPE = "application/x-www-form-urlencoded"
 
     def __init__(self, collection_format='multi', output_str='javascript', sort=False):
-        self.content_type = 'application/x-www-form-urlencoded'
+        self.content_type = self.DEFAULT_CONTENT_TYPE
         self.collection_format = collection_format
         self.output_str = output_str
         self.sort = sort
@@ -274,8 +275,10 @@ class PlainTextRenderer(object):
 
 class JSONRenderer(object):
 
+    DEFAULT_CONTENT_TYPE = "application/json"
+
     def __init__(self):
-        self.content_type = 'application/json'
+        self.content_type = self.DEFAULT_CONTENT_TYPE
 
     def encode_params(self, data=None, **kwargs):
         """

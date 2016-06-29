@@ -91,12 +91,13 @@ class AbstractAuthentication(object):
 
 class X11PathsAuthentication(AbstractAuthentication):
 
-    def __init__(self, app_id, secret):
+    def __init__(self, app_id, secret, utc=None):
         self.app_id = app_id
         self.secret = secret
+        self.utc = utc
 
     def apply_authentication(self, context):
-        authorization_value, utc_value = x_11paths_authentication(self.app_id, self.secret, context)
+        authorization_value, utc_value = x_11paths_authentication(self.app_id, self.secret, context, utc=self.utc)
         context.headers[AUTHORIZATION_HEADER_NAME] = authorization_value
         context.headers[X_11PATHS_DATE_HEADER_NAME] = utc_value
         return context

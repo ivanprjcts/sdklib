@@ -11,7 +11,7 @@ from sdklib.http.methods import *
 class HttpRequestContext(object):
 
     def __init__(self, host=None, proxy=None, method=None, url_path=None, headers=None, query_params=None,
-                 body_params=None, files=None, renderer=None, authentication_instances=[]):
+                 body_params=None, files=None, renderer=None, authentication_instances=[], response_class=HttpResponse):
         self.host = host
         self.proxy = proxy
         self.method = method
@@ -22,6 +22,7 @@ class HttpRequestContext(object):
         self.files = files
         self.renderer = renderer
         self.authentication_instances = authentication_instances
+        self.response_class = response_class
 
     @property
     def headers(self):
@@ -72,7 +73,8 @@ class HttpSdk(object):
 
     LOGIN_URL_PATH = None
 
-    authentication_classes = ()
+    authentication_instances = ()
+    response_class = HttpResponse
 
     def __init__(self, host=None, proxy=None, default_renderer=None):
         self.host = host or self.DEFAULT_HOST
@@ -173,7 +175,7 @@ class HttpSdk(object):
             body, content_type = context.renderer.encode_params(context.body_params, files=context.files)
             context.headers[HttpSdk.CONTENT_TYPE_HEADER_NAME] = content_type
         else:
-            body=None
+            body = None
 
         authentication_instances = context.authentication_instances
         for auth_obj in authentication_instances:
@@ -185,7 +187,7 @@ class HttpSdk(object):
 
         r = HttpSdk.get_pool_manager(context.proxy).request(context.method, url, body=body, headers=context.headers,
                                                             redirect=False)
-        r = HttpResponse(r)
+        r = context.response_class(r)
         return r
 
     def _http_request(self, method, url_path, headers=None, query_params=None, body_params=None, files=None, **kwargs):
@@ -207,12 +209,15 @@ class HttpSdk(object):
         host = kwargs.get('host', self.host)
         proxy = kwargs.get('proxy', self.proxy)
         renderer = kwargs.get('renderer', MultiPartRenderer() if files else self.default_renderer)
+        authentication_instances = kwargs.get('authentication_instances', self.authentication_instances)
 
         if headers is None:
             headers = self.default_headers()
 
         context = HttpRequestContext(host=host, proxy=proxy, method=method, url_path=url_path, headers=headers,
-                                     query_params=query_params, body_params=body_params, files=files, renderer=renderer)
+                                     query_params=query_params, body_params=body_params, files=files, renderer=renderer,
+                                     response_class=self.response_class,
+                                     authentication_instances=authentication_instances)
         res = self.http_request_from_context(context)
         self.cookie = res.cookie
         return res
