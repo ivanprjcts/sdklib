@@ -159,7 +159,8 @@ class HttpSdk(object):
 
     @classmethod
     def set_default_proxy(cls, value):
-        cls.DEFAULT_PROXY = value
+        scheme, host, port = get_hostname_parameters_from_url(value)
+        cls.DEFAULT_PROXY = "%s://%s:%s" % (scheme, host, port)
 
     @staticmethod
     def http_request_from_context(context):
