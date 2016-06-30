@@ -9,10 +9,17 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+## Sdklib 1.1
+
+* By default, no Content-type header in requests without body or files.
+* Add file attribute to sdk response.
+* Allow multipart body with custom content-type in data forms.
+* Allow to add custom response_class.
+
+
 ## Sdklib 1.0
 
 * Use urllib3.
-
 
 
 ## Sdklib 0.5.2.1

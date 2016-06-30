@@ -1,8 +1,8 @@
-# Renderers
+# Renderers #
 
 Renderers are the managers of request enconding.
 
-Render name | Content-type | Encoding
+Renderer name | Content-type | Encoding
 --- | --- | ---
 form | application/x-www-form-urlencoded | param1=value1&param2=value2
 multpart | multipart/form-data | Content-Disposition: form-data; name="param1"\n\nvalue1
@@ -19,7 +19,7 @@ json | application/json | {"param1": "value1", "param2": "value2"}
 ## Render Objects
 
 
-    class BaseRender():
+    class BaseRenderer():
     
         def encode_params(self, data=None, files=None, **kwargs):
             """
@@ -31,21 +31,21 @@ json | application/json | {"param1": "value1", "param2": "value2"}
             """
 
 
-## FormRender
+## FormRenderer
 
 Build the body for a `application/x-www-form-urlencoded` request.
 
 
-## MultiPartRender
+## MultiPartRenderer
 
 Build the body for a `multipart/form-data` request.
 
 
-## PlainTextRender
+## PlainTextRenderer
 
 Build the body for a `text/plain` request.
 
 
-## JSONRender
+## JSONRenderer
 
 Build the body for a `application/json` request.

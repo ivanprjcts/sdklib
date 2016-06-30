@@ -52,7 +52,7 @@ def get_primitive_as_csharp_string(value):
         return str(value)
 
 
-class MultiPartRender(object):
+class MultiPartRenderer(object):
 
     def __init__(self, boundary="----------ThIs_Is_tHe_bouNdaRY_$", output_str='javascript'):
         self.boundary = boundary
@@ -78,7 +78,13 @@ class MultiPartRender(object):
         fields = to_key_val_list(data or {})
         files = to_key_val_list(files or {})
 
-        for field, val in fields:
+        for field, value in fields:
+            ctype = None
+            if isinstance(value, (tuple, list)) and len(value) == 2:
+                val, ctype = value
+            else:
+                val = value
+
             if isinstance(val, basestring) or not hasattr(val, '__iter__'):
                 val = [val]
             for v in val:
@@ -86,9 +92,12 @@ class MultiPartRender(object):
                 if not isinstance(v, bytes):
                     v = to_string(v, lang=output_str)
 
-                new_fields.append(
-                    (field.decode('utf-8') if isinstance(field, bytes) else field,
-                     v.encode('utf-8') if isinstance(v, str) else v))
+                field = field.decode('utf-8') if isinstance(field, bytes) else field
+                v = v.encode('utf-8') if isinstance(v, str) else v
+
+                rf = RequestField(name=field, data=v)
+                rf.make_multipart(content_type=ctype)
+                new_fields.append(rf)
 
         for (k, v) in files:
             # support for explicit filename
@@ -121,15 +130,17 @@ class MultiPartRender(object):
         return body, content_type
 
 
-class FormRender(object):
+class FormRenderer(object):
 
     VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes', 'encoded']
     COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
+    DEFAULT_CONTENT_TYPE = "application/x-www-form-urlencoded"
 
-    def __init__(self, collection_format='multi', output_str='javascript'):
-        self.content_type = 'application/x-www-form-urlencoded'
+    def __init__(self, collection_format='multi', output_str='javascript', sort=False):
+        self.content_type = self.DEFAULT_CONTENT_TYPE
         self.collection_format = collection_format
         self.output_str = output_str
+        self.sort = sort
 
     @property
     def collection_format(self):
@@ -138,7 +149,6 @@ class FormRender(object):
     @collection_format.setter
     def collection_format(self, value):
         assert value in self.VALID_COLLECTION_FORMATS
-
         self._collection_format = value
 
     def encode_params(self, data=None, **kwargs):
@@ -150,6 +160,7 @@ class FormRender(object):
         """
         collection_format = kwargs.get("collection_format", self.collection_format)
         output_str = kwargs.get("output_str", self.output_str)
+        sort = kwargs.get("sort", self.sort)
 
         if data is None:
             return "", self.content_type
@@ -159,7 +170,7 @@ class FormRender(object):
             return data, self.content_type
         elif collection_format == 'multi' and hasattr(data, '__iter__'):
             result = []
-            for k, vs in to_key_val_list(data):
+            for k, vs in to_key_val_list(data, sort=sort):
                 if isinstance(vs, basestring) or not hasattr(vs, '__iter__'):
                     vs = [vs]
                 for v in vs:
@@ -185,7 +196,7 @@ class FormRender(object):
             return data, self.content_type
 
 
-class PlainTextRender(object):
+class PlainTextRenderer(object):
     VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes', 'plain']
     COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
 
@@ -262,10 +273,12 @@ class PlainTextRender(object):
             return str(data).encode(charset) if charset else str(data), self.get_content_type(charset)
 
 
-class JSONRender(object):
+class JSONRenderer(object):
+
+    DEFAULT_CONTENT_TYPE = "application/json"
 
     def __init__(self):
-        self.content_type = 'application/json'
+        self.content_type = self.DEFAULT_CONTENT_TYPE
 
     def encode_params(self, data=None, **kwargs):
         """
@@ -285,14 +298,19 @@ class JSONRender(object):
         return body, self.content_type
 
 
-def get_render(name):
+def get_renderer(name):
     if name == 'json':
-        return JSONRender()
+        return JSONRenderer()
     elif name == 'form':
-        return FormRender()
+        return FormRenderer()
     elif name == 'multipart':
-        return MultiPartRender()
+        return MultiPartRenderer()
     elif name == 'plain':
-        return PlainTextRender()
+        return PlainTextRenderer()
     else:
-        return JSONRender()
+        return JSONRenderer()
+
+
+def url_encode(params, sort=False):
+    r = get_renderer('form')
+    return r.encode_params(params, sort=sort)[0]

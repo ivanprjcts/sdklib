@@ -1,39 +1,85 @@
 import urllib3
 
-from sdklib.http.renderers import JSONRender, MultiPartRender, get_render
+from sdklib.http.renderers import JSONRenderer, MultiPartRenderer, get_renderer
 from sdklib.compat import urlencode
 from sdklib.util.parser import parse_args
 from sdklib.util.urls import get_hostname_parameters_from_url, ensure_url_path_starts_with_slash
 from sdklib.http.response import HttpResponse
+from sdklib.http.methods import *
+
+
+class HttpRequestContext(object):
+
+    def __init__(self, host=None, proxy=None, method=None, url_path=None, headers=None, query_params=None,
+                 body_params=None, files=None, renderer=None, authentication_instances=[], response_class=HttpResponse):
+        self.host = host
+        self.proxy = proxy
+        self.method = method
+        self.url_path = url_path
+        self.headers = headers
+        self.query_params = query_params
+        self.body_params = body_params
+        self.files = files
+        self.renderer = renderer
+        self.authentication_instances = authentication_instances
+        self.response_class = response_class
+
+    @property
+    def headers(self):
+        return self._headers
+
+    @headers.setter
+    def headers(self, value):
+        self._headers = value or dict()
+
+    @property
+    def renderer(self):
+        return self._renderer
+
+    @renderer.setter
+    def renderer(self, value):
+        self._renderer = value or JSONRenderer()
+
+    @property
+    def url_path(self):
+        return self._url_path
+
+    @url_path.setter
+    def url_path(self, value):
+        self._url_path = value or '/'
+
+    @property
+    def method(self):
+        return self._method
+
+    @method.setter
+    def method(self, value):
+        self._method = value or GET_METHOD
 
 
 class HttpSdk(object):
     """
     Http sdk class.
     """
+    from sdklib.http.headers import (
+        ACCEPT_HEADER_NAME, ACCEPT_ENCODING_HEADER_NAME, ACCEPT_LANGUAGE_HEADER_NAME,
+        AUTHORIZATION_HEADER_NAME, CACHE_CONTROL_HEADER_NAME, CONNECTION_HEADER_NAME, CONTENT_LENGTH_HEADER_NAME,
+        CONTENT_TYPE_HEADER_NAME, COOKIE_HEADER_NAME, PRAGMA_HEADER_NAME, REFERRER_HEADER_NAME, USER_AGENT_HEADER_NAME
+    )
+
     DEFAULT_HOST = "http://127.0.0.1:80/"
     DEFAULT_PROXY = None
-    DEFAULT_RENDER = JSONRender()
-
-    USER_AGENT_HEADER_NAME = "User-Agent"
-    PRAGMA_HEADER_NAME = "Pragma"
-    CONTENT_TYPE_HEADER_NAME = "Content-Type"
-    CONTENT_LENGTH_HEADER_NAME = "Content-Length"
-    ACCEPT_HEADER_NAME = "Accept"
-    ACCEPT_LANGUAGE_HEADER_NAME = "Accept-Language"
-    ACCEPT_ENCODING_HEADER_NAME = "Accept-Encoding"
-    CACHE_CONTROL_HEADER_NAME = "Cache-Control"
-    CONNECTION_HEADER_NAME = "Connection"
-    REFERRER_HEADER_NAME = "Referer"
-    COOKIE_HEADER_NAME = "Cookie"
-    X_CSRF_TOKEN_HEADER_NAME = "X-CSRFToken"
+    DEFAULT_RENDERER = JSONRenderer()
 
     LOGIN_URL_PATH = None
 
-    def __init__(self, host=None, proxy=None, default_render=None):
+    authentication_instances = ()
+    response_class = HttpResponse
+
+    def __init__(self, host=None, proxy=None, default_renderer=None):
         self.host = host or self.DEFAULT_HOST
         self.proxy = proxy or self.DEFAULT_PROXY
-        self.default_render = default_render or self.DEFAULT_RENDER
+        self.default_renderer = default_renderer or self.DEFAULT_RENDERER
         self._cookie = None
 
     @property
@@ -93,11 +139,11 @@ class HttpSdk(object):
             headers[self.COOKIE_HEADER_NAME] = self.cookie.as_cookie_header_value()
         return headers
 
-    @property
-    def pool_manager(self):
-        if self.proxy:
+    @staticmethod
+    def get_pool_manager(proxy=None):
+        if proxy is not None:
             pm = urllib3.ProxyManager(
-                self.proxy,
+                proxy,
                 num_pools=10,
             )
         else:
@@ -113,13 +159,43 @@ class HttpSdk(object):
 
     @classmethod
     def set_default_proxy(cls, value):
-        cls.DEFAULT_PROXY = value
+        scheme, host, port = get_hostname_parameters_from_url(value)
+        cls.DEFAULT_PROXY = "%s://%s:%s" % (scheme, host, port)
+
+    @staticmethod
+    def http_request_from_context(context):
+        """
+        Method to do http requests from context.
+        """
+        context.method = context.method.upper()
+        assert context.method in ALLOWED_METHODS
+
+        context.url_path = ensure_url_path_starts_with_slash(context.url_path)
+
+        if context.body_params or context.files:
+            body, content_type = context.renderer.encode_params(context.body_params, files=context.files)
+            context.headers[HttpSdk.CONTENT_TYPE_HEADER_NAME] = content_type
+        else:
+            body = None
+
+        authentication_instances = context.authentication_instances
+        for auth_obj in authentication_instances:
+            context = auth_obj.apply_authentication(context)
+
+        url = "%s%s" % (context.host, context.url_path)
+        if context.query_params is not None:
+            url += "?%s" % (urlencode(context.query_params))
+
+        r = HttpSdk.get_pool_manager(context.proxy).request(context.method, url, body=body, headers=context.headers,
+                                                            redirect=False)
+        r = context.response_class(r)
+        return r
 
     def _http_request(self, method, url_path, headers=None, query_params=None, body_params=None, files=None, **kwargs):
         """
-        Internal method to do http requests.
+        Method to do http requests.
         :param method:
-        :param url:
+        :param url_path:
         :param headers:
         :param body_params:
         :param query_params:
@@ -133,28 +209,19 @@ class HttpSdk(object):
         """
         host = kwargs.get('host', self.host)
         proxy = kwargs.get('proxy', self.proxy)
-        render = kwargs.get('render', MultiPartRender() if files else self.default_render)
-
-        method = method.upper()
-        assert method in ['GET', 'HEAD', 'DELETE', 'POST', 'PUT', 'PATCH', 'OPTIONS', 'TRACE', 'CONNECT']
-
-        url_path = ensure_url_path_starts_with_slash(url_path)
-
-        url = "%s%s" % (host, url_path)
-        if query_params is not None:
-            url += "?%s" % (urlencode(query_params))
-
-        body, content_type = render.encode_params(body_params, files=files)
+        renderer = kwargs.get('renderer', MultiPartRenderer() if files else self.default_renderer)
+        authentication_instances = kwargs.get('authentication_instances', self.authentication_instances)
 
         if headers is None:
             headers = self.default_headers()
-            headers[self.CONTENT_TYPE_HEADER_NAME] = content_type
 
-        r = self.pool_manager.request(method, url, body=body, headers=headers, redirect=False)
-        r = HttpResponse(r)
-        self.cookie = r.cookie  # update cookie
-
-        return r
+        context = HttpRequestContext(host=host, proxy=proxy, method=method, url_path=url_path, headers=headers,
+                                     query_params=query_params, body_params=body_params, files=files, renderer=renderer,
+                                     response_class=self.response_class,
+                                     authentication_instances=authentication_instances)
+        res = self.http_request_from_context(context)
+        self.cookie = res.cookie
+        return res
 
     def login(self, **kwargs):
         """
@@ -165,6 +232,6 @@ class HttpSdk(object):
         assert self.LOGIN_URL_PATH is not None
 
         render_name = kwargs.pop("render", "json")
-        render = get_render(render_name)
+        render = get_renderer(render_name)
         params = parse_args(**kwargs)
         return self._http_request('POST', self.LOGIN_URL_PATH, body_params=params, render=render)
