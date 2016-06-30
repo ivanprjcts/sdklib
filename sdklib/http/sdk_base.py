@@ -67,7 +67,7 @@ class HttpSdk(object):
         CONTENT_TYPE_HEADER_NAME, COOKIE_HEADER_NAME, PRAGMA_HEADER_NAME, REFERRER_HEADER_NAME, USER_AGENT_HEADER_NAME
     )
 
-    DEFAULT_HOST = "http://127.0.0.1:80/"
+    DEFAULT_HOST = "http://127.0.0.1:80"
     DEFAULT_PROXY = None
     DEFAULT_RENDERER = JSONRenderer()
 
@@ -154,13 +154,19 @@ class HttpSdk(object):
 
     @classmethod
     def set_default_host(cls, value):
-        scheme, host, port = get_hostname_parameters_from_url(value)
-        cls.DEFAULT_HOST = "%s://%s:%s" % (scheme, host, port)
+        if value is None:
+            cls.DEFAULT_HOST = "http://127.0.0.1:80"
+        else:
+            scheme, host, port = get_hostname_parameters_from_url(value)
+            cls.DEFAULT_HOST = "%s://%s:%s" % (scheme, host, port)
 
     @classmethod
     def set_default_proxy(cls, value):
-        scheme, host, port = get_hostname_parameters_from_url(value)
-        cls.DEFAULT_PROXY = "%s://%s:%s" % (scheme, host, port)
+        if value is None:
+            cls.DEFAULT_PROXY = None
+        else:
+            scheme, host, port = get_hostname_parameters_from_url(value)
+            cls.DEFAULT_PROXY = "%s://%s:%s" % (scheme, host, port)
 
     @staticmethod
     def http_request_from_context(context):
