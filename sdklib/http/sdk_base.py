@@ -81,6 +81,7 @@ class HttpSdk(object):
         self.proxy = proxy or self.DEFAULT_PROXY
         self.default_renderer = default_renderer or self.DEFAULT_RENDERER
         self._cookie = None
+        self.incognito_mode = False
 
     @property
     def host(self):
@@ -135,7 +136,7 @@ class HttpSdk(object):
     def default_headers(self):
         headers = dict()
         headers[self.ACCEPT_HEADER_NAME] = "*/*"
-        if self.cookie and self.cookie.as_cookie_header_value():
+        if self.cookie and self.cookie.as_cookie_header_value() and not self.incognito_mode:
             headers[self.COOKIE_HEADER_NAME] = self.cookie.as_cookie_header_value()
         return headers
 
