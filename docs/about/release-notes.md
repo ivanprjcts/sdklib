@@ -9,6 +9,12 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+
+## Sdklib 1.2
+
+* Add incognito mode.
+
+
 ## Sdklib 1.1
 
 * By default, no Content-type header in requests without body or files.

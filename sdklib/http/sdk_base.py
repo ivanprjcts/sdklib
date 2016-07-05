@@ -67,7 +67,7 @@ class HttpSdk(object):
         CONTENT_TYPE_HEADER_NAME, COOKIE_HEADER_NAME, PRAGMA_HEADER_NAME, REFERRER_HEADER_NAME, USER_AGENT_HEADER_NAME
     )
 
-    DEFAULT_HOST = "http://127.0.0.1:80/"
+    DEFAULT_HOST = "http://127.0.0.1:80"
     DEFAULT_PROXY = None
     DEFAULT_RENDERER = JSONRenderer()
 
@@ -81,6 +81,7 @@ class HttpSdk(object):
         self.proxy = proxy or self.DEFAULT_PROXY
         self.default_renderer = default_renderer or self.DEFAULT_RENDERER
         self._cookie = None
+        self.incognito_mode = False
 
     @property
     def host(self):
@@ -135,7 +136,7 @@ class HttpSdk(object):
     def default_headers(self):
         headers = dict()
         headers[self.ACCEPT_HEADER_NAME] = "*/*"
-        if self.cookie and self.cookie.as_cookie_header_value():
+        if self.cookie and self.cookie.as_cookie_header_value() and not self.incognito_mode:
             headers[self.COOKIE_HEADER_NAME] = self.cookie.as_cookie_header_value()
         return headers
 
@@ -154,13 +155,19 @@ class HttpSdk(object):
 
     @classmethod
     def set_default_host(cls, value):
-        scheme, host, port = get_hostname_parameters_from_url(value)
-        cls.DEFAULT_HOST = "%s://%s:%s" % (scheme, host, port)
+        if value is None:
+            cls.DEFAULT_HOST = "http://127.0.0.1:80"
+        else:
+            scheme, host, port = get_hostname_parameters_from_url(value)
+            cls.DEFAULT_HOST = "%s://%s:%s" % (scheme, host, port)
 
     @classmethod
     def set_default_proxy(cls, value):
-        scheme, host, port = get_hostname_parameters_from_url(value)
-        cls.DEFAULT_PROXY = "%s://%s:%s" % (scheme, host, port)
+        if value is None:
+            cls.DEFAULT_PROXY = None
+        else:
+            scheme, host, port = get_hostname_parameters_from_url(value)
+            cls.DEFAULT_PROXY = "%s://%s:%s" % (scheme, host, port)
 
     @staticmethod
     def http_request_from_context(context):
