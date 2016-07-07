@@ -7,7 +7,7 @@ REQUIRES = ["urllib3 >= 1.10"]
 
 setup(
     name='sdklib',
-    version='1.2',
+    version='1.3',
     description='SDK helper library',
     author='Ivan Martin',
     author_email='ivanprjcts@gmail.com',
