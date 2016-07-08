@@ -6,7 +6,20 @@
 Welcome to sdklib's documentation!
 ==================================
 
-Contents:
+Library Reference
+-----------------
+
+.. toctree::
+  :hidden:
+
+  user-guide/renderers.rst
+  user-guide/sessions.rst
+  user-guide/authentication.rst
+  user-guide/behave-api.rst
+  tutorial/my-first-sdk.rst
+  about/license.rst
+  about/release-notes.rst
+
 
 .. toctree::
    :maxdepth: 2
