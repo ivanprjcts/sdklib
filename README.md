@@ -1,6 +1,8 @@
 # Sdklib: the client side framework #
 
 [![build-status-badge]][build-status]
+[![Code Climate](https://codeclimate.com/github/ivanprjcts/sdklib/badges/gpa.svg)](https://codeclimate.com/github/ivanprjcts/sdklib)
+[![Test Coverage](https://codeclimate.com/github/ivanprjcts/sdklib/badges/coverage.svg)](https://codeclimate.com/github/ivanprjcts/sdklib/coverage)
 
 
 Sdklib helps you to write you own client library which will consume a specific service.
