@@ -57,7 +57,7 @@ def get_thread_pool():
     return thread_pool
 
 
-def timeout(milliseconds, silent=False):
+def timeout(milliseconds=10000, silent=False):
     def wrap_function(func):
         @wraps(func)
         def __wrapper(*args, **kwargs):
