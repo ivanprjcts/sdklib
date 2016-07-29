@@ -2,6 +2,7 @@
 
 [![build-status-badge]][build-status]
 [![coverage-status-image]][codecov]
+[![pypi-version]][pypi]
 [![Code Climate](https://codeclimate.com/github/ivanprjcts/sdklib/badges/gpa.svg)](https://codeclimate.com/github/ivanprjcts/sdklib)
 
 
@@ -105,3 +106,5 @@ python -m unittest discover
 [build-status]: https://travis-ci.org/ivanprjcts/sdklib
 [codecov]: http://codecov.io/github/ivanprjcts/sdklib?branch=master
 [coverage-status-image]: https://img.shields.io/codecov/c/github/ivanprjcts/sdklib/master.svg
+[pypi-version]: https://img.shields.io/pypi/v/sdklib.svg
+[pypi]: https://pypi.python.org/pypi/sdklib
