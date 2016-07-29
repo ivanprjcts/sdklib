@@ -2,7 +2,7 @@
 
 [![build-status-badge]][build-status]
 [![Code Climate](https://codeclimate.com/github/ivanprjcts/sdklib/badges/gpa.svg)](https://codeclimate.com/github/ivanprjcts/sdklib)
-[![coverage-status-image]][codecov]
+[![coverage-status-image]][codecov]]
 
 
 Sdklib helps you to write you own client library which will consume a specific service.
