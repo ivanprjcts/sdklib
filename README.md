@@ -1,8 +1,9 @@
 # Sdklib: the client side framework #
 
 [![build-status-badge]][build-status]
+[![coverage-status-image]][codecov]
 [![Code Climate](https://codeclimate.com/github/ivanprjcts/sdklib/badges/gpa.svg)](https://codeclimate.com/github/ivanprjcts/sdklib)
-[![coverage-status-image]][codecov]]
+
 
 
 Sdklib helps you to write you own client library which will consume a specific service.
@@ -103,3 +104,4 @@ python -m unittest discover
 [build-status-badge]: https://travis-ci.org/ivanprjcts/sdklib.svg?branch=v1.0
 [build-status]: https://travis-ci.org/ivanprjcts/sdklib
 [codecov]: http://codecov.io/github/ivanprjcts/sdklib?branch=master
+[coverage-status-image]: https://img.shields.io/codecov/c/github/ivanprjcts/sdklib/master.svg
