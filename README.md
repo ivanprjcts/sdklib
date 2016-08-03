@@ -4,6 +4,7 @@
 [![coverage-status-image]][codecov]
 [![pypi-version]][pypi]
 [![Code Climate](https://codeclimate.com/github/ivanprjcts/sdklib/badges/gpa.svg)](https://codeclimate.com/github/ivanprjcts/sdklib)
+[![Requirements Status](https://requires.io/github/ivanprjcts/sdklib/requirements.svg?branch=master)](https://requires.io/github/ivanprjcts/sdklib/requirements/?branch=master)
 
 
 
