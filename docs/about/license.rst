@@ -1,17 +1,19 @@
-# License
+=======
+License
+=======
 
 ---
 
-## Included projects
+Included projects
+=================
 
-* Urllib3 - [View license](https://github.com/shazow/urllib3/blob/master/LICENSE.txt).
-
-* Mkdocs - [View license](https://github.com/mkdocs/mkdocs/blob/master/LICENSE).
+- Urllib3 - `View license <https://github.com/shazow/urllib3/blob/master/LICENSE.txt>`_.
 
 Many thanks to the authors and contributors of those projects.
 
 
-## Sdklib License (BSD)
+Sdklib License (BSD)
+===================
 
 Copyright © 2016, Ivanprojects. All rights reserved.
 

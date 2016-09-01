@@ -11,6 +11,12 @@ class TestUrls(unittest.TestCase):
         self.assertEqual(host, 'myhost.com')
         self.assertEqual(port, '80')
 
+    def test_get_hostname_parameters_from_url_with_subdomain(self):
+        scheme, host, port = get_hostname_parameters_from_url("https://cybersecurity-telefonica.e-paths.com")
+        self.assertEqual(scheme, 'https')
+        self.assertEqual(host, 'cybersecurity-telefonica.e-paths.com')
+        self.assertEqual(port, '443')
+
     def test_get_hostname_parameters_from_url_with_empty_schema(self):
         scheme, host, port = get_hostname_parameters_from_url("://myhost.com/")
         self.assertEqual(scheme, 'http')
