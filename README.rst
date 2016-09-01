@@ -2,7 +2,7 @@
 Sdklib: the client side framework
 =================================
 
-|Build Status||Codecov Status||Pypi Version||Code Climate||Requirements Status|
+|Build Status| |Codecov Status| |Pypi Version| |Code Climate| |Requirements Status|
 
 Sdklib helps you to write you own client library which will consume a specific service.
 
