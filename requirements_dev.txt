@@ -1,1 +1,2 @@
-mkdocs >= 0.15.3
+sphinx>=1.4.4
+sphinx-rtd-theme
