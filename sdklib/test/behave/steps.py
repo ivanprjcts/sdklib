@@ -97,6 +97,7 @@ def send_http_request_with_query_parameters(context, method):
     http_request_context.method = method
     http_request_context.query_parameters = query_params
     context.api_response = api.http_request_from_context(http_request_context)
+    http_request_context.clear()
 
 
 @when('I send a HTTP "{method}" request with body parameters')
@@ -108,6 +109,7 @@ def send_http_request_with_body_parameters(context, method):
     http_request_context.method = method
     http_request_context.body_parameters = body_params
     context.api_response = api.http_request_from_context(http_request_context)
+    http_request_context.clear()
 
 
 @when('I send a HTTP "{method}" request with body parameters encoded "{encoding_type}"')
