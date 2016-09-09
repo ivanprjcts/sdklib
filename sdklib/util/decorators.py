@@ -1,5 +1,7 @@
 import warnings
 
+from .times import timeout
+
 
 def deprecated(func):
     """This is a decorator which can be used to mark functions
@@ -25,3 +27,4 @@ class SomeClass:
  def some_old_method(self, x,y):
      return x + y
 """
+

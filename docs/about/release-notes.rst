@@ -12,6 +12,12 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.3
+==========
+
+- Add timeout decorator.
+- Generate docs with sphinx.
+
 
 Sdklib 1.2
 ==========
