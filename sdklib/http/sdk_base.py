@@ -19,7 +19,7 @@ def generate_url_path(url_path_format, prefix=None, format_suffix=None, allow_ke
         except KeyError as e:
             if not allow_key_errors:
                 raise
-            key = e.message
+            key = e.args[0]
             kwargs[key] = '{%s}' % key
             continue
         except:
