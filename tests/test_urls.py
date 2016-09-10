@@ -1,6 +1,7 @@
 import unittest
 
 from sdklib.util.urls import get_hostname_parameters_from_url, urlsplit, ensure_url_path_starts_with_slash
+from sdklib.http import generate_url_path
 
 
 class TestUrls(unittest.TestCase):
@@ -122,3 +123,31 @@ class TestUrls(unittest.TestCase):
     def test_ensure_url_path_starts_with_slash_if_it_has_not_it(self):
         url = ensure_url_path_starts_with_slash("api/1.0/")
         self.assertEqual(url, "/api/1.0/")
+
+    def test_generate_url_path_without_prefix(self):
+        url_path = generate_url_path("/path/to/{id}/", id=1)
+        self.assertEqual("/path/to/1/", url_path)
+
+    def test_generate_url_path_with_prefix(self):
+        url_path = generate_url_path("/path/to/{id}/", prefix="/example", id=1)
+        self.assertEqual("/example/path/to/1/", url_path)
+
+    def test_generate_url_path_with_multiple_params(self):
+        url_path = generate_url_path("/path/to/{id}/{lang}/", id=1, lang='es')
+        self.assertEqual("/path/to/1/es/", url_path)
+
+    def test_generate_url_path_extra_param(self):
+        url_path = generate_url_path("/path/to/{lang}/", lang='es', invented='hello')
+        self.assertEqual("/path/to/es/", url_path)
+
+    def test_generate_url_path_missing_param(self):
+        url_path = generate_url_path("/path/to/{id}/{lang}/", lang='es')
+        self.assertEqual("/path/to/{id}/es/", url_path)
+
+    def test_generate_url_path_multiples_missing_param(self):
+        url_path = generate_url_path("/path/to/{id}/{lang}/{format}/", lang='es')
+        self.assertEqual("/path/to/{id}/es/{format}/", url_path)
+
+    def test_generate_url_path_format_suffix(self):
+        url_path = generate_url_path("/path/to/{id}/{lang}/{format}/", format_suffix='json', lang='es')
+        self.assertEqual("/path/to/{id}/es/{format}/.json", url_path)

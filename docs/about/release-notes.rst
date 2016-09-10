@@ -16,6 +16,9 @@ Sdklib 1.3
 ==========
 
 - Add timeout decorator.
+- Add generate_url_path function.
+- Add new url parameters.
+- Add get, post, put, patch and delete methods.
 - Generate docs with sphinx.
 
 

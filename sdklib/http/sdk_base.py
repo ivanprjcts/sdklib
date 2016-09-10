@@ -3,19 +3,41 @@ import urllib3
 from sdklib.http.renderers import JSONRenderer, MultiPartRenderer, get_renderer
 from sdklib.compat import urlencode
 from sdklib.util.parser import parse_args
-from sdklib.util.urls import get_hostname_parameters_from_url, ensure_url_path_starts_with_slash
+from sdklib.util.urls import (
+    get_hostname_parameters_from_url, ensure_url_path_starts_with_slash, ensure_url_path_format_suffix_starts_with_dot
+)
 from sdklib.http.response import HttpResponse
 from sdklib.http.methods import *
 
 
+def generate_url_path(url_path_format, prefix=None, format_suffix=None, allow_key_errors=True, **kwargs):
+    prefix = prefix or ''
+    suffix = ensure_url_path_format_suffix_starts_with_dot(format_suffix)
+    while True:
+        try:
+            return ensure_url_path_starts_with_slash(prefix + url_path_format.format(**kwargs) + suffix)
+        except KeyError as e:
+            if not allow_key_errors:
+                raise
+            key = e.message
+            kwargs[key] = '{%s}' % key
+            continue
+        except:
+            raise
+
+
 class HttpRequestContext(object):
 
-    def __init__(self, host=None, proxy=None, method=None, url_path=None, headers=None, query_params=None,
-                 body_params=None, files=None, renderer=None, authentication_instances=[], response_class=HttpResponse):
+    def __init__(self, host=None, proxy=None, method=None, prefix_url_path=None, url_path=None, url_path_params=None,
+                 url_path_format=None, headers=None, query_params=None, body_params=None, files=None, renderer=None,
+                 authentication_instances=[], response_class=HttpResponse):
         self.host = host
         self.proxy = proxy
         self.method = method
+        self.prefix_url_path = prefix_url_path
         self.url_path = url_path
+        self.url_path_params = url_path_params
+        self.url_path_format = url_path_format
         self.headers = headers
         self.query_params = query_params
         self.body_params = body_params
@@ -73,6 +95,9 @@ class HttpSdk(object):
 
     LOGIN_URL_PATH = None
 
+    prefix_url_path = ""
+    url_path_params = {}
+    url_path_format = None
     authentication_instances = ()
     response_class = HttpResponse
 
@@ -177,7 +202,8 @@ class HttpSdk(object):
         context.method = context.method.upper()
         assert context.method in ALLOWED_METHODS
 
-        context.url_path = ensure_url_path_starts_with_slash(context.url_path)
+        context.url_path = generate_url_path(context.url_path, prefix=context.prefix_url_path,
+                                             format_suffix=context.url_path_format, **context.url_path_params)
 
         if context.body_params or context.files:
             body, content_type = context.renderer.encode_params(context.body_params, files=context.files)
@@ -217,22 +243,44 @@ class HttpSdk(object):
         host = kwargs.get('host', self.host)
         proxy = kwargs.get('proxy', self.proxy)
         renderer = kwargs.get('renderer', MultiPartRenderer() if files else self.default_renderer)
+        prefix_url_path = kwargs.get('prefix_url_path', self.prefix_url_path)
         authentication_instances = kwargs.get('authentication_instances', self.authentication_instances)
+        url_path_format = kwargs.get('url_path_format', self.authentication_instances)
 
         if headers is None:
             headers = self.default_headers()
 
-        context = HttpRequestContext(host=host, proxy=proxy, method=method, url_path=url_path, headers=headers,
-                                     query_params=query_params, body_params=body_params, files=files, renderer=renderer,
+        context = HttpRequestContext(host=host, proxy=proxy, method=method, prefix_url_path=prefix_url_path,
+                                     url_path=url_path, url_path_params=self.url_path_params,
+                                     url_path_format=url_path_format, headers=headers, query_params=query_params,
+                                     body_params=body_params, files=files, renderer=renderer,
                                      response_class=self.response_class,
                                      authentication_instances=authentication_instances)
         res = self.http_request_from_context(context)
         self.cookie = res.cookie
         return res
 
+    def get(self, url_path, headers=None, query_params=None, **kwargs):
+        return self._http_request(GET_METHOD, url_path, headers, query_params, None, None, **kwargs)
+
+    def post(self, url_path, headers=None, query_params=None, body_params=None, files=None, **kwargs):
+        return self._http_request(POST_METHOD, url_path, headers, query_params, body_params, files,
+                                  **kwargs)
+
+    def put(self, url_path, headers=None, query_params=None, body_params=None, files=None, **kwargs):
+        return self._http_request(PUT_METHOD, url_path, headers, query_params, body_params, files,
+                                  **kwargs)
+
+    def patch(self, url_path, headers=None, query_params=None, body_params=None, files=None, **kwargs):
+        return self._http_request(PATCH_METHOD, url_path, headers, query_params, body_params, files,
+                                  **kwargs)
+
+    def delete(self, url_path, headers=None, query_params=None, **kwargs):
+        return self._http_request(DELETE_METHOD, url_path, headers, query_params, None, None, **kwargs)
+
     def login(self, **kwargs):
         """
-        Basic Authentication method.
+        Login abstract method with default implementation.
         :param kwargs: parameters
         :return: SdkResponse
         """
@@ -241,4 +289,4 @@ class HttpSdk(object):
         render_name = kwargs.pop("render", "json")
         render = get_renderer(render_name)
         params = parse_args(**kwargs)
-        return self._http_request('POST', self.LOGIN_URL_PATH, body_params=params, render=render)
+        return self.post(self.LOGIN_URL_PATH, body_params=params, render=render)

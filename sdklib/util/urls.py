@@ -26,3 +26,11 @@ def ensure_url_path_starts_with_slash(url_path):
     if not url_path.startswith('/'):
         return '/' + url_path
     return url_path
+
+
+def ensure_url_path_format_suffix_starts_with_dot(format_suffix):
+    if not format_suffix:
+        return ''
+    if not format_suffix.startswith('.'):
+        return '.' + format_suffix
+    return format_suffix

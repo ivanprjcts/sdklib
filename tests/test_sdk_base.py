@@ -1,6 +1,7 @@
 import unittest
 
 from sdklib.http import HttpSdk
+from sdklib.http.sdk_base import generate_url_path
 
 
 class TestSdkBase(unittest.TestCase):
@@ -26,3 +27,4 @@ class TestSdkBase(unittest.TestCase):
         self.assertEqual(HttpSdk.DEFAULT_PROXY, "http://localhost:1234")
         HttpSdk.set_default_proxy(default_proxy)
         self.assertEqual(HttpSdk.DEFAULT_PROXY, default_proxy)
+
