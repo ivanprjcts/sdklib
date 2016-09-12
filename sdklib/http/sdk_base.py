@@ -245,7 +245,7 @@ class HttpSdk(object):
         renderer = kwargs.get('renderer', MultiPartRenderer() if files else self.default_renderer)
         prefix_url_path = kwargs.get('prefix_url_path', self.prefix_url_path)
         authentication_instances = kwargs.get('authentication_instances', self.authentication_instances)
-        url_path_format = kwargs.get('url_path_format', self.authentication_instances)
+        url_path_format = kwargs.get('url_path_format', self.url_path_format)
 
         if headers is None:
             headers = self.default_headers()
