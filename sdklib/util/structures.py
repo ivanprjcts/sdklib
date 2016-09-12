@@ -1,5 +1,7 @@
 import collections
 
+from sdklib.util.xmltodict import parse as parse_xml
+
 
 def contains_subdict(d1, d2):
     for elem in d1:
@@ -75,3 +77,7 @@ def to_key_val_dict(values):
             dict_to_return[k] = v
 
     return dict_to_return
+
+
+def xml_string_to_dict(xml_to_parse):
+    return parse_xml(xml_to_parse)

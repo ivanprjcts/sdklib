@@ -8,6 +8,7 @@ Included projects
 =================
 
 - Urllib3 - `View license <https://github.com/shazow/urllib3/blob/master/LICENSE.txt>`_.
+- Xmltodict - `View license <https://github.com/martinblech/xmltodict/blob/master/LICENSE>`_.
 
 Many thanks to the authors and contributors of those projects.
 

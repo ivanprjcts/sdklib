@@ -19,6 +19,7 @@ Sdklib 1.3
 - Add generate_url_path function.
 - Add new url parameters.
 - Add get, post, put, patch and delete methods.
+- Add XML response parser.
 - Generate docs with sphinx.
 
 

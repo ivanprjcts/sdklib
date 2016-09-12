@@ -1,7 +1,10 @@
 import io
 import json
 
+from xml.etree import ElementTree
+
 from sdklib.http.session import Cookie
+from sdklib.util.structures import xml_string_to_dict
 
 
 class HttpResponse(io.IOBase):
@@ -15,13 +18,18 @@ class HttpResponse(io.IOBase):
     def data(self):
         data = self.urllib3_response.data
         try:
-            decoded_data = data.decode()
+            data = data.decode()
+            pass
         except:
-            decoded_data = data
+            data = data
         try:
-            return json.loads(decoded_data)
+            return json.loads(data)
         except:
-            return decoded_data
+            pass
+        try:
+            return xml_string_to_dict(data)
+        except:
+            return data
 
     @property
     def status(self):
@@ -51,3 +59,8 @@ class HttpResponse(io.IOBase):
         Returns a given response header.
         """
         return self.urllib3_response.getheader(name, default)
+
+    @property
+    def xml(self):
+        data = self.urllib3_response.data
+        return ElementTree.fromstring(data)
