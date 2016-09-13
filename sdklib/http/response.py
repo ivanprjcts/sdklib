@@ -19,9 +19,8 @@ class HttpResponse(io.IOBase):
         data = self.urllib3_response.data
         try:
             data = data.decode()
-            pass
         except:
-            data = data
+            pass
         try:
             return json.loads(data)
         except:
