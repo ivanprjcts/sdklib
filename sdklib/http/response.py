@@ -64,3 +64,7 @@ class HttpResponse(io.IOBase):
     def xml(self):
         data = self.urllib3_response.data
         return ElementTree.fromstring(data)
+
+    @property
+    def raw(self):
+        return self.urllib3_response.data

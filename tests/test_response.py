@@ -1,30 +1,48 @@
 import unittest
 
-from sdklib.http import HttpSdk
+from sdklib.http import HttpResponse
 
 
-class SampleHttpSdk(HttpSdk):
-    """
-    Sample XML Sdk for testing purposes.
-    """
-    DEFAULT_HOST = "http://www.w3schools.com"
+XML_CATALOG = """<?xml version="1.0" encoding="UTF-8"?>
+<CATALOG>
+    <CD>
+        <TITLE>Empire Burlesque</TITLE>
+        <ARTIST>Bob Dylan</ARTIST>
+        <COUNTRY>USA</COUNTRY>
+        <COMPANY>Columbia</COMPANY>
+        <PRICE>10.90</PRICE>
+        <YEAR>1985</YEAR>
+    </CD>
+    <CD>
+        <TITLE>Hide your heart</TITLE>
+        <ARTIST>Bonnie Tyler</ARTIST>
+        <COUNTRY>UK</COUNTRY>
+        <COMPANY>CBS Records</COMPANY>
+        <PRICE>9.90</PRICE>
+        <YEAR>1988</YEAR>
+    </CD>
+    <CD>
+        <TITLE>Greatest Hits</TITLE>
+        <ARTIST>Dolly Parton</ARTIST>
+        <COUNTRY>USA</COUNTRY>
+        <COMPANY>RCA</COMPANY>
+        <PRICE>9.90</PRICE>
+        <YEAR>1982</YEAR>
+    </CD>
+</CATALOG>
+"""
 
-    XML_CATALOG_URL_PATH = "/xml/cd_catalog.xml"
 
-    def get_catalog(self):
-        """
-        Get XML Catalog.
-        :return: SdkResponse
-        """
-        return self._http_request("GET", self.XML_CATALOG_URL_PATH)
+class Urllib3ResponseMock(object):
+    def __init__(self):
+        self.data = XML_CATALOG
 
 
 class TestResponse(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        api = SampleHttpSdk()
-        cls.response = api.get_catalog()
+        cls.response = HttpResponse(Urllib3ResponseMock())
 
     @classmethod
     def tearDownClass(cls):
@@ -37,3 +55,7 @@ class TestResponse(unittest.TestCase):
     def test_xml_response(self):
         xml_data = self.response.xml
         self.assertEqual("CATALOG", xml_data.tag)
+
+    def test_xml_response_raw(self):
+        xml_raw = self.response.raw
+        self.assertIn("<?xml version=\"1.0\"", xml_raw)
