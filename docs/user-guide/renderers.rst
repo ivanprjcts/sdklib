@@ -2,7 +2,7 @@
 Renderers
 =========
 
-Renderers are the managers of request enconding.
+Renderers are the managers of request body enconding.
 
 
 +-----------------+-------------------------------------+----------------------------------------------------------+
@@ -12,32 +12,18 @@ Renderers are the managers of request enconding.
 +-----------------+-------------------------------------+----------------------------------------------------------+
 | multpart        | multipart/form-data                 | Content-Disposition: form-data; name="param1"\n\nvalue1  |
 +-----------------+-------------------------------------+----------------------------------------------------------+
-| plain           | text/plain; charset=utf-8           | param1=value1\nparam2=value2                             |
-+-----------------+-------------------------------------+----------------------------------------------------------|
+| plain           | text/plain; charset=utf-8           | param1=value1\\nparam2=value2                            |
++-----------------+-------------------------------------+----------------------------------------------------------+
 | json            |  application/json                   | {"param1": "value1", "param2": "value2"}                 |
 +-----------------+-------------------------------------+----------------------------------------------------------+
 
----
-
-**Note**: The code is available in the `renderers.py <https://github.com/ivanprjcts/sdklib/tree/master/sdklib/http/renderers.py>`_ module on GitHub.
-
----
 
 
-Renderer Objects
-================
-All renderer objects inherit from BaseRenderer.
-::
-    class BaseRenderer():
 
-        def encode_params(self, data=None, files=None, **kwargs):
-            """
-            Will successfully encode files when passed as a dict or a list of tuples. Order is retained if data
-            is a list of tuples but arbitrary if parameters are supplied as a dict.
+JSONRenderer
+============
 
-            The tuples may be string (filepath), 2-tuples (filename, fileobj), 3-tuples (filename, fileobj,
-            contentype) or 4-tuples (filename, fileobj, contentype, custom_headers).
-            """
+Build the body for a `application/json` request.
 
 
 FormRenderer
@@ -59,7 +45,11 @@ PlainTextRenderer
 Build the body for a `text/plain` request.
 
 
-JSONRenderer
-============
 
-Build the body for a `application/json` request.
+Renderers module
+================
+
+.. automodule:: sdklib.http.renderers
+    :members:
+    :undoc-members:
+    :show-inheritance:

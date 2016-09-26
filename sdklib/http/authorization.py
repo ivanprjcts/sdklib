@@ -1,14 +1,38 @@
+# -*- coding: utf-8 -*-
+u"""
+Copyright (c) 2016 Telefonica Digital | ElevenPaths
+
+This file is part of Toolium.
+
+icensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+"""
+
 import base64
 import hmac
 import binascii
 
 from hashlib import sha1
 
-from sdklib.util.times import get_current_utc
 from sdklib.http import url_encode
+from sdklib.http.renderers import FormRenderer, MultiPartRenderer, JSONRenderer
+from sdklib.http.headers import (
+    AUTHORIZATION_HEADER_NAME, X_11PATHS_DATE_HEADER_NAME, X_11PATHS_BODY_HASH_HEADER_NAME,
+    X_11PATHS_FILE_HASH_HEADER_NAME
+)
+from sdklib.util.files import guess_filename_stream
+from sdklib.util.times import get_current_utc
 from sdklib.util.urls import ensure_url_path_starts_with_slash
 from sdklib.util.structures import to_key_val_list
-from sdklib.http.headers import AUTHORIZATION_HEADER_NAME, X_11PATHS_DATE_HEADER_NAME
 
 
 X_11PATHS_HEADER_PREFIX = "X-11paths-"
@@ -17,13 +41,13 @@ AUTHORIZATION_HEADER_FIELD_SEPARATOR = " "
 AUTHORIZATION_METHOD = "11PATHS"
 
 
-def basic_authentication(username, password):
+def basic_authorization(username, password):
     combined_username_password = username + b":" + password
     b64_combined = base64.b64encode(combined_username_password)
     return b"Basic " + b64_combined
 
 
-def x_11paths_authentication(app_id, secret, context, utc=None):
+def x_11paths_authorization(app_id, secret, context, utc=None):
     """
     Calculate the authentication headers to be sent with a request to the API
     :param app_id:
@@ -32,9 +56,7 @@ def x_11paths_authentication(app_id, secret, context, utc=None):
     :param utc:
     :return: array a map with the Authorization and Date headers needed to sign a Latch API request
     """
-    if utc is None:
-        utc = get_current_utc()
-        utc = utc.strip()
+    utc = utc or context.headers[X_11PATHS_DATE_HEADER_NAME]
 
     url_path = ensure_url_path_starts_with_slash(context.url_path)
     url_path_query = url_path
@@ -46,13 +68,13 @@ def x_11paths_authentication(app_id, secret, context, utc=None):
                       _get_11paths_serialized_headers(context.headers) + "\n" +
                       url_path_query.strip())
 
-    if context.body_params is not None:
+    if context.body_params and isinstance(context.renderer, FormRenderer):
         string_to_sign = string_to_sign + "\n" + url_encode(context.body_params, sort=True)
 
     authorization_header_value = (AUTHORIZATION_METHOD + AUTHORIZATION_HEADER_FIELD_SEPARATOR + app_id +
                                   AUTHORIZATION_HEADER_FIELD_SEPARATOR + _sign_data(secret, string_to_sign))
 
-    return authorization_header_value, utc
+    return authorization_header_value
 
 
 def _sign_data(secret, data):
@@ -62,6 +84,36 @@ def _sign_data(secret, data):
     """
     sha1_hash = hmac.new(secret.encode(), data.encode(), sha1)
     return binascii.b2a_base64(sha1_hash.digest())[:-1].decode('utf8')
+
+
+def _hash_body(context):
+    body, _ = context.renderer.encode_params(context.body_params, files=context.files)
+    return sha1(body).hexdigest()
+
+
+def _hash_file(context):
+    (k, v) = context.files[0]
+    if isinstance(v, (tuple, list)):
+        if len(v) == 2:
+            fn, fp = v
+        elif len(v) == 3:
+            fn, fp, ft = v
+        else:
+            fn, fp, ft, fh = v
+    else:
+        fn, fp = guess_filename_stream(v)
+
+    if isinstance(fp, (str, bytes, bytearray)):
+        fdata = fp
+    else:
+        fdata = fp.read()
+
+    return sha1(fdata).hexdigest()
+
+
+def _get_utc():
+    utc = get_current_utc()
+    return utc.strip()
 
 
 def _get_11paths_serialized_headers(x_headers):
@@ -75,9 +127,9 @@ def _get_11paths_serialized_headers(x_headers):
         headers = to_key_val_list(x_headers, sort=True)
         serialized_headers = ""
         for key, value in headers:
-            if not key.lower().startswith(X_11PATHS_HEADER_PREFIX.lower()):
-                continue
-            serialized_headers += key + X_11PATHS_HEADER_SEPARATOR + value + " "
+            if key.lower().startswith(X_11PATHS_HEADER_PREFIX.lower()) and \
+                            key.lower() != X_11PATHS_DATE_HEADER_NAME.lower():
+                serialized_headers += key.lower() + X_11PATHS_HEADER_SEPARATOR + value + " "
         return serialized_headers.strip()
     else:
         return ""
@@ -97,9 +149,12 @@ class X11PathsAuthentication(AbstractAuthentication):
         self.utc = utc
 
     def apply_authentication(self, context):
-        authorization_value, utc_value = x_11paths_authentication(self.app_id, self.secret, context, utc=self.utc)
-        context.headers[AUTHORIZATION_HEADER_NAME] = authorization_value
-        context.headers[X_11PATHS_DATE_HEADER_NAME] = utc_value
+        context.headers[X_11PATHS_DATE_HEADER_NAME] = _get_utc()
+        if isinstance(context.renderer, MultiPartRenderer):
+            context.headers[X_11PATHS_FILE_HASH_HEADER_NAME] = _hash_file(context)
+        elif isinstance(context.renderer, JSONRenderer):
+            context.headers[X_11PATHS_BODY_HASH_HEADER_NAME] = _hash_body(context)
+        context.headers[AUTHORIZATION_HEADER_NAME] = x_11paths_authorization(self.app_id, self.secret, context)
         return context
 
 
@@ -110,5 +165,5 @@ class BasicAuthentication(AbstractAuthentication):
         self.password = password
 
     def apply_authentication(self, context):
-        context.headers[AUTHORIZATION_HEADER_NAME] = basic_authentication(self.username, self.password)
+        context.headers[AUTHORIZATION_HEADER_NAME] = basic_authorization(self.username, self.password)
         return context

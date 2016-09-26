@@ -12,11 +12,11 @@ Library Reference
 .. toctree::
   :hidden:
 
+  tutorial/my-first-sdk.rst
+  user-guide/configuration.rst
   user-guide/renderers.rst
-  user-guide/sessions.rst
   user-guide/authentication.rst
   user-guide/behave-api.rst
-  tutorial/my-first-sdk.rst
   about/license.rst
   about/release-notes.rst
 
