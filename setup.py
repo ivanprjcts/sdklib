@@ -1,19 +1,14 @@
 from setuptools import setup, find_packages
-
+from sdklib import __version__
 
 EXCLUDE_FROM_PACKAGES = []
 
 REQUIRES = ["urllib3 >= 1.10"]
 
 
-def read_file(filepath):
-    with open(filepath) as f:
-        return f.read()
-
-
 setup(
     name='sdklib',
-    version=read_file('VERSION').strip(),
+    version=__version__,
     description='SDK helper library',
     author='Ivan Martin',
     author_email='ivanprjcts@gmail.com',
