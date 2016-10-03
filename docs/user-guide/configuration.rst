@@ -32,19 +32,31 @@ A renderer object that will be used to build the body for any request.
 For more in depth information, see :ref:`renderers`.
 
 
+URLS
+====
+
 prefix_url_path
-===============
+~~~~~~~~~~~~~~~
 Default: "" (Empty string)
+
+A string that will be automatically included (prepended by default) to all urls.
 
 
 url_path_params
-===============
+~~~~~~~~~~~~~~~
 Default: {} (Empty dictionary)
 
+A dictionary mapping strings to string format that take a model object and return the generated URL. It works like string format with dictionary:
+::
+    "/path/to/{project_id}/{lang}".format(**{"project_id": 1, "lang": "es"})
 
 url_path_format
-===============
-Default: None (null value)
+~~~~~~~~~~~~~~~
+Default: None
+
+A string that will be automatically included (suffixed) to all urls. For example:
+::
+    .json or .xml
 
 
 authentication_instances
