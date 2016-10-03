@@ -114,7 +114,7 @@ The request signature is a base64 encoded and HMAC-SHA1 signed string. The strin
 Once the string has been created following the process described above, it must be signed using the HMAC-SHA1 algorithm and the secret that was obtained when registering the application. After signing, its raw binary data must be encoded in base64. The resulting string is the requestSignature to be added to Authorization header.
 
 The X-11Paths-Date header
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 The **X-11Paths-Date** header contains the value of the current UTC date and must have the following format:
 ::
     yyyy-MM-dd HH:mm:ss

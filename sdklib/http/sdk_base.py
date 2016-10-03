@@ -180,6 +180,11 @@ class HttpSdk(object):
 
     @classmethod
     def set_default_host(cls, value):
+        """
+        Default: "http://127.0.0.1:80"
+
+        A string that will be automatically included at the beginning of the url generated for doing each http request.
+        """
         if value is None:
             cls.DEFAULT_HOST = "http://127.0.0.1:80"
         else:
@@ -188,6 +193,14 @@ class HttpSdk(object):
 
     @classmethod
     def set_default_proxy(cls, value):
+        """
+        Default: None (no proxy)
+
+        A string that will be used to tell each request must be sent through this proxy server.
+        Use the scheme://hostname:port form.
+        If you need to use a proxy, you can configure individual requests with the proxies argument to any request
+        method.
+        """
         if value is None:
             cls.DEFAULT_PROXY = None
         else:
