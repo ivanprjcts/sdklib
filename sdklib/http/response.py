@@ -7,7 +7,12 @@ from sdklib.http.session import Cookie
 from sdklib.util.structures import xml_string_to_dict
 
 
-class HttpResponse(io.IOBase):
+class HttpResponse(object):
+    """
+    Wrapper of Urllib3 HTTPResponse class.
+
+    See http://urllib3.readthedocs.io/en/latest/user-guide.html#response-content
+    """
 
     def __init__(self, resp):
         self.urllib3_response = resp
@@ -32,10 +37,16 @@ class HttpResponse(io.IOBase):
 
     @property
     def status(self):
+        """
+        HTTP Status Code.
+        """
         return self.urllib3_response.status
 
     @property
     def reason(self):
+        """
+        HTTP Reason phrase.
+        """
         return self.urllib3_response.reason
 
     @property
@@ -66,4 +77,7 @@ class HttpResponse(io.IOBase):
 
     @property
     def raw(self):
+        """
+        Returns urllib3 response data.
+        """
         return self.urllib3_response.data

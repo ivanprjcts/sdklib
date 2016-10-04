@@ -63,9 +63,14 @@ authentication_instances
 ========================
 Default: () (Empty tuple)
 
+List (or tuple) of authentication objects that will be used for building the request.
+
+For more in depth information, see :ref:`authentication`.
+
 
 response_class
 ==============
 Default: HttpResponse
 
 
+For more in depth information, see :ref:`response`.

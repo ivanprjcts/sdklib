@@ -4,6 +4,11 @@ from sdklib.compat import cookies
 
 
 class Cookie(object):
+    """
+    Wrapper of python Cookie class.
+
+    See https://docs.python.org/2/library/cookie.html
+    """
 
     def __init__(self, headers=None):
         self._cookie = None

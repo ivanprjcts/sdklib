@@ -1,3 +1,5 @@
+.. _authentication:
+
 ==============
 Authentication
 ==============
@@ -16,21 +18,13 @@ HttpSdk class implements a mechanism to save automatically cookies embedded into
 If a cookie object is stored locally, then every request will contain a *COOKIE* header with this value.
 
 
-Cookie Object
-~~~~~~~~~~~~~
+Session module
+~~~~~~~~~~~~~~
 
-The `Cookie` class implement the following methods:
-
-- `.__init__(self, headers=None)`
-- `.load_from_headers(self, headers)`
-- `.as_cookie_header_value(self)`
-- `.is_empty(self)`
-- `.getcookie(self)`
-- `.items(self)`
-- `.get(self, key, default=None)`
-
-
-Wrapper of python `cookie <https://docs.python.org/2/library/cookie.html>`_ module.
+.. automodule:: sdklib.http.session
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 
 Login method
@@ -132,7 +126,10 @@ It is very important that the value and format of this header is the exact same 
 Note you can still use the standard HTTP Header **Date** in whichever format you want, such as RFC 1123. Just make sure to not confuse both and always use the value you use in **X-11Paths-Date** in the signature process. The API will ignore the standard **Date** header.
 
 
-OAuth 2.0
-=========
+Authorization module
+~~~~~~~~~~~~~~~~~~~~
 
-Future work.
+.. automodule:: sdklib.http.authorization
+    :members:
+    :undoc-members:
+    :show-inheritance:
