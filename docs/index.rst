@@ -6,9 +6,6 @@
 .. include:: ../README.rst
 
 
-Library Reference
------------------
-
 .. toctree::
   :hidden:
 
@@ -20,13 +17,6 @@ Library Reference
   user-guide/behave-api.rst
   about/license.rst
   about/release-notes.rst
-
-
-.. toctree::
-   :maxdepth: 2
-
-   sdklib.rst
-
 
 
 Indices and tables

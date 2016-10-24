@@ -3,29 +3,30 @@ Configuration
 =============
 
 
-DEFAULT_HOST
-============
-Default: "http://127.0.0.1:80"
+Default Configuration
+=====================
 
-A string that will be automatically included at the beginning of the url generated for doing each http request.
+DEFAULT_HOST
+~~~~~~~~~~~~
+Value: "http://127.0.0.1:80"
+
+A string that will be used as host default value.
 
 - It can be also modified by using set_default_host() class method.
 
 
 DEFAULT_PROXY
-=============
-Default: None (no proxy)
+~~~~~~~~~~~~~
+Value: None (no proxy)
 
-A string that will be used to tell each request must be sent through this proxy server.
-Use the scheme://hostname:port form.
-If you need to use a proxy, you can configure individual requests with the *proxy* argument to any request method.
+A string that will be used as proxy default value.
 
 - It can be also modified by using set_default_proxy() class method.
 
 
 DEFAULT_RENDERER
-================
-Default: JSONRenderer object
+~~~~~~~~~~~~~~~~
+Value: JSONRenderer() object
 
 A renderer object that will be used to build the body for any request.
 
@@ -35,11 +36,26 @@ For more in depth information, see :ref:`renderers`.
 URLS
 ====
 
+host
+~~~~
+Default: DEFAULT_HOST_
+
+A string that will be automatically included at the beginning of the url generated for doing each http request.
+
+
+proxy
+~~~~~
+Default: DEFAULT_PROXY_
+
+A string that will be used to tell each request must be sent through this proxy server.
+If you need to use a proxy, you can configure individual requests with the *proxy* argument to any request method.
+
+
 prefix_url_path
 ~~~~~~~~~~~~~~~
 Default: "" (Empty string)
 
-A string that will be automatically included (prepended by default) to all urls.
+A string that will be automatically prepended to all urls.
 
 
 url_path_params

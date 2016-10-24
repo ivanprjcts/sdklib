@@ -33,70 +33,10 @@ Install the `sdklib` package using pip.
     pip install sdklib
 
 
-Usage
-=====
+Sample
+======
 
-My First SDK example.
-::
-    from sdklib.http import HttpSdk
-    from sdklib.util.parser import safe_add_end_slash, parse_args
-    
-    
-    class FirstSdk(HttpSdk):
-        """
-        My First Sdk.
-        """
-        DEFAULT_HOST = "http://api.spring16.equinox.local"
-        
-        API_ITEMS_URL_PATH = "/api/1.0/items/"
-         
-        def create_item(self, name, description=None):
-            """
-            Create an item.
-            :param name: str
-            :param description: str (optional)
-            :return: SdkResponse
-            """
-            params = parse_args(name=name, description=description)
-            return self._http_request("POST", self.API_ITEMS_URL_PATH, body_params=params)
-    
-        def get_items(self, item_id=None):
-            """
-            Retrieve all items if 'item_id' is None. Otherwise, get specified item by 'item_id'.
-            :param item_id: str (optional)
-            :return: SdkResponse
-            """
-            return self._http_request("GET", self.API_ITEMS_URL_PATH + safe_add_end_slash(item_id))
-    
-        def update_item(self, item_id, name, description=None):
-            """
-            Update an item.
-            :param item_id: str
-            :param name: str
-            :param description: str (optional)
-            :return: SdkResponse
-            """
-            params = parse_args(name=name, description=description)
-            return self._http_request("PUT", self.API_ITEMS_URL_PATH + item_id + '/', body_params=params)
-
-        def delete_item(self, item_id):
-            """
-            Remove an item.
-            :param item_id: str
-            :return: SdkResponse
-            """
-            return self._http_request("DELETE", self.API_ITEMS_URL_PATH + item_id + '/')
-
-
-
-Run the tests
-=============
-
-Change to 'project_directory' and then, run unittest from command line.
-::
-    cd project_directory/
-    python -m unittest discover
-
+- My first SDK - `here <https://github.com/ivanprjcts/my-first-sdk>`_.
 
 
 Contributing

@@ -7,11 +7,8 @@ Introduction
 
 This tutorial will cover creating a simple SDK for managing a REST-ful API.
 
----
-
 **Note**: The code for this tutorial is available in the `ivanprjcts/my-first-sdk <https://github.com/ivanprjcts/my-first-sdk>`_ repository on GitHub.
 
----
 
 Setting up a new environment
 ============================
@@ -66,9 +63,9 @@ We'll need to edit our `first_sdk/first_sdk.py` file:
         """
         My First Sdk.
         """
-        DEFAULT_HOST = "http://api.spring16.equinox.local"
+        DEFAULT_HOST = "http://mockapi.sdklib.org"
 
-        API_ITEMS_URL_PATH = "/api/1.0/items/"
+        API_ITEMS_URL_PATH = "/items/"
 
         def create_item(self, name, description=None):
             """

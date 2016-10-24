@@ -119,7 +119,8 @@ class HttpSdk(object):
     @host.setter
     def host(self, value):
         """
-        Set hostname.
+        A string that will be automatically included at the beginning of the url generated for doing each http request.
+
         :param value: The host to be connected with, e.g. (http://hostname) or (https://X.X.X.X:port)
         """
         scheme, host, port = get_hostname_parameters_from_url(value)
@@ -136,8 +137,7 @@ class HttpSdk(object):
     @proxy.setter
     def proxy(self, value):
         """
-        Set proxy.
-        :param value:
+        A string that will be used to tell each request must be sent through this proxy server.
         """
         self._proxy = value
 
