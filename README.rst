@@ -51,5 +51,5 @@ Contributing
 Authors
 =======
 
-- Ivan Martin Vedriel - `@ivanprjcts <https://github.com/ivanprjcts>`_ - also maintainer.
+- Ivan Martin Vedriel - @ivanprjcts
 
