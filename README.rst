@@ -17,6 +17,7 @@ Sdklib helps you to write you own client library which will consume a specific s
 .. |Requirements Status| image:: https://requires.io/github/ivanprjcts/sdklib/requirements.svg?branch=master
    :target: https://requires.io/github/ivanprjcts/sdklib/requirements/?branch=master
 
+
 Highlights
 ==========
 
@@ -28,8 +29,8 @@ Highlights
 Install
 =======
 
-Install the ``sdklib`` package using pip.
-::
+Install the ``sdklib`` package using pip::
+
     pip install sdklib
 
 
