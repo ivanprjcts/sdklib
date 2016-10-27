@@ -1,6 +1,12 @@
 from setuptools import setup, find_packages
 from sdklib import __version__
 
+
+def read_file(filepath):
+    with open(filepath) as f:
+        return f.read()
+
+
 EXCLUDE_FROM_PACKAGES = []
 
 REQUIRES = ["urllib3 >= 1.10"]
@@ -10,10 +16,12 @@ setup(
     name='sdklib',
     version=__version__,
     description='SDK helper library',
+    long_description=read_file('README.rst'),
     author='Ivan Martin',
     author_email='ivanprjcts@gmail.com',
     url='https://github.com/ivanprjcts/sdklib',
     install_requires=REQUIRES,
+    keywords=['sdk', 'api', 'REST', 'client', 'http', 'requests'],
     license='BSD',
     classifiers=[
         'Intended Audience :: Developers',
