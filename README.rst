@@ -28,7 +28,7 @@ Highlights
 Install
 =======
 
-Install the `sdklib` package using pip.
+Install the ``sdklib`` package using pip.
 ::
     pip install sdklib
 
@@ -36,7 +36,7 @@ Install the `sdklib` package using pip.
 Sample
 ======
 
-- My first SDK - `here <https://github.com/ivanprjcts/my-first-sdk>`_.
+Find my first SDK on github: https://github.com/ivanprjcts/my-first-sdk
 
 
 Contributing
