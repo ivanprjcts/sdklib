@@ -59,7 +59,7 @@ def set_query_parameters(context):
     for row in context.table:
         query_params[row["param_name"]] = row["param_value"]
     http_request_context = HttpRequestContextSingleton.get_instance()
-    http_request_context.query_parameters = query_params
+    http_request_context.query_params = query_params
 
 
 @given('The body parameters')
@@ -68,7 +68,7 @@ def set_body_parameters(context):
     for row in context.table:
         body_params[row["param_name"]] = row["param_value"]
     http_request_context = HttpRequestContextSingleton.get_instance()
-    http_request_context.body_parameters = body_params
+    http_request_context.body_params = body_params
 
 
 @given('The body files')
@@ -95,7 +95,7 @@ def send_http_request_with_query_parameters(context, method):
         query_params[row["param_name"]] = row["param_value"]
     http_request_context = HttpRequestContextSingleton.get_instance()
     http_request_context.method = method
-    http_request_context.query_parameters = query_params
+    http_request_context.query_params = query_params
     context.api_response = api.http_request_from_context(http_request_context)
     http_request_context.clear()
 
@@ -107,7 +107,7 @@ def send_http_request_with_body_parameters(context, method):
         body_params[row["param_name"]] = row["param_value"]
     http_request_context = HttpRequestContextSingleton.get_instance()
     http_request_context.method = method
-    http_request_context.body_parameters = body_params
+    http_request_context.body_params = body_params
     context.api_response = api.http_request_from_context(http_request_context)
     http_request_context.clear()
 
