@@ -3,7 +3,7 @@
 import unittest
 
 from sdklib.http import HttpRequestContext
-from sdklib.http.authorization import basic_authorization, x_11paths_authorization
+from sdklib.http.authorization import basic_authorization, x_11paths_authorization, X11PathsAuthentication
 from sdklib.http.renderers import FormRenderer
 
 
@@ -32,3 +32,17 @@ class TestAuthorization(unittest.TestCase):
         header_value = x_11paths_authorization(app_id="123456", secret="654321", context=context,
                                                utc="2016-01-01 00:00:00")
         self.assertEqual("11PATHS 123456 8Ok3S1xUFLtjRxRkWVoZAKXZc1A=", header_value)
+
+    def test_11paths_authentication_class_with_static_time(self):
+        auth = X11PathsAuthentication(app_id="123456", secret="654321", utc="2016-01-01 00:00:00")
+        context = HttpRequestContext(method="POST", url_path="/path/",
+                                     body_params={"param": "value"}, renderer=FormRenderer())
+        res_context = auth.apply_authentication(context=context)
+        self.assertEqual("11PATHS 123456 8Ok3S1xUFLtjRxRkWVoZAKXZc1A=", res_context.headers["Authorization"])
+
+    def test_11paths_authentication_class_with_dynamic_time(self):
+        auth = X11PathsAuthentication(app_id="123456", secret="654321")
+        context = HttpRequestContext(method="POST", url_path="/path/",
+                                     body_params={"param": "value"}, renderer=FormRenderer())
+        res_context = auth.apply_authentication(context=context)
+        self.assertNotEqual("11PATHS 123456 8Ok3S1xUFLtjRxRkWVoZAKXZc1A=", res_context.headers["Authorization"])

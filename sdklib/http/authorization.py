@@ -132,7 +132,7 @@ class X11PathsAuthentication(AbstractAuthentication):
         self.utc = utc
 
     def apply_authentication(self, context):
-        context.headers[X_11PATHS_DATE_HEADER_NAME] = _get_utc()
+        context.headers[X_11PATHS_DATE_HEADER_NAME] = self.utc or _get_utc()
         if isinstance(context.renderer, MultiPartRenderer):
             context.headers[X_11PATHS_FILE_HASH_HEADER_NAME] = _hash_file(context)
         elif isinstance(context.renderer, JSONRenderer):
