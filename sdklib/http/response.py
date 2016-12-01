@@ -71,6 +71,11 @@ class HttpResponse(object):
         return self.urllib3_response.getheader(name, default)
 
     @property
+    def json(self):
+        data = self.urllib3_response.data
+        return json.loads(data)
+
+    @property
     def xml(self):
         data = self.urllib3_response.data
         return ElementTree.fromstring(data)

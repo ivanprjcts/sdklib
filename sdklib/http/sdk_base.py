@@ -1,3 +1,5 @@
+import logging
+
 import urllib3
 
 from sdklib.http.renderers import JSONRenderer, MultiPartRenderer, get_renderer
@@ -8,6 +10,7 @@ from sdklib.util.urls import (
 )
 from sdklib.http.response import HttpResponse
 from sdklib.http.methods import *
+from sdklib.util.logger import log_print_request, log_print_response
 
 
 def generate_url_path(url_path_format, prefix=None, format_suffix=None, allow_key_errors=True, **kwargs):
@@ -107,6 +110,7 @@ class HttpSdk(object):
         self.default_renderer = default_renderer or self.DEFAULT_RENDERER
         self._cookie = None
         self.incognito_mode = False
+        self.logger = logging.getLogger(__name__)
 
     @property
     def host(self):
@@ -208,9 +212,13 @@ class HttpSdk(object):
             cls.DEFAULT_PROXY = "%s://%s:%s" % (scheme, host, port)
 
     @staticmethod
-    def http_request_from_context(context):
+    def http_request_from_context(context, logger=None, update_content_type=True):
         """
         Method to do http requests from context.
+        :param context: request context.
+        :param logger: Logger instance to be used to print the request and response data.
+        :param update_content_type: (bool) Update headers before performig the request, adding the Content-Type value
+            according to the rendered body. By default: True.
         """
         context.method = context.method.upper()
         assert context.method in ALLOWED_METHODS
@@ -220,7 +228,8 @@ class HttpSdk(object):
 
         if context.body_params or context.files:
             body, content_type = context.renderer.encode_params(context.body_params, files=context.files)
-            context.headers[HttpSdk.CONTENT_TYPE_HEADER_NAME] = content_type
+            if update_content_type:
+                context.headers[HttpSdk.CONTENT_TYPE_HEADER_NAME] = content_type
         else:
             body = None
 
@@ -232,12 +241,15 @@ class HttpSdk(object):
         if context.query_params is not None:
             url += "?%s" % (urlencode(context.query_params))
 
+        log_print_request(logger, context.method, url, context.query_params, context.headers, body)
         r = HttpSdk.get_pool_manager(context.proxy).request(context.method, url, body=body, headers=context.headers,
                                                             redirect=False)
+        log_print_response(logger, r.status, r.data, r.headers)
         r = context.response_class(r)
         return r
 
-    def _http_request(self, method, url_path, headers=None, query_params=None, body_params=None, files=None, **kwargs):
+    def _http_request(self, method, url_path, headers=None, query_params=None, body_params=None, files=None,
+                      update_content_type=True, **kwargs):
         """
         Method to do http requests.
         :param method:
@@ -251,6 +263,8 @@ class HttpSdk(object):
             or a 3-tuple ``('filepath', 'content_type', custom_headers)``, where ``'content-type'`` is a string
             defining the content type of the given file and ``custom_headers`` a dict-like object containing additional
             headers to add for the file.
+        :param update_content_type: (bool) Update headers before performig the request, adding the Content-Type value
+            according to the rendered body. By default: True.
         :return:
         """
         host = kwargs.get('host', self.host)
@@ -269,7 +283,7 @@ class HttpSdk(object):
                                      body_params=body_params, files=files, renderer=renderer,
                                      response_class=self.response_class,
                                      authentication_instances=authentication_instances)
-        res = self.http_request_from_context(context)
+        res = self.http_request_from_context(context, self.logger, update_content_type)
         self.cookie = res.cookie
         return res
 

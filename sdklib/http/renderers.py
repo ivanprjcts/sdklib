@@ -1,4 +1,5 @@
 import json
+import exceptions
 
 from urllib3.filepost import encode_multipart_formdata
 from urllib3.fields import RequestField, guess_content_type
@@ -296,6 +297,20 @@ class JSONRenderer(object):
             body = json.dumps(fields, encoding='latin-1')
 
         return body, self.content_type
+
+
+class XMLRenderer(object):
+
+    DEFAULT_CONTENT_TYPE = "application/xml"
+
+    def __init__(self):
+        self.content_type = self.DEFAULT_CONTENT_TYPE
+
+    def encode_params(self, data=None, **kwargs):
+        """
+        Build the body for a application/xml request.
+        """
+        exceptions.BaseException("Not implemented yet")
 
 
 def get_renderer(name):

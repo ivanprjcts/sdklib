@@ -12,6 +12,15 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.4
+==========
+
+- Add XMLRenderer interface.
+- Add json property to response.
+- Add logger.
+- Allow to replace content-type header value.
+
+
 Sdklib 1.3
 ==========
 
