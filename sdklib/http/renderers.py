@@ -1,6 +1,8 @@
 import json
-import exceptions
-
+try:
+    from exceptions import BaseException
+except:
+    pass
 from urllib3.filepost import encode_multipart_formdata
 from urllib3.fields import RequestField, guess_content_type
 
@@ -310,7 +312,7 @@ class XMLRenderer(object):
         """
         Build the body for a application/xml request.
         """
-        exceptions.BaseException("Not implemented yet")
+        raise BaseException("Not implemented yet")
 
 
 def get_renderer(name):
