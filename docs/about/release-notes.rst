@@ -12,6 +12,12 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.4.1
+============
+
+- Fix bug: ensure url path params is never None.
+
+
 Sdklib 1.4
 ==========
 
