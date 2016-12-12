@@ -81,6 +81,14 @@ class HttpRequestContext(object):
     def method(self, value):
         self._method = value or GET_METHOD
 
+    @property
+    def url_path_params(self):
+        return self._url_path_params
+
+    @url_path_params.setter
+    def url_path_params(self, value):
+        self._url_path_params = value or dict()
+
 
 class HttpSdk(object):
     """
@@ -222,6 +230,8 @@ class HttpSdk(object):
         """
         context.method = context.method.upper()
         assert context.method in ALLOWED_METHODS
+
+        print context.url_path_params
 
         context.url_path = generate_url_path(context.url_path, prefix=context.prefix_url_path,
                                              format_suffix=context.url_path_format, **context.url_path_params)
