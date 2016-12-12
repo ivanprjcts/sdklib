@@ -12,6 +12,12 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.4.2
+============
+
+- Fix bug: 11paths authorization header is not correct using multiples form params.
+
+
 Sdklib 1.4.1
 ============
 

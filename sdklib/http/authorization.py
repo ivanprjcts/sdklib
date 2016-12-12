@@ -52,7 +52,7 @@ def x_11paths_authorization(app_id, secret, context, utc=None):
                       url_path_query.strip())
 
     if context.body_params and isinstance(context.renderer, FormRenderer):
-        string_to_sign = string_to_sign + "\n" + url_encode(context.body_params, sort=True)
+        string_to_sign = string_to_sign + "\n" + url_encode(context.body_params, sort=True).replace("&", "")
 
     authorization_header_value = (AUTHORIZATION_METHOD + AUTHORIZATION_HEADER_FIELD_SEPARATOR + app_id +
                                   AUTHORIZATION_HEADER_FIELD_SEPARATOR + _sign_data(secret, string_to_sign))

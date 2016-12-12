@@ -46,3 +46,15 @@ class TestAuthorization(unittest.TestCase):
                                      body_params={"param": "value"}, renderer=FormRenderer())
         res_context = auth.apply_authentication(context=context)
         self.assertNotEqual("11PATHS 123456 8Ok3S1xUFLtjRxRkWVoZAKXZc1A=", res_context.headers["Authorization"])
+
+    def test_11paths_authentication_form_multi(self):
+        auth = X11PathsAuthentication(app_id="QRKJw6qX4fykZ3G3yqkQ", secret="eHkAXTebECWBs4TtNbNMBYC99AzMrmaydUWcUFEM",
+                                      utc="2016-12-12 11:18:45")
+        context = HttpRequestContext(method="POST", url_path="/api/0.1/vulnerabilities/15fc104c-dc55-41d4-8d4e-4d76eda7a029/consequences",
+                                     body_params={"consequence.scopes[]": "1",
+                                                  "consequence.impact[]": "1",
+                                                  "consequence.description[es]": "test",
+                                                  "consequence.description[en]": "test"},
+                                     renderer=FormRenderer())
+        res_context = auth.apply_authentication(context=context)
+        self.assertEqual("11PATHS QRKJw6qX4fykZ3G3yqkQ CMf3royzdD4l/P0RVKyr2uOXZ4Y=", res_context.headers["Authorization"])
