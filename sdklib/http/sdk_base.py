@@ -231,8 +231,6 @@ class HttpSdk(object):
         context.method = context.method.upper()
         assert context.method in ALLOWED_METHODS
 
-        print context.url_path_params
-
         context.url_path = generate_url_path(context.url_path, prefix=context.prefix_url_path,
                                              format_suffix=context.url_path_format, **context.url_path_params)
 
