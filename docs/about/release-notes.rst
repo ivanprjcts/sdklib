@@ -12,6 +12,12 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.5
+============
+
+- Add HTML parsed response.
+
+
 Sdklib 1.4.2
 ============
 
