@@ -9,8 +9,6 @@ def read_file(filepath):
 
 EXCLUDE_FROM_PACKAGES = []
 
-REQUIRES = ["urllib3 >= 1.10"]
-
 
 setup(
     name='sdklib',
@@ -20,7 +18,7 @@ setup(
     author='Ivan Martin',
     author_email='ivanprjcts@gmail.com',
     url='https://github.com/ivanprjcts/sdklib',
-    install_requires=REQUIRES,
+    install_requires=read_file('requirements.txt').splitlines(),
     keywords=['sdk', 'api', 'REST', 'client', 'http', 'requests'],
     license='BSD',
     classifiers=[
