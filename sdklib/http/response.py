@@ -5,13 +5,14 @@ from xml.etree import ElementTree
 
 from sdklib.http.session import Cookie
 from sdklib.util.structures import xml_string_to_dict
+from sdklib.html import HTML
 
 
 class HttpResponse(object):
     """
     Wrapper of Urllib3 HTTPResponse class.
 
-    See http://urllib3.readthedocs.io/en/latest/user-guide.html#response-content
+    See `Urllib3 <http://urllib3.readthedocs.io/en/latest/user-guide.html#response-content>`_.
     """
 
     def __init__(self, resp):
@@ -86,3 +87,10 @@ class HttpResponse(object):
         Returns urllib3 response data.
         """
         return self.urllib3_response.data
+
+    @property
+    def html(self):
+        """
+        Returns HTML response data.
+        """
+        return HTML(self.urllib3_response.data)

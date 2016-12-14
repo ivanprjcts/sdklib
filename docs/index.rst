@@ -17,12 +17,4 @@
   user-guide/behave-api.rst
   about/license.rst
   about/release-notes.rst
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
+  sdklib.rst
