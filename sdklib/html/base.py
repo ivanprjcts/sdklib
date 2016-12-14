@@ -23,6 +23,7 @@ class HTML(object):
     def find_element_by_id(self, id_):
         """
         Finds an element by id.
+
         :param id_: The id of the element to be found.
         :return:
         """
@@ -31,6 +32,7 @@ class HTML(object):
     def find_elements_by_id(self, id_):
         """
         Finds multiple elements by id.
+
         :param id_: The id of the elements to be found.
         :return:
         """
@@ -39,6 +41,7 @@ class HTML(object):
     def find_element_by_xpath(self, xpath):
         """
         Finds an element by xpath.
+
         :param xpath: The xpath locator of the element to find.
         :return:
         """
@@ -47,6 +50,7 @@ class HTML(object):
     def find_elements_by_xpath(self, xpath):
         """
         Finds multiple elements by xpath.
+
         :param xpath: The xpath locator of the elements to be found.
         :return:
         """

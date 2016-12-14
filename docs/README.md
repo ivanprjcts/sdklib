@@ -1,0 +1,4 @@
+# Generate docs #
+
+1. Generate API docs. [See sphinx-apidoc](http://www.sphinx-doc.org/en/1.5.1/invocation.html#invocation-of-sphinx-apidoc)
+2. Generate html. [See sphinx-build](http://www.sphinx-doc.org/en/1.5.1/invocation.html#invocation-of-sphinx-build)
