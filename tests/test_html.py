@@ -18,9 +18,9 @@ class TestHTML(unittest.TestCase):
         self.assertEqual(2, len(self.html.find_elements_by_id('primary-nav')))
 
     def test_find_element_by_xpath(self):
-        item = self.html.find_element_by_xpath(".//li[@class='dropdown-submenu test']/a[@href='index.html#']")
+        item = self.html.find_element_by_xpath("//li[@class='dropdown-submenu test']/a[@href='index.html#']")
         self.assertEqual("Press Room", item.text)
 
     def test_find_elements_by_xpath(self):
-        items = self.html.find_elements_by_xpath(".//li[@class='dropdown-submenu test']/a[@href='index.html#']")
+        items = self.html.find_elements_by_xpath("//li[@class='dropdown-submenu test']/a[@href='index.html#']")
         self.assertEqual(1, len(items))

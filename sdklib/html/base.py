@@ -38,6 +38,10 @@ class HTML(object):
         """
         return self.find_elements_by_xpath('.//*[@id="%s"]' % id_)
 
+    @staticmethod
+    def _convert_xpath(xpath):
+        return "." + xpath if xpath.startswith("/") else xpath
+
     def find_element_by_xpath(self, xpath):
         """
         Finds an element by xpath.
@@ -45,7 +49,7 @@ class HTML(object):
         :param xpath: The xpath locator of the element to find.
         :return:
         """
-        return self.tree.find(xpath)
+        return self.tree.find(self._convert_xpath(xpath))
 
     def find_elements_by_xpath(self, xpath):
         """
@@ -54,4 +58,4 @@ class HTML(object):
         :param xpath: The xpath locator of the elements to be found.
         :return:
         """
-        return self.tree.findall(xpath)
+        return self.tree.findall(self._convert_xpath(xpath))
