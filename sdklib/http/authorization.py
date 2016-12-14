@@ -32,7 +32,8 @@ def basic_authorization(username, password):
 
 def x_11paths_authorization(app_id, secret, context, utc=None):
     """
-    Calculate the authentication headers to be sent with a request to the API
+    Calculate the authentication headers to be sent with a request to the API.
+
     :param app_id:
     :param secret:
     :param context
@@ -62,6 +63,8 @@ def x_11paths_authorization(app_id, secret, context, utc=None):
 
 def _sign_data(secret, data):
     """
+    Sign data.
+
     :param data: the string to sign
     :return: string base64 encoding of the HMAC-SHA1 hash of the data parameter using {@code secretKey} as cipher key.
     """
@@ -101,7 +104,8 @@ def _get_utc():
 
 def _get_11paths_serialized_headers(x_headers):
     """
-    Prepares and returns a string ready to be signed from the 11-paths specific HTTP headers received
+    Prepares and returns a string ready to be signed from the 11-paths specific HTTP headers received.
+
     :param x_headers: a non necessarily ordered map (array without duplicates) of the HTTP headers to be ordered.
     :return: string The serialized headers, an empty string if no headers are passed, or None if there's a problem such
     as non 11paths specific headers

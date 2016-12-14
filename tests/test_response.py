@@ -32,30 +32,49 @@ XML_CATALOG = """<?xml version="1.0" encoding="UTF-8"?>
 </CATALOG>
 """
 
+HTML_STR = """<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<h1 id="heading">This is a Heading</h1>
+<p>This is a paragraph.</p>
+
+</body>
+</html>
+"""
+
 
 class Urllib3ResponseMock(object):
-    def __init__(self):
-        self.data = XML_CATALOG
+    def __init__(self, data):
+        self.data = data
 
 
 class TestResponse(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.response = HttpResponse(Urllib3ResponseMock())
+        cls.xml_response = HttpResponse(Urllib3ResponseMock(XML_CATALOG))
+        cls.html_response = HttpResponse(Urllib3ResponseMock(HTML_STR))
 
     @classmethod
     def tearDownClass(cls):
         pass
 
     def test_xml_response_data(self):
-        data = self.response.data
+        data = self.xml_response.data
         self.assertTrue(isinstance(data["CATALOG"]["CD"], list))
 
     def test_xml_response(self):
-        xml_data = self.response.xml
+        xml_data = self.xml_response.xml
         self.assertEqual("CATALOG", xml_data.tag)
 
     def test_xml_response_raw(self):
-        xml_raw = self.response.raw
+        xml_raw = self.xml_response.raw
         self.assertIn("<?xml version=\"1.0\"", xml_raw)
+
+    def test_html_response(self):
+        html = self.html_response.html
+        self.assertIn("This is a Heading", html.find_element_by_id("heading").text)

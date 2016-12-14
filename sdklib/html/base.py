@@ -6,6 +6,11 @@ from sdklib.compat import str
 class HTML(object):
     """
     HTMLObject class.
+
+    .. note::
+
+       This class emulates some methods of selenium Web Driver.
+       See `selenium Web Driver <https://github.com/SeleniumHQ/selenium/blob/master/py/selenium/webdriver/remote/webdriver.py>`_.
     """
 
     def __init__(self, dom):
