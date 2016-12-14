@@ -1,5 +1,7 @@
 import html5lib
 
+from sdklib.compat import str
+
 
 class HTML(object):
     """
