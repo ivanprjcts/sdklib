@@ -55,7 +55,18 @@ def get_primitive_as_csharp_string(value):
         return str(value)
 
 
-class MultiPartRenderer(object):
+class BaseRenderer(object):
+
+    DEFAULT_CONTENT_TYPE = ""
+
+    def encode_params(self, data=None, **kwargs):
+        """
+        Build the body for a request.
+        """
+        raise BaseException("Not implemented yet")
+
+
+class MultiPartRenderer(BaseRenderer):
 
     def __init__(self, boundary="----------ThIs_Is_tHe_bouNdaRY_$", output_str='javascript'):
         self.boundary = boundary
@@ -133,7 +144,7 @@ class MultiPartRenderer(object):
         return body, content_type
 
 
-class FormRenderer(object):
+class FormRenderer(BaseRenderer):
 
     VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes', 'encoded']
     COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
@@ -199,7 +210,7 @@ class FormRenderer(object):
             return data, self.content_type
 
 
-class PlainTextRenderer(object):
+class PlainTextRenderer(BaseRenderer):
     VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes', 'plain']
     COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
 
@@ -276,7 +287,7 @@ class PlainTextRenderer(object):
             return str(data).encode(charset) if charset else str(data), self.get_content_type(charset)
 
 
-class JSONRenderer(object):
+class JSONRenderer(BaseRenderer):
 
     DEFAULT_CONTENT_TYPE = "application/json"
 
@@ -301,7 +312,7 @@ class JSONRenderer(object):
         return body, self.content_type
 
 
-class XMLRenderer(object):
+class XMLRenderer(BaseRenderer):
 
     DEFAULT_CONTENT_TYPE = "application/xml"
 
