@@ -124,6 +124,7 @@ class HttpSdk(object):
     def host(self):
         """
         Get hostname.
+
         :return: host value
         """
         return self._host
@@ -142,6 +143,7 @@ class HttpSdk(object):
     def proxy(self):
         """
         Get proxy url.
+
         :return: proxy url value
         """
         return self._proxy
@@ -157,6 +159,7 @@ class HttpSdk(object):
     def cookie(self):
         """
         Get cookie.
+
         :return: cookie value
         """
         return self._cookie
@@ -223,6 +226,7 @@ class HttpSdk(object):
     def http_request_from_context(context, logger=None, update_content_type=True):
         """
         Method to do http requests from context.
+
         :param context: request context.
         :param logger: Logger instance to be used to print the request and response data.
         :param update_content_type: (bool) Update headers before performig the request, adding the Content-Type value
@@ -236,7 +240,7 @@ class HttpSdk(object):
 
         if context.body_params or context.files:
             body, content_type = context.renderer.encode_params(context.body_params, files=context.files)
-            if update_content_type:
+            if update_content_type and HttpSdk.CONTENT_TYPE_HEADER_NAME not in context.headers:
                 context.headers[HttpSdk.CONTENT_TYPE_HEADER_NAME] = content_type
         else:
             body = None
@@ -260,6 +264,7 @@ class HttpSdk(object):
                       update_content_type=True, **kwargs):
         """
         Method to do http requests.
+
         :param method:
         :param url_path:
         :param headers:
@@ -316,6 +321,7 @@ class HttpSdk(object):
     def login(self, **kwargs):
         """
         Login abstract method with default implementation.
+
         :param kwargs: parameters
         :return: SdkResponse
         """

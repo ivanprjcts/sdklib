@@ -12,6 +12,12 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.6
+==========
+
+- Custom content-type header has priority over renderer content-type.
+
+
 Sdklib 1.5.2
 ============
 
