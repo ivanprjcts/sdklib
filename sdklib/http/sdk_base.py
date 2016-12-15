@@ -33,7 +33,26 @@ class HttpRequestContext(object):
 
     def __init__(self, host=None, proxy=None, method=None, prefix_url_path=None, url_path=None, url_path_params=None,
                  url_path_format=None, headers=None, query_params=None, body_params=None, files=None, renderer=None,
-                 authentication_instances=[], response_class=HttpResponse):
+                 authentication_instances=[], response_class=HttpResponse, update_content_type=True):
+        """
+
+        :param host:
+        :param proxy:
+        :param method:
+        :param prefix_url_path:
+        :param url_path:
+        :param url_path_params:
+        :param url_path_format:
+        :param headers:
+        :param query_params:
+        :param body_params:
+        :param files:
+        :param renderer:
+        :param authentication_instances:
+        :param response_class:
+        :param update_content_type: (bool) Update headers before performing the request, adding the Content-Type value
+            according to the rendered body. By default: True.
+        """
         self.host = host
         self.proxy = proxy
         self.method = method
@@ -48,6 +67,7 @@ class HttpRequestContext(object):
         self.renderer = renderer
         self.authentication_instances = authentication_instances
         self.response_class = response_class
+        self.update_content_type = update_content_type
 
     @property
     def headers(self):
@@ -223,14 +243,12 @@ class HttpSdk(object):
             cls.DEFAULT_PROXY = "%s://%s:%s" % (scheme, host, port)
 
     @staticmethod
-    def http_request_from_context(context, logger=None, update_content_type=True):
+    def http_request_from_context(context, logger=None, **kwargs):
         """
         Method to do http requests from context.
 
         :param context: request context.
         :param logger: Logger instance to be used to print the request and response data.
-        :param update_content_type: (bool) Update headers before performig the request, adding the Content-Type value
-            according to the rendered body. By default: True.
         """
         context.method = context.method.upper()
         assert context.method in ALLOWED_METHODS
@@ -240,7 +258,7 @@ class HttpSdk(object):
 
         if context.body_params or context.files:
             body, content_type = context.renderer.encode_params(context.body_params, files=context.files)
-            if update_content_type and HttpSdk.CONTENT_TYPE_HEADER_NAME not in context.headers:
+            if context.update_content_type and HttpSdk.CONTENT_TYPE_HEADER_NAME not in context.headers:
                 context.headers[HttpSdk.CONTENT_TYPE_HEADER_NAME] = content_type
         else:
             body = None
@@ -260,8 +278,7 @@ class HttpSdk(object):
         r = context.response_class(r)
         return r
 
-    def _http_request(self, method, url_path, headers=None, query_params=None, body_params=None, files=None,
-                      update_content_type=True, **kwargs):
+    def _http_request(self, method, url_path, headers=None, query_params=None, body_params=None, files=None, **kwargs):
         """
         Method to do http requests.
 
@@ -286,17 +303,27 @@ class HttpSdk(object):
         prefix_url_path = kwargs.get('prefix_url_path', self.prefix_url_path)
         authentication_instances = kwargs.get('authentication_instances', self.authentication_instances)
         url_path_format = kwargs.get('url_path_format', self.url_path_format)
+        update_content_type = kwargs.get('update_content_type', True)
 
         if headers is None:
             headers = self.default_headers()
 
-        context = HttpRequestContext(host=host, proxy=proxy, method=method, prefix_url_path=prefix_url_path,
-                                     url_path=url_path, url_path_params=self.url_path_params,
-                                     url_path_format=url_path_format, headers=headers, query_params=query_params,
-                                     body_params=body_params, files=files, renderer=renderer,
-                                     response_class=self.response_class,
-                                     authentication_instances=authentication_instances)
-        res = self.http_request_from_context(context, self.logger, update_content_type)
+        context = HttpRequestContext(
+            host=host, proxy=proxy, method=method,
+            prefix_url_path=prefix_url_path,
+            url_path=url_path,
+            url_path_params=self.url_path_params,
+            url_path_format=url_path_format,
+            headers=headers,
+            query_params=query_params,
+            body_params=body_params,
+            files=files,
+            renderer=renderer,
+            response_class=self.response_class,
+            authentication_instances=authentication_instances,
+            update_content_type=update_content_type
+        )
+        res = self.http_request_from_context(context, self.logger)
         self.cookie = res.cookie
         return res
 
