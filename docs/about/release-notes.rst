@@ -17,6 +17,7 @@ Sdklib 1.6
 
 - Custom content-type header has priority over renderer content-type.
 - Get update_content_type parameter from context.
+- Add BaseRenderer.
 
 
 Sdklib 1.5.2
