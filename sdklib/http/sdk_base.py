@@ -78,6 +78,14 @@ class HttpRequestContext(object):
         self._headers = value or dict()
 
     @property
+    def headers(self):
+        return self._headers
+
+    @headers.setter
+    def headers(self, value):
+        self._headers = value or dict()
+
+    @property
     def renderer(self):
         return self._renderer
 
@@ -108,6 +116,24 @@ class HttpRequestContext(object):
     @url_path_params.setter
     def url_path_params(self, value):
         self._url_path_params = value or dict()
+
+    @property
+    def authentication_instances(self):
+        return self._authentication_instances
+
+    @authentication_instances.setter
+    def authentication_instances(self, value):
+        self._authentication_instances = value or []
+
+
+    @property
+    def update_content_type(self):
+        return self._update_content_type
+
+    @update_content_type.setter
+    def update_content_type(self, value):
+        self._update_content_type = value if value is False else True
+
 
 
 class HttpSdk(object):

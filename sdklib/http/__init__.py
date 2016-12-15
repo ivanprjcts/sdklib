@@ -16,14 +16,10 @@ api = HttpSdk()
 @Singleton
 class HttpRequestContextSingleton(HttpRequestContext):
 
-    def clear(self):
-        self.host = None
-        self.proxy = None
-        self.method = None
-        self.url_path = None
-        self.headers = None
-        self.authentication_instances = []
-        self.body_params = None
-        self.query_params = None
-        self.files = None
-        self.renderer = None
+    fields_to_clear = [
+        'method', 'url_path', 'body_params', 'query_params', 'files'
+    ]
+
+    def clear(self, *args):
+        for field in self.fields_to_clear + list(args):
+            setattr(self, field, None)
