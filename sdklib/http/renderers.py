@@ -326,6 +326,18 @@ class XMLRenderer(BaseRenderer):
         raise BaseException("Not implemented yet")
 
 
+class CustomRenderer(BaseRenderer):
+
+    def __init__(self, content_type):
+        self.content_type = content_type
+
+    def encode_params(self, data=None, **kwargs):
+        """
+        Build the body for a custom request.
+        """
+        return data, self.content_type
+
+
 def get_renderer(name):
     if name == 'json':
         return JSONRenderer()
