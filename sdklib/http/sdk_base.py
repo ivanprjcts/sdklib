@@ -164,7 +164,6 @@ class HttpSdk(object):
         self.default_renderer = default_renderer or self.DEFAULT_RENDERER
         self._cookie = None
         self.incognito_mode = False
-        self.logger = logging.getLogger(__name__)
 
     @property
     def host(self):
@@ -269,12 +268,11 @@ class HttpSdk(object):
             cls.DEFAULT_PROXY = "%s://%s:%s" % (scheme, host, port)
 
     @staticmethod
-    def http_request_from_context(context, logger=None, **kwargs):
+    def http_request_from_context(context, **kwargs):
         """
         Method to do http requests from context.
 
         :param context: request context.
-        :param logger: Logger instance to be used to print the request and response data.
         """
         context.method = context.method.upper()
         assert context.method in ALLOWED_METHODS
@@ -297,10 +295,10 @@ class HttpSdk(object):
         if context.query_params is not None:
             url += "?%s" % (urlencode(context.query_params))
 
-        log_print_request(logger, context.method, url, context.query_params, context.headers, body)
+        log_print_request(context.method, url, context.query_params, context.headers, body)
         r = HttpSdk.get_pool_manager(context.proxy).request(context.method, url, body=body, headers=context.headers,
                                                             redirect=False)
-        log_print_response(logger, r.status, r.data, r.headers)
+        log_print_response(r.status, r.data, r.headers)
         r = context.response_class(r)
         return r
 
@@ -349,7 +347,7 @@ class HttpSdk(object):
             authentication_instances=authentication_instances,
             update_content_type=update_content_type
         )
-        res = self.http_request_from_context(context, self.logger)
+        res = self.http_request_from_context(context)
         self.cookie = res.cookie
         return res
 
