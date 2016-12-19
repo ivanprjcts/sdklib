@@ -1,5 +1,3 @@
-import logging
-
 import urllib3
 
 from sdklib.http.renderers import JSONRenderer, MultiPartRenderer, get_renderer
@@ -30,10 +28,17 @@ def generate_url_path(url_path_format, prefix=None, format_suffix=None, allow_ke
 
 
 class HttpRequestContext(object):
+    """
+    Context object used to save http request parameters.
+    """
+
+    fields_to_clear = [
+        'method', 'url_path', 'body_params', 'query_params', 'files'
+    ]
 
     def __init__(self, host=None, proxy=None, method=None, prefix_url_path=None, url_path=None, url_path_params=None,
                  url_path_format=None, headers=None, query_params=None, body_params=None, files=None, renderer=None,
-                 authentication_instances=[], response_class=HttpResponse, update_content_type=True):
+                 authentication_instances=None, response_class=None, update_content_type=None):
         """
 
         :param host:
@@ -125,6 +130,13 @@ class HttpRequestContext(object):
     def authentication_instances(self, value):
         self._authentication_instances = value or []
 
+    @property
+    def response_class(self):
+        return self._response_class
+
+    @response_class.setter
+    def response_class(self, value):
+        self._response_class = value or HttpResponse
 
     @property
     def update_content_type(self):
@@ -134,6 +146,14 @@ class HttpRequestContext(object):
     def update_content_type(self, value):
         self._update_content_type = value if value is False else True
 
+    def clear(self, *args):
+        """
+        Set default values to **self.fields_to_clear**. In addition, it is possible to pass extra fields to clear.
+
+        :param args: extra fields to clear.
+        """
+        for field in self.fields_to_clear + list(args):
+            setattr(self, field, None)
 
 
 class HttpSdk(object):
