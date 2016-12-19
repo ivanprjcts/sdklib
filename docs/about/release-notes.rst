@@ -12,6 +12,14 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.6.5
+============
+
+- Use an internal logger instance to print request and response logs.
+- Add clear method to http request context.
+- Add fields_to_clear attribute to http request context.
+
+
 Sdklib 1.6
 ==========
 
