@@ -38,7 +38,7 @@ class HttpRequestContext(object):
 
     def __init__(self, host=None, proxy=None, method=None, prefix_url_path=None, url_path=None, url_path_params=None,
                  url_path_format=None, headers=None, query_params=None, body_params=None, files=None, renderer=None,
-                 authentication_instances=None, response_class=None, update_content_type=None):
+                 authentication_instances=None, response_class=None, update_content_type=None, redirect=None):
         """
 
         :param host:
@@ -57,6 +57,7 @@ class HttpRequestContext(object):
         :param response_class:
         :param update_content_type: (bool) Update headers before performing the request, adding the Content-Type value
             according to the rendered body. By default: True.
+        :param redirect: redirect requests automatically. By default: False
         """
         self.host = host
         self.proxy = proxy
@@ -73,6 +74,7 @@ class HttpRequestContext(object):
         self.authentication_instances = authentication_instances
         self.response_class = response_class
         self.update_content_type = update_content_type
+        self.redirect = redirect
 
     @property
     def headers(self):
@@ -145,6 +147,14 @@ class HttpRequestContext(object):
     @update_content_type.setter
     def update_content_type(self, value):
         self._update_content_type = value if value is False else True
+
+    @property
+    def redirect(self):
+        return self._redirect
+
+    @redirect.setter
+    def redirect(self, value):
+        self._redirect = value if value is True else False
 
     def clear(self, *args):
         """
@@ -316,8 +326,11 @@ class HttpSdk(object):
             url += "?%s" % (urlencode(context.query_params))
 
         log_print_request(context.method, url, context.query_params, context.headers, body)
-        r = HttpSdk.get_pool_manager(context.proxy).request(context.method, url, body=body, headers=context.headers,
-                                                            redirect=False)
+        r = HttpSdk.get_pool_manager(context.proxy).request(context.method,
+                                                            url,
+                                                            body=body,
+                                                            headers=context.headers,
+                                                            redirect=context.redirect)
         log_print_response(r.status, r.data, r.headers)
         r = context.response_class(r)
         return r
@@ -348,6 +361,7 @@ class HttpSdk(object):
         authentication_instances = kwargs.get('authentication_instances', self.authentication_instances)
         url_path_format = kwargs.get('url_path_format', self.url_path_format)
         update_content_type = kwargs.get('update_content_type', True)
+        redirect = kwargs.get('redirect', False)
 
         if headers is None:
             headers = self.default_headers()
@@ -365,7 +379,8 @@ class HttpSdk(object):
             renderer=renderer,
             response_class=self.response_class,
             authentication_instances=authentication_instances,
-            update_content_type=update_content_type
+            update_content_type=update_content_type,
+            redirect=redirect
         )
         res = self.http_request_from_context(context)
         self.cookie = res.cookie

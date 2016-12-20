@@ -12,6 +12,12 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.6.6
+============
+
+- Allow to redirect http requests.
+
+
 Sdklib 1.6.5
 ============
 
