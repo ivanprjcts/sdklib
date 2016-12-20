@@ -18,3 +18,11 @@ class TestSampleSdk(unittest.TestCase):
         response = self.api.get_products()
         self.assertEqual(response.status, 200)
         self.assertTrue(isinstance(response.data, list))
+
+    def test_redirect_true(self):
+        response = self.api.checkout(redirect=True)
+        self.assertEqual(response.status, 200)
+
+    def test_redirect_false(self):
+        response = self.api.checkout(redirect=False)
+        self.assertEqual(response.status, 302)
