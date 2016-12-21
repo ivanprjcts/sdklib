@@ -12,6 +12,13 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.7
+==========
+
+- Return more parameters into urlsplit function.
+- Add generate_url() function.
+
+
 Sdklib 1.6.6
 ============
 

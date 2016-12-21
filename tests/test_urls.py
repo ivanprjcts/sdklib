@@ -1,13 +1,15 @@
 import unittest
 
-from sdklib.util.urls import get_hostname_parameters_from_url, urlsplit, ensure_url_path_starts_with_slash
+from sdklib.util.urls import (
+    get_hostname_parameters_from_url, urlsplit, ensure_url_path_starts_with_slash, generate_url
+)
 from sdklib.http import generate_url_path
 
 
 class TestUrls(unittest.TestCase):
 
     def test_get_hostname_parameters_from_url_with_http_schema(self):
-        scheme, host, port = get_hostname_parameters_from_url("http://myhost.com/")
+        scheme, host, port,  = get_hostname_parameters_from_url("http://myhost.com/")
         self.assertEqual(scheme, 'http')
         self.assertEqual(host, 'myhost.com')
         self.assertEqual(port, '80')
@@ -61,49 +63,49 @@ class TestUrls(unittest.TestCase):
         self.assertEqual(port, '80')
 
     def test_urlsplit_http_schema(self):
-        scheme, host, port = urlsplit("http://myhost.com/")
+        scheme, host, port, _, _ = urlsplit("http://myhost.com/")
         self.assertEqual(scheme, 'http')
         self.assertEqual(host, 'myhost.com')
         self.assertEqual(port, '')
 
     def test_urlsplit_empty_schema(self):
-        scheme, host, port = urlsplit("://myhost.com/")
+        scheme, host, port, _, _ = urlsplit("://myhost.com/")
         self.assertEqual(scheme, '')
         self.assertEqual(host, 'myhost.com')
         self.assertEqual(port, '')
 
     def test_urlsplit_https_schema(self):
-        scheme, host, port = urlsplit("https://myhost.com/")
+        scheme, host, port, _, _ = urlsplit("https://myhost.com/")
         self.assertEqual(scheme, 'https')
         self.assertEqual(host, 'myhost.com')
         self.assertEqual(port, '')
 
     def test_urlsplit_https_and_port(self):
-        scheme, host, port = urlsplit("https://myhost.com:66/")
+        scheme, host, port, _, _ = urlsplit("https://myhost.com:66/")
         self.assertEqual(scheme, 'https')
         self.assertEqual(host, 'myhost.com')
         self.assertEqual(port, '66')
 
     def test_urlsplit_without_schema(self):
-        scheme, host, port = urlsplit("myhost.com/")
+        scheme, host, port, _, _ = urlsplit("myhost.com/")
         self.assertEqual(scheme, None)
         self.assertEqual(host, 'myhost.com')
         self.assertEqual(port, '')
 
     def test_urlsplit_without_end_slash(self):
-        scheme, host, port = urlsplit("myhost.com")
+        scheme, host, port, _, _ = urlsplit("myhost.com")
         self.assertEqual(scheme, None)
         self.assertEqual(host, 'myhost.com')
         self.assertEqual(port, '')
 
     def test_urlsplit_with_non_http_schema(self):
-        scheme, host, port = urlsplit("ftp://myhost.com")
+        scheme, host, port, _, _ = urlsplit("ftp://myhost.com")
         self.assertEqual(scheme, 'ftp')
         self.assertEqual(host, 'myhost.com')
         self.assertEqual(port, '')
 
     def test_urlsplit_localhost(self):
-        scheme, host, port = urlsplit("http://localhost:8080")
+        scheme, host, port, _, _ = urlsplit("http://localhost:8080")
         self.assertEqual(scheme, 'http')
         self.assertEqual(host, 'localhost')
         self.assertEqual(port, '8080')
@@ -151,3 +153,19 @@ class TestUrls(unittest.TestCase):
     def test_generate_url_path_format_suffix(self):
         url_path = generate_url_path("/path/to/{id}/{lang}/{format}/", format_suffix='json', lang='es')
         self.assertEqual("/path/to/{id}/es/{format}/.json", url_path)
+
+    def test_generate_url_full(self):
+        url = generate_url(scheme="http", host="myhost.com", port=80, path="path", query={"param": "value"})
+        self.assertEqual("http://myhost.com:80/path?param=value", url)
+
+    def test_generate_url_scheme_host_port_and_path(self):
+        url = generate_url(scheme="http", host="myhost.com", port=80, path="path")
+        self.assertEqual("http://myhost.com:80/path", url)
+
+    def test_generate_url_scheme_host_and_path(self):
+        url = generate_url(scheme="http", host="myhost.com", path="path")
+        self.assertEqual("http://myhost.com/path", url)
+
+    def test_generate_url_scheme_and_host(self):
+        url = generate_url(scheme="http", host="myhost.com")
+        self.assertEqual("http://myhost.com", url)
