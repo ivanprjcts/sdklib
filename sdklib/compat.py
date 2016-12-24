@@ -14,6 +14,7 @@ if is_py2:
     from urllib import urlencode, quote_plus
     import SocketServer as socketserver
     import thread
+    from StringIO import StringIO
 
     basestring = basestring
     str = unicode
@@ -22,6 +23,7 @@ elif is_py3:
     from http import cookies
     import socketserver
     import _thread as thread
+    from io import StringIO
 
     basestring = (str, bytes)
     str = str

@@ -24,3 +24,7 @@ class TestHTML(unittest.TestCase):
     def test_find_elements_by_xpath(self):
         items = self.html.find_elements_by_xpath("//li[@class='dropdown-submenu test']/a[@href='index.html#']")
         self.assertEqual(1, len(items))
+
+    def test_find_element_by_xpath_contains(self):
+        item = self.html.find_element_by_xpath("//li[contains(@class, 'test')]/a[@href='index.html#']")
+        self.assertEqual("Press Room", item.text)

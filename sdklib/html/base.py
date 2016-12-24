@@ -1,6 +1,6 @@
-import html5lib
+from lxml import etree
 
-from sdklib.compat import str
+from sdklib.compat import StringIO
 
 
 class HTML(object):
@@ -15,15 +15,10 @@ class HTML(object):
 
     def __init__(self, dom):
         self._parse(dom=dom)
-        self._remove_namespaces()
 
     def _parse(self, dom):
-        self.tree = html5lib.parse(dom)
-
-    def _remove_namespaces(self):
-        for el in self.tree.iter():
-            if isinstance(el.tag, str) and '}' in el.tag:
-                el.tag = el.tag.split('}', 1)[1]  # strip all namespaces
+        parser = etree.HTMLParser()
+        self.tree = etree.parse(StringIO(dom), parser)
 
     def find_element_by_id(self, id_):
         """
@@ -32,7 +27,7 @@ class HTML(object):
         :param id_: The id of the element to be found.
         :return:
         """
-        return self.find_element_by_xpath('.//*[@id="%s"]' % id_)
+        return self.find_element_by_xpath('//*[@id="%s"]' % id_)
 
     def find_elements_by_id(self, id_):
         """
@@ -41,11 +36,7 @@ class HTML(object):
         :param id_: The id of the elements to be found.
         :return:
         """
-        return self.find_elements_by_xpath('.//*[@id="%s"]' % id_)
-
-    @staticmethod
-    def _convert_xpath(xpath):
-        return "." + xpath if xpath.startswith("/") else xpath
+        return self.find_elements_by_xpath('//*[@id="%s"]' % id_)
 
     def find_element_by_xpath(self, xpath):
         """
@@ -54,7 +45,10 @@ class HTML(object):
         :param xpath: The xpath locator of the element to find.
         :return:
         """
-        return self.tree.find(self._convert_xpath(xpath))
+        e = self.tree.xpath(xpath)
+        if isinstance(e, list):
+            return e[0]
+        return e
 
     def find_elements_by_xpath(self, xpath):
         """
@@ -63,4 +57,4 @@ class HTML(object):
         :param xpath: The xpath locator of the elements to be found.
         :return:
         """
-        return self.tree.findall(self._convert_xpath(xpath))
+        return self.tree.xpath(xpath)
