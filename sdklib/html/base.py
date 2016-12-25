@@ -68,6 +68,8 @@ class HTMLxml(HTMLBase):
 
         :param xpath: The xpath locator of the element to find.
         :return:
+
+        http://lxml.de/xpathxslt.html#xpath
         """
         e = self.tree.xpath(xpath)
         if isinstance(e, list):
@@ -80,6 +82,8 @@ class HTMLxml(HTMLBase):
 
         :param xpath: The xpath locator of the elements to be found.
         :return:
+
+        http://lxml.de/xpathxslt.html#xpath
         """
         return self.tree.xpath(xpath)
 
@@ -110,6 +114,8 @@ class HTML5lib(HTMLBase):
 
         :param xpath: The xpath locator of the element to find.
         :return:
+
+        https://docs.python.org/2/library/xml.etree.elementtree.html#supported-xpath-syntax
         """
         return self.tree.find(self._convert_xpath(xpath))
 
@@ -119,5 +125,7 @@ class HTML5lib(HTMLBase):
 
         :param xpath: The xpath locator of the elements to be found.
         :return:
+
+        https://docs.python.org/2/library/xml.etree.elementtree.html#supported-xpath-syntax
         """
         return self.tree.findall(self._convert_xpath(xpath))
