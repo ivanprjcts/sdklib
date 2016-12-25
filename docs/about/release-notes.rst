@@ -17,6 +17,8 @@ Sdklib 1.7
 
 - Return more parameters into urlsplit function.
 - Add generate_url() function.
+- Add lxml as optional requirement.
+- Support xpath functions such as contains() using lxml.
 
 
 Sdklib 1.6.6
