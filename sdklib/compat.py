@@ -29,3 +29,10 @@ elif is_py3:
 
     basestring = (str, bytes)
     str = str
+
+
+try:
+    import lxml
+    html_lxml = True
+except:
+    html_lxml = False
