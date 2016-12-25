@@ -72,9 +72,8 @@ class HTMLxml(HTMLBase):
         http://lxml.de/xpathxslt.html#xpath
         """
         e = self.tree.xpath(xpath)
-        if isinstance(e, list):
+        if isinstance(e, list) and len(e) > 0:
             return e[0]
-        return e
 
     def find_elements_by_xpath(self, xpath):
         """

@@ -12,6 +12,12 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.7.2
+============
+
+- Fix some bugs.
+
+
 Sdklib 1.7.1
 ============
 
