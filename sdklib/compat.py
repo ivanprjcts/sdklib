@@ -15,6 +15,7 @@ if is_py2:
     from urlparse import urlsplit
     import SocketServer as socketserver
     import thread
+    from StringIO import StringIO
 
     basestring = basestring
     str = unicode
@@ -24,6 +25,14 @@ elif is_py3:
     from http import cookies
     import socketserver
     import _thread as thread
+    from io import StringIO
 
     basestring = (str, bytes)
     str = str
+
+
+try:
+    import lxml
+    html_lxml = True
+except:
+    html_lxml = False
