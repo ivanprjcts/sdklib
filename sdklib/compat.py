@@ -19,6 +19,8 @@ if is_py2:
 
     basestring = basestring
     str = unicode
+    convert_bytes_to_str = lambda x: x
+
 elif is_py3:
     from urllib.parse import urlencode, quote_plus, urlsplit
     from urllib.parse import urlencode
@@ -29,6 +31,7 @@ elif is_py3:
 
     basestring = (str, bytes)
     str = str
+    convert_bytes_to_str = lambda x: str(x)
 
 
 try:

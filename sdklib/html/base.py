@@ -1,6 +1,6 @@
 import html5lib
 
-from sdklib.compat import StringIO, str
+from sdklib.compat import StringIO, str, convert_bytes_to_str
 
 
 class HTMLBase(object):
@@ -60,7 +60,7 @@ class HTMLxml(HTMLBase):
         from lxml import etree
 
         parser = etree.HTMLParser()
-        self.tree = etree.parse(StringIO(dom), parser)
+        self.tree = etree.parse(StringIO(convert_bytes_to_str(dom)), parser)
 
     def find_element_by_xpath(self, xpath):
         """
