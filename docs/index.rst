@@ -14,7 +14,6 @@
   user-guide/renderers.rst
   user-guide/authentication.rst
   user-guide/response.rst
-  user-guide/behave-api.rst
   about/license.rst
   about/release-notes.rst
   sdklib.rst
