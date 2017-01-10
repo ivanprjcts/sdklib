@@ -17,7 +17,7 @@ def parse_args(**kwargs):
     return _parse_params(kwargs)
 
 
-def parse_params_as_tuple_list(params, separate_list_elements=True):
+def _parse_params_as_tuple_list(params, separate_list_elements):
     to_return = []
     for elem in params:
         if params[elem] is not None:
@@ -29,16 +29,12 @@ def parse_params_as_tuple_list(params, separate_list_elements=True):
     return to_return
 
 
+def parse_params_as_tuple_list(params, separate_list_elements=True):
+    return _parse_params_as_tuple_list(params, separate_list_elements)
+
+
 def parse_args_as_tuple_list(separate_list_elements=True, **kwargs):
-    to_return = []
-    for elem in kwargs:
-        if kwargs[elem] is not None:
-            if isinstance(kwargs[elem], list) and separate_list_elements:
-                for list_elem in kwargs[elem]:
-                    to_return.append((elem, list_elem))
-            else:
-                to_return.append((elem, kwargs[elem]))
-    return to_return
+    return _parse_params_as_tuple_list(kwargs, separate_list_elements)
 
 
 def safe_add_slash(item):
