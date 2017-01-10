@@ -18,6 +18,7 @@ Sdklib 1.8
 - Add test coverage reports.
 - Remove rrserver.
 - Remove behave api steps.
+- Remove unused modules.
 
 
 Sdklib 1.7.2
