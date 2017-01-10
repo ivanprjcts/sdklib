@@ -11,46 +11,29 @@ from sdklib.util.structures import to_key_val_list, to_key_val_dict
 from sdklib.compat import urlencode, quote_plus, basestring, str
 
 
+java_strings = {"true": "true", "false": "false", "null": "null"}
+python_strings = {"true": "True", "false": "False", "null": "None"}
+csharp_strings = {"true": "True", "false": "False", "null": "Null"}
+
+
 def to_string(value, lang='javascript'):
     if lang in ['javascript', 'java', 'php']:
-        return get_primitive_as_java_string(value)
+        return get_primitive_as_string(java_strings, value)
     elif lang in ['python']:
-        return get_primitive_as_python_string(value)
+        return get_primitive_as_string(python_strings, value)
     elif lang in ['csharp', 'dotnet']:
-        return get_primitive_as_csharp_string(value)
+        return get_primitive_as_string(csharp_strings, value)
     else:
-        return get_primitive_as_python_string(value)
+        return get_primitive_as_string(python_strings, value)
 
 
-def get_primitive_as_java_string(value):
+def get_primitive_as_string(strings_dict, value):
     if isinstance(value, bool) and value:
-        return "true"
+        return strings_dict["true"]
     elif isinstance(value, bool):
-        return "false"
+        return strings_dict["false"]
     elif value is None:
-        return "null"
-    else:
-        return str(value)
-
-
-def get_primitive_as_python_string(value):
-    if isinstance(value, bool) and value:
-        return "True"
-    elif isinstance(value, bool):
-        return "False"
-    elif value is None:
-        return "None"
-    else:
-        return str(value)
-
-
-def get_primitive_as_csharp_string(value):
-    if isinstance(value, bool) and value:
-        return "True"
-    elif isinstance(value, bool):
-        return "False"
-    elif value is None:
-        return "Null"
+        return strings_dict["null"]
     else:
         return str(value)
 

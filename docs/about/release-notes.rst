@@ -12,6 +12,13 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.8
+==========
+
+- Add test coverage reports.
+- Remove rrserver.
+
+
 Sdklib 1.7.2
 ============
 

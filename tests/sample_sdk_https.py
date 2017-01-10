@@ -3,7 +3,7 @@ from sdklib.http import HttpSdk
 
 class SampleHttpsHttpSdk(HttpSdk):
 
-    DEFAULT_HOST = "https://www.carniceriasdejuan.com"
+    DEFAULT_HOST = "https://www.projectx.com.es"
 
     API_PRODUCTS_PATH = "/api/1.0/products/"
     API_CHECKOUT_PATH = "/checkout"

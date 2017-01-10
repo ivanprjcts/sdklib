@@ -8,8 +8,8 @@ Sdklib helps you to write you own client library which will consume a specific s
 
 .. |Build Status| image:: https://travis-ci.org/ivanprjcts/sdklib.svg?branch=master
    :target: https://travis-ci.org/ivanprjcts/sdklib
-.. |Codecov Status| image:: https://img.shields.io/codecov/c/github/ivanprjcts/sdklib/master.svg
-   :target: http://codecov.io/github/ivanprjcts/sdklib?branch=master
+.. |Codecov Status| image:: https://codecov.io/gh/ivanprjcts/sdklib/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/ivanprjcts/sdklib
 .. |Pypi Version| image:: https://img.shields.io/pypi/v/sdklib.svg
    :target: https://pypi.python.org/pypi/sdklib
 .. |Code Climate| image:: https://codeclimate.com/github/ivanprjcts/sdklib/badges/gpa.svg
@@ -38,6 +38,14 @@ Sample
 ======
 
 Find my first SDK on github: https://github.com/ivanprjcts/my-first-sdk
+
+
+Run tests
+=========
+
+Running testing with coverage::
+
+    py.test --cov=sdklib tests/
 
 
 Contributing

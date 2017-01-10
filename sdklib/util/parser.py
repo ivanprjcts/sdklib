@@ -1,23 +1,20 @@
-try:
-    from urllib.parse import urlencode
-except:
-    from urllib import urlencode
+from sdklib.compat import urlencode
 
 
-def parse_params(vars):
+def _parse_params(params):
     to_return = dict()
-    for elem in vars:
-        if vars[elem] is not None:
-            to_return[elem] = vars[elem]
+    for elem in params:
+        if params[elem] is not None:
+            to_return[elem] = params[elem]
     return to_return
+
+
+def parse_params(params):
+    return _parse_params(params)
 
 
 def parse_args(**kwargs):
-    to_return = dict()
-    for elem in kwargs:
-        if kwargs[elem] is not None:
-            to_return[elem] = kwargs[elem]
-    return to_return
+    return _parse_params(kwargs)
 
 
 def parse_params_as_tuple_list(params, separate_list_elements=True):

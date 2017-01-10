@@ -1,6 +1,5 @@
 from sdklib.http import HttpSdk
-from sdklib.http.renderers import MultiPartRenderer, FormRenderer
-from sdklib.util.parser import parse_args
+from sdklib.util.parser import parse_args, safe_add_end_slash
 
 
 class SampleHttpSdk(HttpSdk):
@@ -8,30 +7,29 @@ class SampleHttpSdk(HttpSdk):
     Sample Sdk for testing purposes.
     """
 
-    API_RESTAURANTS_URL_PATH = "/api/1.0/restaurants/"
-    LOGIN_URL_PATH = "/api/1.0/auth/login/"  # overwrite HttpSdk 'LOGIN_URL_PATH'
+    DEFAULT_HOST = "https://mockapi.sdklib.org"
 
-    def get_restaurants(self):
+    API_ITEMS_URL_PATH = "/items/"
+
+    def get_items(self):
         """
-        Get all restaurants.
+        Get all items.
         :return: SdkResponse
         """
-        return self._http_request("GET", self.API_RESTAURANTS_URL_PATH)
+        return self._http_request("GET", self.API_ITEMS_URL_PATH)
 
-    def create_restaurant(self, name, description=None, city=None):
+    def create_item(self, name, description=None, city=None):
         """
-        Create a restaurant.
+        Create an item.
         :return: SdkResponse
         """
-        params = parse_args(name=name, description=description, city=city)
-        return self._http_request("POST", self.API_RESTAURANTS_URL_PATH, body_params=params, render=FormRenderer())
+        params = parse_args(name=name, description=description)
+        return self._http_request("POST", self.API_ITEMS_URL_PATH, body_params=params)
 
-    def update_restaurant(self, name, main_image, description=None, city=None):
+    def update_item(self, item_id, name, description=None):
         """
-        Update a restaurant.
+        Update an item.
         :return: SdkResponse
         """
-        params = parse_args(name=name, description=description, city=city)
-        files = parse_args(mainImage=main_image)
-        return self._http_request("PUT", self.API_RESTAURANTS_URL_PATH, body_params=params, files=files,
-                                  render=MultiPartRenderer())
+        params = parse_args(name=name, description=description)
+        return self._http_request("PUT", self.API_ITEMS_URL_PATH + safe_add_end_slash(item_id), body_params=params)
