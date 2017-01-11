@@ -41,20 +41,20 @@ def get_hostname_parameters_from_url(url):
     return scheme, host, port
 
 
+def _ensure_str_starts_with(_str, beginning, default=''):
+    if not _str:
+        return default
+    if not _str.startswith('/'):
+        return beginning + _str
+    return _str
+
+
 def ensure_url_path_starts_with_slash(url_path):
-    if not url_path:
-        return '/'
-    if not url_path.startswith('/'):
-        return '/' + url_path
-    return url_path
+    return _ensure_str_starts_with(url_path, '/', default='/')
 
 
 def ensure_url_path_format_suffix_starts_with_dot(format_suffix):
-    if not format_suffix:
-        return ''
-    if not format_suffix.startswith('.'):
-        return '.' + format_suffix
-    return format_suffix
+    return _ensure_str_starts_with(format_suffix, '.', default='')
 
 
 def generate_url(scheme=None, host=None, port=None, path=None, query=None):
