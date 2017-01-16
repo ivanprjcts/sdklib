@@ -4,6 +4,7 @@ import json
 import logging
 from xml.dom.minidom import parseString
 
+from sdklib.compat import str
 from sdklib.http.headers import CONTENT_TYPE_HEADER_NAME
 from sdklib.http.renderers import JSONRenderer, XMLRenderer
 
@@ -25,7 +26,8 @@ def _get_pretty_body(headers, body):
             return pretty_xml_as_string
         else:
             if JSONRenderer.DEFAULT_CONTENT_TYPE in headers[CONTENT_TYPE_HEADER_NAME]:
-                parsed = json.loads(body)
+                decoded_body = body.decode('utf-8')
+                parsed = json.loads(decoded_body)
                 return json.dumps(parsed, sort_keys=True, indent=4)
             else:
                 return body

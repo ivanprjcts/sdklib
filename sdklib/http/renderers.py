@@ -284,7 +284,7 @@ class JSONRenderer(BaseRenderer):
         if isinstance(data, basestring):
             raise ValueError("Data must not be a string.")
         if data is None:
-            return "", self.content_type
+            return b"", self.content_type
 
         fields = to_key_val_dict(data or "")
         try:
@@ -292,7 +292,7 @@ class JSONRenderer(BaseRenderer):
         except:
             body = json.dumps(fields, encoding='latin-1')
 
-        return body, self.content_type
+        return str(body).encode(), self.content_type
 
 
 class XMLRenderer(BaseRenderer):

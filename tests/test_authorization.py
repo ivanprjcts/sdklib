@@ -3,8 +3,11 @@
 import unittest
 
 from sdklib.http import HttpRequestContext
-from sdklib.http.authorization import basic_authorization, x_11paths_authorization, X11PathsAuthentication
-from sdklib.http.renderers import FormRenderer
+from sdklib.http.authorization import (
+    basic_authorization, x_11paths_authorization, X11PathsAuthentication, BasicAuthentication
+)
+from sdklib.http.renderers import FormRenderer, JSONRenderer
+from sdklib.http.headers import AUTHORIZATION_HEADER_NAME, X_11PATHS_BODY_HASH_HEADER_NAME
 
 
 class TestAuthorization(unittest.TestCase):
@@ -12,6 +15,12 @@ class TestAuthorization(unittest.TestCase):
     def test_basic_authentication(self):
         value = basic_authorization(username=b"Aladdin", password=b"OpenSesame")
         self.assertEqual(b"Basic QWxhZGRpbjpPcGVuU2VzYW1l", value)
+
+    def test_basic_authentication_class(self):
+        a = BasicAuthentication(b"Aladdin", b"OpenSesame")
+        ctx = HttpRequestContext(headers={})
+        auth_ctx = a.apply_authentication(context=ctx)
+        self.assertEqual(b"Basic QWxhZGRpbjpPcGVuU2VzYW1l", auth_ctx.headers[AUTHORIZATION_HEADER_NAME])
 
     def test_11paths_authentication(self):
         context = HttpRequestContext(method="GET", url_path="/path/")
@@ -57,4 +66,12 @@ class TestAuthorization(unittest.TestCase):
                                                   "consequence.description[en]": "test"},
                                      renderer=FormRenderer())
         res_context = auth.apply_authentication(context=context)
-        self.assertEqual("11PATHS QRKJw6qX4fykZ3G3yqkQ CMf3royzdD4l/P0RVKyr2uOXZ4Y=", res_context.headers["Authorization"])
+        self.assertEqual("11PATHS QRKJw6qX4fykZ3G3yqkQ CMf3royzdD4l/P0RVKyr2uOXZ4Y=", res_context.headers[AUTHORIZATION_HEADER_NAME])
+
+    def test_11paths_authentication_class_json(self):
+        auth = X11PathsAuthentication(app_id="123456", secret="654321", utc="2016-01-01 00:00:00")
+        context = HttpRequestContext(method="POST", url_path="/path/",
+                                     body_params={"param": "value"}, renderer=JSONRenderer())
+        res_context = auth.apply_authentication(context=context)
+        self.assertEqual("11PATHS 123456 6CFsVmrRxEz3Icz6U8SSHZ4RukE=", res_context.headers[AUTHORIZATION_HEADER_NAME])
+        self.assertEqual("f247c7579b452d08f38eec23c2d1a4a23daee0d2", res_context.headers[X_11PATHS_BODY_HASH_HEADER_NAME])
