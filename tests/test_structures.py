@@ -3,7 +3,7 @@ import unittest
 from sdklib.util.structures import get_dict_from_list, to_key_val_dict, to_key_val_list
 
 
-class TestUtil(unittest.TestCase):
+class TestStructures(unittest.TestCase):
 
     def test_to_key_val_list(self):
         test_list = {'key1': 'val1', 'key0': 'val0'}
@@ -14,6 +14,18 @@ class TestUtil(unittest.TestCase):
         test_list = {'key1': 'val1', 'key0': 'val0'}
         res = to_key_val_list(test_list, sort=True)
         self.assertEqual(res, [('key0', 'val0'), ('key1', 'val1')])
+
+    def test_to_key_val_list_none(self):
+        res = to_key_val_list(None)
+        self.assertIsNone(res)
+
+    def test_to_key_val_list_exception(self):
+        try:
+            to_key_val_list(1)
+            self.assertTrue(False)
+        except ValueError:
+            pass
+
 
     def test_get_dict_from_list(self):
         test_list = [{"Id": 0, "key2": "", "key3": ""},{"Id": 1, "key2": ""}, {"Id": 2, "key2": "", "key7": 4}]
@@ -35,3 +47,13 @@ class TestUtil(unittest.TestCase):
         res = to_key_val_dict(json_obj)
         self.assertEqual(res, {"Id": 0, "key2": ["", "val"]})
 
+    def test_to_key_val_dict_none(self):
+        res = to_key_val_dict(None)
+        self.assertEqual(res, {})
+
+    def test_to_key_val_dict_exception(self):
+        try:
+            to_key_val_dict(1)
+            self.assertTrue(False)
+        except ValueError:
+            pass
