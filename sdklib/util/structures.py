@@ -69,7 +69,9 @@ def to_key_val_dict(values):
 
     dict_to_return = dict()
     for k, v in values:
-        if k in dict_to_return and isinstance(dict_to_return[k], list):
+        if k in dict_to_return and isinstance(dict_to_return[k], list) and isinstance(v, list):
+            dict_to_return[k].extend(v)
+        elif k in dict_to_return and isinstance(dict_to_return[k], list):
             dict_to_return[k].append(v)
         elif k in dict_to_return:
             dict_to_return[k] = [dict_to_return[k], v]

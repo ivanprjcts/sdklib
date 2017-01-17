@@ -26,7 +26,6 @@ class TestStructures(unittest.TestCase):
         except ValueError:
             pass
 
-
     def test_get_dict_from_list(self):
         test_list = [{"Id": 0, "key2": "", "key3": ""},{"Id": 1, "key2": ""}, {"Id": 2, "key2": "", "key7": 4}]
         res = get_dict_from_list(test_list, Id=1)
@@ -46,6 +45,21 @@ class TestStructures(unittest.TestCase):
         json_obj = [("Id", 0), ("key2", ""), ("key2", "val")]
         res = to_key_val_dict(json_obj)
         self.assertEqual(res, {"Id": 0, "key2": ["", "val"]})
+
+    def test_to_key_val_dict_tuple_list_double_array(self):
+        json_obj = [("Id", 0), ("key2", [""]), ("key2", ["val", "val2"])]
+        res = to_key_val_dict(json_obj)
+        self.assertEqual(res, {"Id": 0, "key2": ["", "val", "val2"]})
+
+    def test_to_key_val_dict_tuple_list_array_append(self):
+        json_obj = [("Id", 0), ("key2", [""]), ("key2", "val")]
+        res = to_key_val_dict(json_obj)
+        self.assertEqual(res, {"Id": 0, "key2": ["", "val"]})
+
+    def test_to_key_val_dict_tuple_list_three_elements(self):
+        json_obj = [("Id", 0), ("key2", ""), ("key2", "val"), ("key2", "val2")]
+        res = to_key_val_dict(json_obj)
+        self.assertEqual(res, {"Id": 0, "key2": ["", "val", "val2"]})
 
     def test_to_key_val_dict_none(self):
         res = to_key_val_dict(None)

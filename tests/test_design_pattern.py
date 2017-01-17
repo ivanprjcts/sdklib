@@ -3,8 +3,7 @@ import unittest
 from sdklib.util.design_pattern import Singleton
 
 
-@Singleton
-class MyClass:
+class MyClass(object):
 
     attribute = "MyClass"
 
@@ -12,16 +11,25 @@ class MyClass:
         return self.attribute + " say hello to " + name
 
 
-class TestDesignPattern(unittest.TestCase):
+@Singleton
+class MySingletonClass(MyClass):
+    pass
 
+
+class TestDesignPattern(unittest.TestCase):
     def test_singleton_try_to_use_standard_init_method(self):
         try:
-            c = MyClass()
+            c = MySingletonClass()
             self.assertTrue(False)
         except TypeError:
             pass
 
     def test_singleton_get_instance(self):
-        c = MyClass.get_instance()
+        c = MySingletonClass.get_instance()
         res = c.return_hello("ivan")
         self.assertEqual("MyClass say hello to ivan", res)
+
+    def test_singleton_instance_check(self):
+        c = MySingletonClass.get_instance()
+        print(type(MyClass))
+        self.assertTrue(isinstance(c, MyClass))
