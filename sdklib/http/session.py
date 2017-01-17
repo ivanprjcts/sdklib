@@ -26,7 +26,7 @@ class Cookie(object):
     def as_cookie_header_value(self):
         if self.is_empty():
             return ""
-        items = list(self._cookie.items())
+        items = list(self.items())
         name, morsel = items[0]
         output = "%s=%s" % (name, morsel.value)
         for name, morsel in items[1:]:
