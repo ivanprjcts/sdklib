@@ -26,3 +26,15 @@ class TestSampleSdk(unittest.TestCase):
     def test_update_item(self):
         response = self.api.update_item(1, "mi nombre", "algo")
         self.assertEqual(response.status, 200)
+
+    def test_partial_update_item(self):
+        response = self.api.partial_update_item(1, "mi nombre")
+        self.assertEqual(response.status, 405)
+
+    def test_delete_item(self):
+        response = self.api.delete_item(1)
+        self.assertEqual(response.status, 204)
+
+    def test_login(self):
+        response = self.api.login(username="user", password="password")
+        self.assertEqual(response.status, 404)

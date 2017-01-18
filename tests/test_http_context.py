@@ -81,3 +81,8 @@ class TestHttpContext(unittest.TestCase):
         ctxt_singleton.clear("proxy")
         self.assertNotEqual("http://localhost:8080", ctxt_singleton.proxy)
         self.assertEqual("PUT", ctxt_singleton.method)
+
+    def test_http_context_headers_none(self):
+        ctxt = HttpRequestContext()
+        ctxt.headers = None
+        self.assertEqual({}, ctxt.headers)

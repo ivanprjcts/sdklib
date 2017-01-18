@@ -12,12 +12,13 @@ class SampleHttpsHttpSdk(HttpSdk):
     def get_products(self):
         """
         Get all products.
+
         :return: SdkResponse
         """
-        return self._http_request("GET", self.API_PRODUCTS_PATH)
+        return self.get(self.API_PRODUCTS_PATH)
 
     def checkout(self, redirect=True):
-        return self._http_request("GET", self.API_CHECKOUT_PATH, redirect=redirect)
+        return self.get(self.API_CHECKOUT_PATH, redirect=redirect)
 
     def home(self):
-        return self._http_request("GET", self.API_HOME_PATH)
+        return self.get(self.API_HOME_PATH)

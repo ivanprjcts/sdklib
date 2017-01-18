@@ -9,27 +9,48 @@ class SampleHttpSdk(HttpSdk):
 
     DEFAULT_HOST = "https://mockapi.sdklib.org"
 
+    LOGIN_URL_PATH = "/login/"  # not exist
     API_ITEMS_URL_PATH = "/items/"
 
     def get_items(self):
         """
         Get all items.
+
         :return: SdkResponse
         """
-        return self._http_request("GET", self.API_ITEMS_URL_PATH)
+        return self.get(self.API_ITEMS_URL_PATH)
 
     def create_item(self, name, description=None, city=None):
         """
         Create an item.
+
         :return: SdkResponse
         """
         params = parse_args(name=name, description=description)
-        return self._http_request("POST", self.API_ITEMS_URL_PATH, body_params=params)
+        return self.post(self.API_ITEMS_URL_PATH, body_params=params)
 
     def update_item(self, item_id, name, description=None):
         """
         Update an item.
+
         :return: SdkResponse
         """
         params = parse_args(name=name, description=description)
-        return self._http_request("PUT", self.API_ITEMS_URL_PATH + safe_add_end_slash(item_id), body_params=params)
+        return self.put(self.API_ITEMS_URL_PATH + safe_add_end_slash(item_id), body_params=params)
+
+    def partial_update_item(self, item_id, name=None, description=None):
+        """
+        Update partially an item.
+
+        :return: SdkResponse
+        """
+        params = parse_args(name=name, description=description)
+        return self.patch(self.API_ITEMS_URL_PATH + safe_add_end_slash(item_id), body_params=params)
+
+    def delete_item(self, item_id):
+        """
+        Delete an item.
+
+        :return: SdkResponse
+        """
+        return self.delete(self.API_ITEMS_URL_PATH + safe_add_end_slash(item_id))

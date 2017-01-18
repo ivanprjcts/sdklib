@@ -154,6 +154,13 @@ class TestUrls(unittest.TestCase):
         url_path = generate_url_path("/path/to/{id}/{lang}/{format}/", format_suffix='json', lang='es')
         self.assertEqual("/path/to/{id}/es/{format}/.json", url_path)
 
+    def test_generate_url_path_not_allow_errors(self):
+        try:
+            generate_url_path("/path/to/{id}/{lang}/{format}/", format_suffix='json', lang='es', allow_key_errors=False)
+            self.assertTrue(False)
+        except KeyError:
+            pass
+
     def test_generate_url_full(self):
         url = generate_url(scheme="http", host="myhost.com", port=80, path="path", query={"param": "value"})
         self.assertEqual("http://myhost.com:80/path?param=value", url)
