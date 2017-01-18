@@ -54,8 +54,8 @@ Find my first SDK on github: https://github.com/ivanprjcts/my-first-sdk
             """
             Create an item.
             
-            :param name: str
-            :param description: str (optional)
+            :type name: str
+            :type description: str
             :return: SdkResponse
             """
             params = parse_args(name=name, description=description)
