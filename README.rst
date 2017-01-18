@@ -38,6 +38,29 @@ Sample
 
 Find my first SDK on github: https://github.com/ivanprjcts/my-first-sdk
 
+.. code-block:: python
+
+    from sdklib.http import HttpSdk
+
+    class FirstSdk(HttpSdk):
+        """
+        My First Sdk.
+        """
+        DEFAULT_HOST = "http://mockapi.sdklib.org"
+
+        API_ITEMS_URL_PATH = "/items/"
+
+        def create_item(self, name, description=None):
+            """
+            Create an item.
+            
+            :param name: str
+            :param description: str (optional)
+            :return: SdkResponse
+            """
+            params = parse_args(name=name, description=description)
+            return self.post(self.API_ITEMS_URL_PATH, body_params=params)
+
 
 Run tests
 =========
