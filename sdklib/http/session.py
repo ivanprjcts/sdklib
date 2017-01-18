@@ -17,7 +17,7 @@ class Cookie(object):
     def load_from_headers(self, headers):
         if not headers:
             return
-        set_cookie_header = headers.get("Set-Cookie")
+        set_cookie_header = headers.get("Set-Cookie", None)
         if set_cookie_header:
             ck = cookies.SimpleCookie()
             ck.load(set_cookie_header)
@@ -35,7 +35,7 @@ class Cookie(object):
         return output
 
     def is_empty(self):
-        return (self._cookie is None) or (self._cookie.items() == [])
+        return (self._cookie is None) or (len(self._cookie.items()) == 0)
 
     def getcookie(self):
         return self._cookie
