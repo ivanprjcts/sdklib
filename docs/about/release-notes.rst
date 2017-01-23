@@ -15,6 +15,15 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.8
 ==========
 
+Sdklib 1.8.1
+------------
+
+- Add guess_file_name_stream_type_header() method.
+- Fix 11paths auth bug.
+
+Sdklib 1.8.0
+------------
+
 - Add test coverage reports.
 - Add some tests.
 - Remove rrserver.

@@ -7,7 +7,7 @@ import binascii
 from hashlib import sha1
 
 from sdklib.http import url_encode
-from sdklib.http.renderers import FormRenderer, MultiPartRenderer, JSONRenderer
+from sdklib.http.renderers import FormRenderer, MultiPartRenderer, JSONRenderer, guess_file_name_stream_type_header
 from sdklib.http.headers import (
     AUTHORIZATION_HEADER_NAME, X_11PATHS_DATE_HEADER_NAME, X_11PATHS_BODY_HASH_HEADER_NAME,
     X_11PATHS_FILE_HASH_HEADER_NAME
@@ -78,23 +78,12 @@ def _hash_body(context):
 
 
 def _hash_file(context):
-    (k, v) = context.files[0]
-    if isinstance(v, (tuple, list)):
-        if len(v) == 2:
-            fn, fp = v
-        elif len(v) == 3:
-            fn, fp, ft = v
-        else:
-            fn, fp, ft, fh = v
-    else:
-        fn, fp = guess_filename_stream(v)
+    files = context.files
+    assert len(files) == 1, "This method only can sign requests with one file"
 
-    if isinstance(fp, (str, bytes, bytearray)):
-        fdata = fp
-    else:
-        fdata = fp.read()
-
-    return sha1(fdata).hexdigest()
+    for param in files:
+        _, fdata, _, _ = guess_file_name_stream_type_header(files[param])
+        return sha1(fdata).hexdigest()
 
 
 def _get_utc():

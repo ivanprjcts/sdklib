@@ -1,5 +1,6 @@
 from sdklib.http import HttpSdk
 from sdklib.util.parser import parse_args, safe_add_end_slash
+from sdklib.http.authorization import X11PathsAuthentication
 
 
 class SampleHttpSdk(HttpSdk):
@@ -11,6 +12,7 @@ class SampleHttpSdk(HttpSdk):
 
     LOGIN_URL_PATH = "/login/"  # not exist
     API_ITEMS_URL_PATH = "/items/"
+    API_FILE_URL_PATH = "/files/"
 
     def get_items(self):
         """
@@ -54,3 +56,14 @@ class SampleHttpSdk(HttpSdk):
         :return: SdkResponse
         """
         return self.delete(self.API_ITEMS_URL_PATH + safe_add_end_slash(item_id))
+
+    def create_file_11paths_auth(self, filename, file_stream, app_id, secret, description=None, name=None):
+        """
+        Create a file using 11paths authentication.
+
+        :return: SdkResponse
+        """
+        auth = (X11PathsAuthentication(app_id, secret),)
+        params = parse_args(name=name, description=description)
+        return self.post(self.API_FILE_URL_PATH, body_params=params, files={"file": (filename, file_stream)},
+                         authentication_instances=auth)
