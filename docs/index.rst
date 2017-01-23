@@ -16,4 +16,4 @@
   user-guide/response.rst
   about/license.rst
   about/release-notes.rst
-  sdklib.rst
+  modules.rst
