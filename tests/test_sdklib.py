@@ -1,4 +1,5 @@
 import unittest
+from sdklib.util.files import guess_filename_stream
 
 from tests.sample_sdk import SampleHttpSdk
 
@@ -37,4 +38,10 @@ class TestSampleSdk(unittest.TestCase):
 
     def test_login(self):
         response = self.api.login(username="user", password="password")
+        self.assertEqual(response.status, 404)
+
+    def test_create_file(self):
+        fname, fstream = guess_filename_stream("tests/resources/file.pdf")
+        response = self.api.create_file_11paths_auth(fname, fstream, "235hWLEETQ46KWLnAg48",
+                                                     "lBc4BSeqtGkidJZXictc3yiHbKBS87hjE078rswJ")
         self.assertEqual(response.status, 404)

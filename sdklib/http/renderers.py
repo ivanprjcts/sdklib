@@ -49,6 +49,35 @@ class BaseRenderer(object):
         raise BaseException("Not implemented yet")
 
 
+def guess_file_name_stream_type_header(args):
+    """
+    Guess filename, file stream, file type, file header from args.
+
+    :param args: may be string (filepath), 2-tuples (filename, fileobj), 3-tuples (filename, fileobj,
+    contentype) or 4-tuples (filename, fileobj, contentype, custom_headers).
+    :return: filename, file stream, file type, file header
+    """
+    ftype = None
+    fheader = None
+    if isinstance(args, (tuple, list)):
+        if len(args) == 2:
+            fname, fstream = args
+        elif len(args) == 3:
+            fname, fstream, ftype = args
+        else:
+            print(len(args))
+            fname, fstream, ftype, fheader = args
+    else:
+        fname, fstream = guess_filename_stream(args)
+        ftype = guess_content_type(fname)
+
+    if isinstance(fstream, (str, bytes, bytearray)):
+        fdata = fstream
+    else:
+        fdata = fstream.read()
+    return fname, fdata, ftype, fheader
+
+
 class MultiPartRenderer(BaseRenderer):
 
     def __init__(self, boundary="----------ThIs_Is_tHe_bouNdaRY_$", output_str='javascript'):
@@ -97,25 +126,7 @@ class MultiPartRenderer(BaseRenderer):
                 new_fields.append(rf)
 
         for (k, v) in files:
-            # support for explicit filename
-            ft = None
-            fh = None
-            if isinstance(v, (tuple, list)):
-                if len(v) == 2:
-                    fn, fp = v
-                elif len(v) == 3:
-                    fn, fp, ft = v
-                else:
-                    fn, fp, ft, fh = v
-            else:
-                fn, fp = guess_filename_stream(v)
-                ft = guess_content_type(fn)
-
-            if isinstance(fp, (str, bytes, bytearray)):
-                fdata = fp
-            else:
-                fdata = fp.read()
-
+            fn, fdata, ft, fh = guess_file_name_stream_type_header(v)
             rf = RequestField(name=k, data=fdata, filename=fn, headers=fh)
             rf.make_multipart(content_type=ft)
             new_fields.append(rf)
