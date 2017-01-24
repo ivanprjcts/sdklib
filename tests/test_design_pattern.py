@@ -31,5 +31,4 @@ class TestDesignPattern(unittest.TestCase):
 
     def test_singleton_instance_check(self):
         c = MySingletonClass.get_instance()
-        print(type(MyClass))
         self.assertTrue(isinstance(c, MyClass))

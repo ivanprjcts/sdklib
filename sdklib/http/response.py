@@ -1,4 +1,3 @@
-import io
 import json
 
 from xml.etree import ElementTree
@@ -94,3 +93,53 @@ class HttpResponse(object):
         Returns HTML response data.
         """
         return HTML(self.urllib3_response.data)
+
+
+class Error(object):
+    def __init__(self, json_data):
+        self.json = json_data
+
+    @property
+    def code(self):
+        return self.json['Code'] if "Code" in self.json else None
+
+    @property
+    def message(self):
+        return self.json['Message'] if "Message" in self.json else None
+
+    @property
+    def json(self):
+        return self._json
+
+    @json.setter
+    def json(self, value):
+        self._json = value if isinstance(value, dict) else dict()
+
+    def __repr__(self):
+        return json.dumps(self.json)
+
+    def __str__(self):
+        return self.__repr__()
+
+
+class Api11PathsResponse(HttpResponse):
+    """
+    This class models a response from any of the endpoints in most of 11Paths APIs.
+
+    It consists of a "data" and an "error" elements. Although normally only one of them will be present, they are not
+    mutually exclusive, since errors can be non fatal, and therefore a response could have valid information in the data
+    field and at the same time inform of an error.
+    """
+    @property
+    def data(self):
+        """
+        :return: data part of the API response into a dictionary
+        """
+        return self.json["Data"] if "Data" in self.json else None
+
+    @property
+    def error(self):
+        """
+        @return Error the error part of the API response, consisting of an error code and an error message
+        """
+        return Error(self.json["Error"]) if "Error" in self.json else None
