@@ -33,7 +33,7 @@ class HttpRequestContext(object):
     """
 
     fields_to_clear = [
-        'method', 'url_path', 'body_params', 'query_params', 'files'
+        'method', 'url_path', 'body_params', 'query_params', 'files', 'renderer'
     ]
 
     def __init__(self, host=None, proxy=None, method=None, prefix_url_path=None, url_path=None, url_path_params=None,
@@ -98,7 +98,7 @@ class HttpRequestContext(object):
 
     @renderer.setter
     def renderer(self, value):
-        self._renderer = value or JSONRenderer()
+        self._renderer = value or JSONRenderer() if not self.files else MultiPartRenderer()
 
     @property
     def url_path(self):
@@ -326,11 +326,13 @@ class HttpSdk(object):
             url += "?%s" % (urlencode(context.query_params))
 
         log_print_request(context.method, url, context.query_params, context.headers, body)
-        r = HttpSdk.get_pool_manager(context.proxy).request(context.method,
-                                                            url,
-                                                            body=body,
-                                                            headers=context.headers,
-                                                            redirect=context.redirect)
+        r = HttpSdk.get_pool_manager(context.proxy).request(
+            context.method,
+            url,
+            body=body,
+            headers=context.headers,
+            redirect=context.redirect
+        )
         log_print_response(r.status, r.data, r.headers)
         r = context.response_class(r)
         return r

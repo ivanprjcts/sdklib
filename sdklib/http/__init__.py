@@ -1,4 +1,4 @@
-from sdklib.http.sdk_base import HttpSdk, HttpRequestContext, generate_url_path
+from sdklib.http.base import HttpSdk, HttpRequestContext, generate_url_path
 from sdklib.http.response import HttpResponse
 from sdklib.http.renderers import get_renderer, url_encode
 from sdklib.util.design_pattern import Singleton
