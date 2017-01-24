@@ -15,19 +15,19 @@ class TestSampleSdk(unittest.TestCase):
     def tearDownClass(cls):
         pass
 
-    def test_get_products(self):
+    def _test_get_products(self):
         response = self.api.get_products()
         self.assertEqual(response.status, 200)
         self.assertTrue(isinstance(response.data, list))
 
-    def test_redirect_true(self):
+    def _test_redirect_true(self):
         response = self.api.checkout(redirect=True)
         self.assertEqual(response.status, 200)
 
-    def test_redirect_false(self):
+    def _test_redirect_false(self):
         response = self.api.checkout(redirect=False)
         self.assertEqual(response.status, 302)
 
-    def test_html_response(self):
+    def _test_html_response(self):
         response = self.api.home()
         self.assertTrue(isinstance(response.html, HTML))

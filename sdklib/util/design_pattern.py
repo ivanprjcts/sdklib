@@ -19,7 +19,6 @@ class Singleton:
     Limitations: The decorated class cannot be inherited from.
 
     """
-
     def __init__(self, decorated):
         self._decorated = decorated
 

@@ -2,8 +2,6 @@
 Release Notes
 =============
 
----
-
 Upgrading
 =========
 
@@ -15,14 +13,19 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.8
 ==========
 
+Sdklib 1.8.2
+------------
+
+- Add Api11PathsResponse.
+
 Sdklib 1.8.1
 ------------
 
 - Add guess_file_name_stream_type_header() method.
 - Fix 11paths auth bug.
 
-Sdklib 1.8.0
-------------
+Sdklib 1.8
+----------
 
 - Add test coverage reports.
 - Add some tests.
@@ -32,20 +35,21 @@ Sdklib 1.8.0
 - Fix some bugs.
 
 
-Sdklib 1.7.2
-============
-
-- Fix some bugs.
-
-
-Sdklib 1.7.1
-============
-
-- Fix some bugs.
-
-
 Sdklib 1.7
 ==========
+
+Sdklib 1.7.2
+------------
+
+- Fix some bugs.
+
+Sdklib 1.7.1
+------------
+
+- Fix some bugs.
+
+Sdklib 1.7
+----------
 
 - Return more parameters into urlsplit function.
 - Add generate_url() function.
@@ -53,22 +57,23 @@ Sdklib 1.7
 - Support xpath functions such as contains() using lxml.
 
 
+Sdklib 1.6
+==========
+
 Sdklib 1.6.6
-============
+------------
 
 - Allow to redirect http requests.
 
-
 Sdklib 1.6.5
-============
+------------
 
 - Use an internal logger instance to print request and response logs.
 - Add clear method to http request context.
 - Add fields_to_clear attribute to http request context.
 
-
 Sdklib 1.6
-==========
+----------
 
 - Custom content-type header has priority over renderer content-type.
 - Get update_content_type parameter from context.
@@ -76,38 +81,40 @@ Sdklib 1.6
 - Add CustomRenderer.
 
 
+Sdklib 1.5
+==========
+
 Sdklib 1.5.2
-============
+------------
 
 - Add manifest.
 
-
 Sdklib 1.5.1
-============
+------------
 
 - Fix requirements.
 
-
 Sdklib 1.5
-==========
+----------
 
 - Add HTML parsed response.
 
 
+Sdklib 1.4
+==========
+
 Sdklib 1.4.2
-============
+------------
 
 - Fix bug: 11paths authorization header is not correct using multiples form params.
 
-
 Sdklib 1.4.1
-============
+------------
 
 - Fix bug: ensure url path params is never None.
 
-
 Sdklib 1.4
-==========
+----------
 
 - Add XMLRenderer interface.
 - Add json property to response.
@@ -144,52 +151,46 @@ Sdklib 1.1
 Sdklib 1.0
 ==========
 
+Sdklib 1.0
+----------
+
 - Use urllib3.
 
-
 Sdklib 0.5.2.1
-==============
+--------------
 
 - Bug fixing.
 
-
 Sdklib 0.5.2
-============
+------------
 
 - Bug fixing.
 - Allow passing files and form_parameters as tuples when request is encoded multipart
 
-
 Sdklib 0.5.1
-============
+------------
 
 - Bug fixing.
 
-
 Sdklib 0.5
-==========
+----------
 
 - Add new parse as tuple list function.
 - Add files parameter to http method.
 - Infer content type header in all requests.
 
-
 Sdklib 0.4.1
-============
+------------
 
 - Add parameters to strf timetizer functions.
 
-
 Sdklib 0.4
-==========
+----------
 
 - Add file functions.
 - Add parse as tuple list function.
 
-
 Sdklib 0.3
-==========
+----------
 
 - Initial version.
-
-

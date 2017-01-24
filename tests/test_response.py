@@ -1,6 +1,6 @@
 import unittest
 
-from sdklib.http import HttpResponse
+from sdklib.http.response import Api11PathsResponse, HttpResponse
 
 
 XML_CATALOG = """<?xml version="1.0" encoding="UTF-8"?>
@@ -46,6 +46,8 @@ HTML_STR = """<!DOCTYPE html>
 </html>
 """
 
+JSON = """{"Data":null,"Error":{"Code":209,"Message":"No available cleanings"}}"""
+
 
 class Urllib3ResponseMock(object):
     def __init__(self, data):
@@ -58,6 +60,7 @@ class TestResponse(unittest.TestCase):
     def setUpClass(cls):
         cls.xml_response = HttpResponse(Urllib3ResponseMock(XML_CATALOG))
         cls.html_response = HttpResponse(Urllib3ResponseMock(HTML_STR))
+        cls.api11paths_response = Api11PathsResponse(Urllib3ResponseMock(JSON))
 
     @classmethod
     def tearDownClass(cls):
@@ -78,3 +81,10 @@ class TestResponse(unittest.TestCase):
     def test_html_response(self):
         html = self.html_response.html
         self.assertIn("This is a Heading", html.find_element_by_id("heading").text)
+
+    def test_api11paths_response(self):
+        data = self.api11paths_response.data
+        error = self.api11paths_response.error
+        self.assertEqual(None, data)
+        self.assertEqual("No available cleanings", error.message)
+        self.assertEqual(209, error.code)
