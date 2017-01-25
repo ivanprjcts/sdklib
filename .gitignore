@@ -60,3 +60,9 @@ target/
 output/
 .idea/
 
+# Auto-genenated api-docs
+docs/sdklib*.rst
+docs/modules.rst
+
+# Auto-genenated behave-docs
+docs/steps
