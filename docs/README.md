@@ -5,7 +5,12 @@
 sphinx-apidoc -o docs sdklib
 ````
 
-2. Generate html. [See sphinx-build](http://www.sphinx-doc.org/en/1.5.1/invocation.html#invocation-of-sphinx-build)
+2. Generate Steps-API docs. [See behave-formatters](https://pythonhosted.org/behave/formatters.html)
+````cmd
+behave --dry-run -f sphinx.steps doc-utils/steps_catalog/catalog.feature -o docs/steps
+````
+
+3. Generate html. [See sphinx-build](http://www.sphinx-doc.org/en/1.5.1/invocation.html#invocation-of-sphinx-build)
 ````cmd
 sphinx-build -b html docs/ output/
 ````
