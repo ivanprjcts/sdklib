@@ -1,7 +1,7 @@
 import urllib3
 
 from sdklib.http.renderers import JSONRenderer, MultiPartRenderer, get_renderer
-from sdklib.compat import urlencode
+from sdklib.compat import urlencode, convert_unicode_to_native_str
 from sdklib.util.parser import parse_args
 from sdklib.util.urls import (
     get_hostname_parameters_from_url, ensure_url_path_starts_with_slash, ensure_url_path_format_suffix_starts_with_dot
@@ -106,7 +106,7 @@ class HttpRequestContext(object):
 
     @url_path.setter
     def url_path(self, value):
-        self._url_path = value or '/'
+        self._url_path = value if value else '/'
 
     @property
     def method(self):
@@ -114,7 +114,7 @@ class HttpRequestContext(object):
 
     @method.setter
     def method(self, value):
-        self._method = value or GET_METHOD
+        self._method = value if value else GET_METHOD
 
     @property
     def url_path_params(self):
@@ -326,9 +326,10 @@ class HttpSdk(object):
             url += "?%s" % (urlencode(context.query_params))
 
         log_print_request(context.method, url, context.query_params, context.headers, body)
+        # ensure method and url are native str
         r = HttpSdk.get_pool_manager(context.proxy).request(
-            context.method,
-            url,
+            convert_unicode_to_native_str(context.method),
+            convert_unicode_to_native_str(url),
             body=body,
             headers=context.headers,
             redirect=context.redirect

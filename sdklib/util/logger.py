@@ -55,7 +55,10 @@ def log_print_request(method, url, query_params=None, headers=None, body=None):
     if headers is not None:
         log_msg += '\t> Headers:\n{}\n'.format(json.dumps(dict(headers), sort_keys=True, indent=4))
     if body is not None:
-        log_msg += '\t> Payload sent:\n{}\n'.format(_get_pretty_body(headers, body))
+        try:
+            log_msg += '\t> Payload sent:\n{}\n'.format(_get_pretty_body(headers, body))
+        except:
+            log_msg += "\t> Payload could't be formatted"
 
     logger.debug(log_msg)
 
