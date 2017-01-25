@@ -13,14 +13,14 @@ from sdklib.http.headers import AUTHORIZATION_HEADER_NAME, X_11PATHS_BODY_HASH_H
 class TestAuthorization(unittest.TestCase):
 
     def test_basic_authentication(self):
-        value = basic_authorization(username=b"Aladdin", password=b"OpenSesame")
-        self.assertEqual(b"Basic QWxhZGRpbjpPcGVuU2VzYW1l", value)
+        value = basic_authorization(username="Aladdin", password="OpenSesame")
+        self.assertEqual("Basic QWxhZGRpbjpPcGVuU2VzYW1l", value)
 
     def test_basic_authentication_class(self):
-        a = BasicAuthentication(b"Aladdin", b"OpenSesame")
+        a = BasicAuthentication("Aladdin", "OpenSesame")
         ctx = HttpRequestContext(headers={})
         auth_ctx = a.apply_authentication(context=ctx)
-        self.assertEqual(b"Basic QWxhZGRpbjpPcGVuU2VzYW1l", auth_ctx.headers[AUTHORIZATION_HEADER_NAME])
+        self.assertEqual("Basic QWxhZGRpbjpPcGVuU2VzYW1l", auth_ctx.headers[AUTHORIZATION_HEADER_NAME])
 
     def test_11paths_authentication(self):
         context = HttpRequestContext(method="GET", url_path="/path/")

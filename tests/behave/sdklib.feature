@@ -15,6 +15,22 @@ Feature: Test 11Paths APIs
     Then The HTTP status code should be "404"
 
 
+  Scenario: Try to clean a File with Latch using an invalid secret
+    # Enter steps here
+    Given The API endpoint "https://mockapi.sdklib.org"
+      # And The API proxy "http://localhost:8080"
+      And The API resource "/some/path/"
+      And The headers
+       | header_name   | header_value   |
+       | x-header      | Hello          |
+      And Authorization-Basic with username "user" and password "Passw0rd"
+      And The query parameters
+       | param_name   | param_value   |
+       | param        | value         |
+    When I send a HTTP "GET" request
+    Then The HTTP status code should be "404"
+
+
   Scenario: Try to pair a Latch application using an invalid secret
     # Enter steps here
     Given The API endpoint "https://latch.elevenpaths.com"

@@ -6,6 +6,7 @@ import binascii
 
 from hashlib import sha1
 
+from sdklib.compat import convert_str_to_bytes, convert_bytes_to_str
 from sdklib.http import url_encode
 from sdklib.http.renderers import FormRenderer, MultiPartRenderer, JSONRenderer, guess_file_name_stream_type_header
 from sdklib.http.headers import (
@@ -25,9 +26,9 @@ AUTHORIZATION_METHOD = "11PATHS"
 
 
 def basic_authorization(username, password):
-    combined_username_password = username + b":" + password
-    b64_combined = base64.b64encode(combined_username_password)
-    return b"Basic " + b64_combined
+    combined_username_password = username + ":" + password
+    b64_combined = base64.b64encode(convert_str_to_bytes(combined_username_password))
+    return "Basic " + convert_bytes_to_str(b64_combined)
 
 
 def x_11paths_authorization(app_id, secret, context, utc=None):

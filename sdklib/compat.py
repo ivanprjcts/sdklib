@@ -32,7 +32,7 @@ elif is_py3:
 
     basestring = (str, bytes)
     str = str
-    convert_bytes_to_str = lambda x: str(x)
+    convert_bytes_to_str = lambda x: x.decode() if isinstance(x, bytes) else x
     convert_unicode_to_native_str = lambda x: x
 
 
