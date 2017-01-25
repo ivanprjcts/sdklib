@@ -20,6 +20,7 @@ if is_py2:
     basestring = basestring
     str = unicode
     convert_bytes_to_str = lambda x: x
+    convert_unicode_to_native_str = lambda x: x.encode() if isinstance(x, unicode) else x
 
 elif is_py3:
     from urllib.parse import urlencode, quote_plus, urlsplit
@@ -32,6 +33,7 @@ elif is_py3:
     basestring = (str, bytes)
     str = str
     convert_bytes_to_str = lambda x: str(x)
+    convert_unicode_to_native_str = lambda x: x
 
 
 try:
@@ -39,3 +41,7 @@ try:
     html_lxml = True
 except:
     html_lxml = False
+
+
+def convert_str_to_bytes(value):
+    return value.encode("ISO-8859-1") if isinstance(value, str) else value

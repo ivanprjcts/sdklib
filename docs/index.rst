@@ -14,6 +14,7 @@
   user-guide/renderers.rst
   user-guide/authentication.rst
   user-guide/response.rst
+  Behave steps<steps/index.rst>
   about/license.rst
   about/release-notes.rst
   modules.rst

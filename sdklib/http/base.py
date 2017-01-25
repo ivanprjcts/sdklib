@@ -1,7 +1,7 @@
 import urllib3
 
 from sdklib.http.renderers import JSONRenderer, MultiPartRenderer, get_renderer
-from sdklib.compat import urlencode
+from sdklib.compat import urlencode, convert_unicode_to_native_str
 from sdklib.util.parser import parse_args
 from sdklib.util.urls import (
     get_hostname_parameters_from_url, ensure_url_path_starts_with_slash, ensure_url_path_format_suffix_starts_with_dot
@@ -33,7 +33,7 @@ class HttpRequestContext(object):
     """
 
     fields_to_clear = [
-        'method', 'url_path', 'body_params', 'query_params', 'files'
+        'method', 'url_path', 'body_params', 'query_params', 'files', 'renderer'
     ]
 
     def __init__(self, host=None, proxy=None, method=None, prefix_url_path=None, url_path=None, url_path_params=None,
@@ -98,7 +98,7 @@ class HttpRequestContext(object):
 
     @renderer.setter
     def renderer(self, value):
-        self._renderer = value or JSONRenderer()
+        self._renderer = value or JSONRenderer() if not self.files else MultiPartRenderer()
 
     @property
     def url_path(self):
@@ -106,7 +106,7 @@ class HttpRequestContext(object):
 
     @url_path.setter
     def url_path(self, value):
-        self._url_path = value or '/'
+        self._url_path = value if value else '/'
 
     @property
     def method(self):
@@ -114,7 +114,7 @@ class HttpRequestContext(object):
 
     @method.setter
     def method(self, value):
-        self._method = value or GET_METHOD
+        self._method = value if value else GET_METHOD
 
     @property
     def url_path_params(self):
@@ -326,11 +326,14 @@ class HttpSdk(object):
             url += "?%s" % (urlencode(context.query_params))
 
         log_print_request(context.method, url, context.query_params, context.headers, body)
-        r = HttpSdk.get_pool_manager(context.proxy).request(context.method,
-                                                            url,
-                                                            body=body,
-                                                            headers=context.headers,
-                                                            redirect=context.redirect)
+        # ensure method and url are native str
+        r = HttpSdk.get_pool_manager(context.proxy).request(
+            convert_unicode_to_native_str(context.method),
+            convert_unicode_to_native_str(url),
+            body=body,
+            headers=context.headers,
+            redirect=context.redirect
+        )
         log_print_response(r.status, r.data, r.headers)
         r = context.response_class(r)
         return r

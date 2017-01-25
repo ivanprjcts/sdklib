@@ -65,7 +65,6 @@ def guess_file_name_stream_type_header(args):
         elif len(args) == 3:
             fname, fstream, ftype = args
         else:
-            print(len(args))
             fname, fstream, ftype, fheader = args
     else:
         fname, fstream = guess_filename_stream(args)
