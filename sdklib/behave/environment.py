@@ -13,7 +13,7 @@ def sdklib_before_all(context):
     safe_add_http_request_context_to_behave_context(context)
 
 
-def after_scenario(context, scenario):
+def sdklib_after_scenario(context, scenario):
     """
     Clean method that will be executed after each scenario.
 
