@@ -66,4 +66,4 @@ class SampleHttpSdk(HttpSdk):
         auth = (X11PathsAuthentication(app_id, secret),)
         params = parse_args(name=name, description=description)
         return self.post(self.API_FILE_URL_PATH, body_params=params, files={"file": (filename, file_stream)},
-                         authentication_instances=auth)
+                         authentication_instances=auth, host="https://latch.elevenpaths.com")
