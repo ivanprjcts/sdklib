@@ -13,6 +13,13 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.8
 ==========
 
+Sdklib 1.8.3
+------------
+
+- Add behave steps.
+- Fix some bugs.
+- Separate requirements_dev.txt into different files.
+
 Sdklib 1.8.2
 ------------
 
