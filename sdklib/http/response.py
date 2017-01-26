@@ -3,7 +3,7 @@ import json
 from xml.etree import ElementTree
 
 from sdklib.http.session import Cookie
-from sdklib.util.structures import xml_string_to_dict
+from sdklib.util.structures import xml_string_to_dict, CaseInsensitiveDict
 from sdklib.html import HTML
 
 
@@ -76,6 +76,10 @@ class HttpResponse(object):
         return json.loads(data)
 
     @property
+    def case_insensitive_dict(self):
+        return CaseInsensitiveDict(self.json)
+
+    @property
     def xml(self):
         data = self.urllib3_response.data
         return ElementTree.fromstring(data)
@@ -98,14 +102,15 @@ class HttpResponse(object):
 class Error(object):
     def __init__(self, json_data):
         self.json = json_data
+        self.case_insensitive_dict = CaseInsensitiveDict(self.json)
 
     @property
     def code(self):
-        return self.json['Code'] if "Code" in self.json else None
+        return self.case_insensitive_dict['code'] if "code" in self.case_insensitive_dict else None
 
     @property
     def message(self):
-        return self.json['Message'] if "Message" in self.json else None
+        return self.case_insensitive_dict['message'] if "message" in self.case_insensitive_dict else None
 
     @property
     def json(self):
@@ -135,11 +140,12 @@ class Api11PathsResponse(HttpResponse):
         """
         :return: data part of the API response into a dictionary
         """
-        return self.json["Data"] if "Data" in self.json else None
+        return self.case_insensitive_dict.get("data", None)
 
     @property
     def error(self):
         """
         @return Error the error part of the API response, consisting of an error code and an error message
         """
-        return Error(self.json["Error"]) if "Error" in self.json else None
+        return Error(self.case_insensitive_dict["error"]) if self.case_insensitive_dict.get("error", None) is not None \
+            else None

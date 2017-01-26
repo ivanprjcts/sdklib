@@ -46,7 +46,11 @@ HTML_STR = """<!DOCTYPE html>
 </html>
 """
 
-JSON = """{"Data":null,"Error":{"Code":209,"Message":"No available cleanings"}}"""
+JSON_DATA_AND_ERROR = """{"data": "Hello","error":{"code":209,"message":"No available cleanings"}}"""
+INSENSITIVE_JSON_DATA_AND_ERROR = """{"DaTA": "Hello","eRror":{"codE":209,"Message":"No available cleanings"}}"""
+JSON_NULL_DATA_AND_ERROR = """{"data":null,"error":null}"""
+JSON_NO_DATA_AND_ERROR = """{}"""
+JSON_ERROR_CODE_AND_NO_MESSAGE = """{"error":{"code":209}}"""
 
 
 class Urllib3ResponseMock(object):
@@ -60,7 +64,15 @@ class TestResponse(unittest.TestCase):
     def setUpClass(cls):
         cls.xml_response = HttpResponse(Urllib3ResponseMock(XML_CATALOG))
         cls.html_response = HttpResponse(Urllib3ResponseMock(HTML_STR))
-        cls.api11paths_response = Api11PathsResponse(Urllib3ResponseMock(JSON))
+        cls.api11paths_response_null_data = Api11PathsResponse(Urllib3ResponseMock(JSON_NULL_DATA_AND_ERROR))
+        cls.api11paths_response_data_error = Api11PathsResponse(Urllib3ResponseMock(JSON_DATA_AND_ERROR))
+        cls.api11paths_response_no_data = Api11PathsResponse(Urllib3ResponseMock(JSON_NO_DATA_AND_ERROR))
+        cls.api11paths_response_error_code_no_message = Api11PathsResponse(
+            Urllib3ResponseMock(JSON_ERROR_CODE_AND_NO_MESSAGE)
+        )
+        cls.api11paths_response_insensitive_data_error = Api11PathsResponse(
+            Urllib3ResponseMock(INSENSITIVE_JSON_DATA_AND_ERROR)
+        )
 
     @classmethod
     def tearDownClass(cls):
@@ -82,9 +94,35 @@ class TestResponse(unittest.TestCase):
         html = self.html_response.html
         self.assertIn("This is a Heading", html.find_element_by_id("heading").text)
 
-    def test_api11paths_response(self):
-        data = self.api11paths_response.data
-        error = self.api11paths_response.error
-        self.assertEqual(None, data)
+    def test_api11paths_response_data_and_error(self):
+        data = self.api11paths_response_data_error.data
+        error = self.api11paths_response_data_error.error
+        self.assertEqual("Hello", data)
+        self.assertEqual("No available cleanings", error.message)
+        self.assertEqual(209, error.code)
+
+    def test_api11paths_response_null_data_error(self):
+        data = self.api11paths_response_null_data.data
+        error = self.api11paths_response_null_data.error
+        self.assertIsNone(data)
+        self.assertIsNone(error)
+
+    def test_api11paths_response_error_code_no_message(self):
+        data = self.api11paths_response_error_code_no_message.data
+        error = self.api11paths_response_error_code_no_message.error
+        self.assertIsNone(data)
+        self.assertEqual(209, error.code)
+        self.assertEqual(None, error.message)
+
+    def test_api11paths_response_no_data_error(self):
+        data = self.api11paths_response_null_data.data
+        error = self.api11paths_response_null_data.error
+        self.assertIsNone(data)
+        self.assertIsNone(error)
+
+    def test_api11paths_response_insensitive_data_and_error(self):
+        data = self.api11paths_response_insensitive_data_error.data
+        error = self.api11paths_response_insensitive_data_error.error
+        self.assertEqual("Hello", data)
         self.assertEqual("No available cleanings", error.message)
         self.assertEqual(209, error.code)

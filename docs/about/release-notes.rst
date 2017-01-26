@@ -13,6 +13,13 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.8
 ==========
 
+Sdklib 1.8.4
+------------
+
+- Make get Api11PathsResponse data, error, code and message case insensitive.
+- Add CaseInsensitiveDict class.
+- Fix some bugs.
+
 Sdklib 1.8.3
 ------------
 
