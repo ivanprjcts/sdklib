@@ -2,6 +2,7 @@ import json
 
 from xml.etree import ElementTree
 
+from sdklib.compat import convert_bytes_to_str
 from sdklib.http.session import Cookie
 from sdklib.util.structures import xml_string_to_dict, CaseInsensitiveDict
 from sdklib.html import HTML
@@ -73,7 +74,7 @@ class HttpResponse(object):
     @property
     def json(self):
         data = self.urllib3_response.data
-        return json.loads(data)
+        return json.loads(convert_bytes_to_str(data))
 
     @property
     def case_insensitive_dict(self):

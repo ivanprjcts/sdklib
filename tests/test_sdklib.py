@@ -1,4 +1,5 @@
 import unittest
+from sdklib.compat import bytes
 from sdklib.util.files import guess_filename_stream
 
 from tests.sample_sdk import SampleHttpSdk
@@ -45,3 +46,13 @@ class TestSampleSdk(unittest.TestCase):
         response = self.api.create_file_11paths_auth(fname, fstream, "235hWLEETQ46KWLnAg48",
                                                      "lBc4BSeqtGkidJZXictc3yiHbKBS87hjE078rswJ")
         self.assertEqual(response.status, 404)
+
+    def test_get_json_response(self):
+        response = self.api.get_items()
+        self.assertEqual(response.status, 200)
+        self.assertTrue(isinstance(response.json, list))
+
+    def test_get_raw_response(self):
+        response = self.api.get_items()
+        self.assertEqual(response.status, 200)
+        self.assertTrue(isinstance(response.raw, bytes))

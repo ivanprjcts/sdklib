@@ -3,7 +3,7 @@ import unittest
 from sdklib.http.response import Api11PathsResponse, HttpResponse
 
 
-XML_CATALOG = """<?xml version="1.0" encoding="UTF-8"?>
+XML_CATALOG = b"""<?xml version="1.0" encoding="UTF-8"?>
 <CATALOG>
     <CD>
         <TITLE>Empire Burlesque</TITLE>
@@ -32,7 +32,7 @@ XML_CATALOG = """<?xml version="1.0" encoding="UTF-8"?>
 </CATALOG>
 """
 
-HTML_STR = """<!DOCTYPE html>
+HTML_STR = b"""<!DOCTYPE html>
 <html>
 <head>
 <title>Page Title</title>
@@ -46,11 +46,11 @@ HTML_STR = """<!DOCTYPE html>
 </html>
 """
 
-JSON_DATA_AND_ERROR = """{"data": "Hello","error":{"code":209,"message":"No available cleanings"}}"""
-INSENSITIVE_JSON_DATA_AND_ERROR = """{"DaTA": "Hello","eRror":{"codE":209,"Message":"No available cleanings"}}"""
-JSON_NULL_DATA_AND_ERROR = """{"data":null,"error":null}"""
-JSON_NO_DATA_AND_ERROR = """{}"""
-JSON_ERROR_CODE_AND_NO_MESSAGE = """{"error":{"code":209}}"""
+JSON_DATA_AND_ERROR = b"""{"data": "Hello","error":{"code":209,"message":"No available cleanings"}}"""
+INSENSITIVE_JSON_DATA_AND_ERROR = b"""{"DaTA": "Hello","eRror":{"codE":209,"Message":"No available cleanings"}}"""
+JSON_NULL_DATA_AND_ERROR = b"""{"data":null,"error":null}"""
+JSON_NO_DATA_AND_ERROR = b"""{}"""
+JSON_ERROR_CODE_AND_NO_MESSAGE = b"""{"error":{"code":209}}"""
 
 
 class Urllib3ResponseMock(object):
@@ -88,7 +88,7 @@ class TestResponse(unittest.TestCase):
 
     def test_xml_response_raw(self):
         xml_raw = self.xml_response.raw
-        self.assertIn("<?xml version=\"1.0\"", xml_raw)
+        self.assertEqual(XML_CATALOG, xml_raw)
 
     def test_html_response(self):
         html = self.html_response.html

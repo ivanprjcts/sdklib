@@ -18,6 +18,7 @@ if is_py2:
     from StringIO import StringIO
 
     basestring = basestring
+    bytes = str
     str = unicode
     convert_bytes_to_str = lambda x: x
     convert_unicode_to_native_str = lambda x: x.encode() if isinstance(x, unicode) else x
@@ -32,6 +33,7 @@ elif is_py3:
 
     basestring = (str, bytes)
     str = str
+    bytes = bytes
     convert_bytes_to_str = lambda x: x.decode() if isinstance(x, bytes) else x
     convert_unicode_to_native_str = lambda x: x
 

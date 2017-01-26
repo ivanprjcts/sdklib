@@ -8,7 +8,7 @@ Feature: Test 11Paths APIs
       And The API resource "/ExternalApi/CleanFile"
       And 11Paths-Authorization with application id "nBDbNL8Ae7uzyZhvgNyg" and secret "1Nz4fpbTNJcvPPQL7vYwgtZChMgdnNyGH8DB2nia"
       And The body files
-       | param_name   | path_to_file               |
+       | param_name   | path_to_file              |
        | file         | tests/resources/file.pdf  |
       And The default renderer
     When I send a HTTP "POST" request

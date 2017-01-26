@@ -1,3 +1,4 @@
+import copy
 import urllib3
 
 from sdklib.http.renderers import JSONRenderer, MultiPartRenderer, get_renderer
@@ -304,38 +305,38 @@ class HttpSdk(object):
 
         :param context: request context.
         """
-        context.method = context.method.upper()
-        assert context.method in ALLOWED_METHODS
+        new_context = copy.deepcopy(context)
+        assert new_context.method in ALLOWED_METHODS
 
-        context.url_path = generate_url_path(context.url_path, prefix=context.prefix_url_path,
-                                             format_suffix=context.url_path_format, **context.url_path_params)
+        new_context.url_path = generate_url_path(new_context.url_path, prefix=new_context.prefix_url_path,
+                                             format_suffix=new_context.url_path_format, **new_context.url_path_params)
 
-        if context.body_params or context.files:
-            body, content_type = context.renderer.encode_params(context.body_params, files=context.files)
-            if context.update_content_type and HttpSdk.CONTENT_TYPE_HEADER_NAME not in context.headers:
-                context.headers[HttpSdk.CONTENT_TYPE_HEADER_NAME] = content_type
+        if new_context.body_params or new_context.files:
+            body, content_type = new_context.renderer.encode_params(new_context.body_params, files=new_context.files)
+            if new_context.update_content_type and HttpSdk.CONTENT_TYPE_HEADER_NAME not in new_context.headers:
+                new_context.headers[HttpSdk.CONTENT_TYPE_HEADER_NAME] = content_type
         else:
             body = None
 
-        authentication_instances = context.authentication_instances
+        authentication_instances = new_context.authentication_instances
         for auth_obj in authentication_instances:
-            context = auth_obj.apply_authentication(context)
+            new_context = auth_obj.apply_authentication(new_context)
 
-        url = "%s%s" % (context.host, context.url_path)
-        if context.query_params is not None:
-            url += "?%s" % (urlencode(context.query_params))
+        url = "%s%s" % (new_context.host, new_context.url_path)
+        if new_context.query_params is not None:
+            url += "?%s" % (urlencode(new_context.query_params))
 
-        log_print_request(context.method, url, context.query_params, context.headers, body)
+        log_print_request(new_context.method, url, new_context.query_params, new_context.headers, body)
         # ensure method and url are native str
-        r = HttpSdk.get_pool_manager(context.proxy).request(
-            convert_unicode_to_native_str(context.method),
+        r = HttpSdk.get_pool_manager(new_context.proxy).request(
+            convert_unicode_to_native_str(new_context.method),
             convert_unicode_to_native_str(url),
             body=body,
-            headers=context.headers,
-            redirect=context.redirect
+            headers=new_context.headers,
+            redirect=new_context.redirect
         )
         log_print_response(r.status, r.data, r.headers)
-        r = context.response_class(r)
+        r = new_context.response_class(r)
         return r
 
     def _http_request(self, method, url_path, headers=None, query_params=None, body_params=None, files=None, **kwargs):
