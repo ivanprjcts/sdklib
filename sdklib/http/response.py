@@ -8,18 +8,24 @@ from sdklib.util.structures import xml_string_to_dict, CaseInsensitiveDict
 from sdklib.html import HTML
 
 
-class HttpResponse(object):
+class AbstractHttpResponse(object):
     """
-    Wrapper of Urllib3 HTTPResponse class.
+    Wrapper of Urllib3 HTTPResponse class needed to implement any HttpSdk response class.
 
     See `Urllib3 <http://urllib3.readthedocs.io/en/latest/user-guide.html#response-content>`_.
     """
-
     def __init__(self, resp):
         self.urllib3_response = resp
         self._cookie = None
         self.file = None
 
+
+class HttpResponse(AbstractHttpResponse):
+    """
+    Wrapper of Urllib3 HTTPResponse class.
+
+    See `Urllib3 <http://urllib3.readthedocs.io/en/latest/user-guide.html#response-content>`_.
+    """
     @property
     def data(self):
         data = self.urllib3_response.data
@@ -128,7 +134,7 @@ class Error(object):
         return self.__repr__()
 
 
-class Api11PathsResponse(HttpResponse):
+class Api11PathsResponse(AbstractHttpResponse):
     """
     This class models a response from any of the endpoints in most of 11Paths APIs.
 
@@ -136,6 +142,15 @@ class Api11PathsResponse(HttpResponse):
     mutually exclusive, since errors can be non fatal, and therefore a response could have valid information in the data
     field and at the same time inform of an error.
     """
+    @property
+    def json(self):
+        data = self.urllib3_response.data
+        return json.loads(convert_bytes_to_str(data))
+
+    @property
+    def case_insensitive_dict(self):
+        return CaseInsensitiveDict(self.json)
+
     @property
     def data(self):
         """

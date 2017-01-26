@@ -13,6 +13,12 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.8
 ==========
 
+Sdklib 1.8.5
+------------
+
+- Create AbstractHttpResponse class.
+- Remove some properties from Api11PathsResponse.
+
 Sdklib 1.8.4
 ------------
 
