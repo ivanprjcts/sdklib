@@ -4,9 +4,10 @@ import unittest
 
 from sdklib.http import HttpRequestContext
 from sdklib.http.authorization import (
-    basic_authorization, x_11paths_authorization, X11PathsAuthentication, BasicAuthentication
+    basic_authorization, x_11paths_authorization, X11PathsAuthentication, BasicAuthentication,
+    _get_11paths_serialized_headers
 )
-from sdklib.http.renderers import FormRenderer, JSONRenderer
+from sdklib.http.renderers import FormRenderer, JSONRenderer, MultiPartRenderer
 from sdklib.http.headers import AUTHORIZATION_HEADER_NAME, X_11PATHS_BODY_HASH_HEADER_NAME
 
 
@@ -75,3 +76,25 @@ class TestAuthorization(unittest.TestCase):
         res_context = auth.apply_authentication(context=context)
         self.assertEqual("11PATHS 123456 6CFsVmrRxEz3Icz6U8SSHZ4RukE=", res_context.headers[AUTHORIZATION_HEADER_NAME])
         self.assertEqual("f247c7579b452d08f38eec23c2d1a4a23daee0d2", res_context.headers[X_11PATHS_BODY_HASH_HEADER_NAME])
+
+    def test_11paths_authentication_get_serialized_headers(self):
+        serializer_headers = _get_11paths_serialized_headers(
+            {
+                "X-11paths-profile-id": "77ed609a-1a9b-4c16-97c2-ba32f72f5499",
+                "X-11paths-file-hash": "a30d2aef3f9da7f3273100bb7d412ccedb4c481f"
+            }
+        )
+        self.assertEqual(
+            "x-11paths-file-hash:a30d2aef3f9da7f3273100bb7d412ccedb4c481f x-11paths-profile-id:77ed609a-1a9b-4c16-97c2-ba32f72f5499",
+            serializer_headers
+        )
+
+    def test_11paths_authentication_class_multiples_headers(self):
+        auth = X11PathsAuthentication(app_id="2kNhWLEETQ46KWLnAg48", secret="lBc4BSeqCGkidJZXictc3yiHbKBS87hjE05YrswJ",
+                                      utc="2017-01-27 08:27:44")
+        context = HttpRequestContext(method="POST", url_path="/ExternalApi/CleanFile",
+                                     renderer=MultiPartRenderer(),
+                                     headers={"X-11paths-profile-id": "77ed609a-1a9b-4c16-97c2-ba32f72f5499"},
+                                     files={"file": "tests/resources/file.pdf"})
+        res_context = auth.apply_authentication(context=context)
+        self.assertEqual("11PATHS 2kNhWLEETQ46KWLnAg48 zD0lfu7Xac4MOUiwfeJahuSyg3Q=", res_context.headers["Authorization"])
