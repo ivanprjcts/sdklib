@@ -13,6 +13,11 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.8
 ==========
 
+Sdklib 1.8.5.1
+--------------
+
+- Fix Api11PathsResponse bug.
+
 Sdklib 1.8.5
 ------------
 

@@ -19,6 +19,21 @@ class AbstractHttpResponse(object):
         self._cookie = None
         self.file = None
 
+    @property
+    def cookie(self):
+        if not self._cookie:
+            self._cookie = Cookie(self.headers)
+        else:
+            self._cookie.load_from_headers(self.headers)
+        return self._cookie
+
+    @property
+    def headers(self):
+        """
+        Returns a dictionary of the response headers.
+        """
+        return self.urllib3_response.getheaders()
+
 
 class HttpResponse(AbstractHttpResponse):
     """
@@ -55,21 +70,6 @@ class HttpResponse(AbstractHttpResponse):
         HTTP Reason phrase.
         """
         return self.urllib3_response.reason
-
-    @property
-    def headers(self):
-        """
-        Returns a dictionary of the response headers.
-        """
-        return self.urllib3_response.getheaders()
-
-    @property
-    def cookie(self):
-        if not self._cookie:
-            self._cookie = Cookie(self.headers)
-        else:
-            self._cookie.load_from_headers(self.headers)
-        return self._cookie
 
     def getheader(self, name, default=None):
         """
