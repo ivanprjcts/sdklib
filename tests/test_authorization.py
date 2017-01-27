@@ -95,6 +95,6 @@ class TestAuthorization(unittest.TestCase):
         context = HttpRequestContext(method="POST", url_path="/ExternalApi/CleanFile",
                                      renderer=MultiPartRenderer(),
                                      headers={"X-11paths-profile-id": "77ed609a-1a9b-4c16-97c2-ba32f72f5499"},
-                                     files={"file": "tests/resources/file.pdf"})
+                                     files={"file": "tests/resources/file.png"})
         res_context = auth.apply_authentication(context=context)
-        self.assertEqual("11PATHS 2kNhWLEETQ46KWLnAg48 zD0lfu7Xac4MOUiwfeJahuSyg3Q=", res_context.headers["Authorization"])
+        self.assertEqual("11PATHS 2kNhWLEETQ46KWLnAg48 8/fuEv9NLn41ikh96hRHMFGs1ww=", res_context.headers["Authorization"])
