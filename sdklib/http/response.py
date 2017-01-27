@@ -80,7 +80,10 @@ class HttpResponse(AbstractHttpResponse):
     @property
     def json(self):
         data = self.urllib3_response.data
-        return json.loads(convert_bytes_to_str(data))
+        try:
+            return json.loads(convert_bytes_to_str(data))
+        except:
+            return dict()
 
     @property
     def case_insensitive_dict(self):
@@ -145,7 +148,10 @@ class Api11PathsResponse(AbstractHttpResponse):
     @property
     def json(self):
         data = self.urllib3_response.data
-        return json.loads(convert_bytes_to_str(data))
+        try:
+            return json.loads(convert_bytes_to_str(data))
+        except:
+            return dict()
 
     @property
     def case_insensitive_dict(self):
