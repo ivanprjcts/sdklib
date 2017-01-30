@@ -299,6 +299,10 @@ class HttpSdk(object):
             cls.DEFAULT_PROXY = "%s://%s:%s" % (scheme, host, port)
 
     @staticmethod
+    def convert_headers_to_native_str(headers):
+        return {convert_unicode_to_native_str(name): convert_unicode_to_native_str(value) for name, value in headers.items()}
+
+    @staticmethod
     def http_request_from_context(context, **kwargs):
         """
         Method to do http requests from context.
@@ -332,7 +336,7 @@ class HttpSdk(object):
             convert_unicode_to_native_str(new_context.method),
             convert_unicode_to_native_str(url),
             body=body,
-            headers=new_context.headers,
+            headers=HttpSdk.convert_headers_to_native_str(new_context.headers),
             redirect=new_context.redirect
         )
         log_print_response(r.status, r.data, r.headers)

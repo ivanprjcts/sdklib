@@ -106,7 +106,7 @@ def _get_11paths_serialized_headers(x_headers):
         for key, value in headers:
             if key.lower().startswith(X_11PATHS_HEADER_PREFIX.lower()) and \
                             key.lower() != X_11PATHS_DATE_HEADER_NAME.lower():
-                serialized_headers += key.lower() + X_11PATHS_HEADER_SEPARATOR + value + " "
+                serialized_headers += key.lower() + X_11PATHS_HEADER_SEPARATOR + value.replace("\n", " ") + " "
         return serialized_headers.strip()
     else:
         return ""
@@ -131,7 +131,11 @@ class X11PathsAuthentication(AbstractAuthentication):
             context.headers[X_11PATHS_FILE_HASH_HEADER_NAME] = _hash_file(context)
         elif isinstance(context.renderer, JSONRenderer):
             context.headers[X_11PATHS_BODY_HASH_HEADER_NAME] = _hash_body(context)
-        context.headers[AUTHORIZATION_HEADER_NAME] = x_11paths_authorization(self.app_id, self.secret, context)
+        context.headers[AUTHORIZATION_HEADER_NAME] = x_11paths_authorization(
+            self.app_id,
+            self.secret,
+            context
+        )
         return context
 
 

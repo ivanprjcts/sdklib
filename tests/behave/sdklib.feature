@@ -46,3 +46,18 @@ Feature: Test 11Paths APIs
        """
        {"error":{"code":102,"message":"Invalid application signature"}}
        """
+
+    Scenario: Analyze a file
+    # Enter steps here
+    Given The API endpoint "https://latch.elevenpaths.com"
+      And The API resource "/ExternalApi/AnalyzeFile"
+      And The headers
+       | header_name              | header_value    |
+       | X-11Paths-Analyzeformat  | ListMetadata    |
+      And 11Paths-Authorization with application id "2kNhWLEETQ46KWLnAg48" and secret "lBc4vSeqCGkidJZXictc3yiHbKBS87hjE05YrswJ"
+      And The body files
+       | param_name   | path_to_file               |
+       | file         | tests/resources/file.pdf  |
+      And The default renderer
+    When I send a HTTP "POST" request
+    Then The HTTP status code should be "404"

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import unittest
 from sdklib.compat import bytes
 from sdklib.util.files import guess_filename_stream
