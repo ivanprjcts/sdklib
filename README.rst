@@ -23,6 +23,7 @@ Highlights
 
 - Python 2.7+ or 3.3+.
 - Only http/https protocol is currently supported.
+- BDD integration.
 
 
 Install
