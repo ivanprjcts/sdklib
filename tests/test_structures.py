@@ -10,10 +10,15 @@ class TestStructures(unittest.TestCase):
         res = to_key_val_list(test_list)
         self.assertTrue((res == [('key1', 'val1'), ('key0', 'val0')]) or (res == [('key0', 'val0'), ('key1', 'val1')]))
 
-    def test_to_key_val_list_sorted(self):
-        test_list = {'key1': 'val1', 'key0': 'val0'}
-        res = to_key_val_list(test_list, sort=True)
-        self.assertEqual(res, [('key0', 'val0'), ('key1', 'val1')])
+    def test_to_key_val_list_sorted_insensitive(self):
+        test_list = {'Key1': 'val1', 'key0': 'val0'}
+        res = to_key_val_list(test_list, sort=True, insensitive=True)
+        self.assertEqual(res, [('key0', 'val0'), ('Key1', 'val1')])
+
+    def test_to_key_val_list_sorted_sensitive(self):
+        test_list = {'Key1': 'val1', 'key0': 'val0'}
+        res = to_key_val_list(test_list, sort=True, insensitive=False)
+        self.assertEqual(res, [('Key1', 'val1'), ('key0', 'val0')])
 
     def test_to_key_val_list_none(self):
         res = to_key_val_list(None)

@@ -101,7 +101,7 @@ def _get_11paths_serialized_headers(x_headers):
     as non 11paths specific headers
     """
     if x_headers:
-        headers = to_key_val_list(x_headers, sort=True)
+        headers = to_key_val_list(x_headers, sort=True, insensitive=True)
         serialized_headers = ""
         for key, value in headers:
             if key.lower().startswith(X_11PATHS_HEADER_PREFIX.lower()) and \
