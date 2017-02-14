@@ -13,6 +13,12 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.8
 ==========
 
+Sdklib 1.8.7
+------------
+
+- Fix "The HTTP reason phrase should not be" behave step.
+- Add "The HTTP reason phrase should contain" behave step.
+
 Sdklib 1.8.6
 ------------
 
