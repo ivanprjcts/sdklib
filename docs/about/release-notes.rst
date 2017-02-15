@@ -18,6 +18,7 @@ Sdklib 1.8.7
 
 - Fix "The HTTP reason phrase should not be" behave step.
 - Add "The HTTP reason phrase should contain" behave step.
+- Add BaseHttpResponse class.
 
 Sdklib 1.8.6
 ------------

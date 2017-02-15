@@ -35,7 +35,21 @@ class AbstractHttpResponse(object):
         return self.urllib3_response.getheaders()
 
 
-class HttpResponse(AbstractHttpResponse):
+class BaseHttpResponse(AbstractHttpResponse):
+    @property
+    def json(self):
+        data = self.urllib3_response.data
+        try:
+            return json.loads(convert_bytes_to_str(data))
+        except:
+            return dict()
+
+    @property
+    def case_insensitive_dict(self):
+        return CaseInsensitiveDict(self.json)
+
+
+class HttpResponse(BaseHttpResponse):
     """
     Wrapper of Urllib3 HTTPResponse class.
 
@@ -76,18 +90,6 @@ class HttpResponse(AbstractHttpResponse):
         Returns a given response header.
         """
         return self.urllib3_response.getheader(name, default)
-
-    @property
-    def json(self):
-        data = self.urllib3_response.data
-        try:
-            return json.loads(convert_bytes_to_str(data))
-        except:
-            return dict()
-
-    @property
-    def case_insensitive_dict(self):
-        return CaseInsensitiveDict(self.json)
 
     @property
     def xml(self):
@@ -137,7 +139,7 @@ class Error(object):
         return self.__repr__()
 
 
-class Api11PathsResponse(AbstractHttpResponse):
+class Api11PathsResponse(BaseHttpResponse):
     """
     This class models a response from any of the endpoints in most of 11Paths APIs.
 
@@ -145,18 +147,6 @@ class Api11PathsResponse(AbstractHttpResponse):
     mutually exclusive, since errors can be non fatal, and therefore a response could have valid information in the data
     field and at the same time inform of an error.
     """
-    @property
-    def json(self):
-        data = self.urllib3_response.data
-        try:
-            return json.loads(convert_bytes_to_str(data))
-        except:
-            return dict()
-
-    @property
-    def case_insensitive_dict(self):
-        return CaseInsensitiveDict(self.json)
-
     @property
     def data(self):
         """
