@@ -31,12 +31,12 @@ def http_reason_phrase_should_be(context, reason):
 
 @then('The HTTP reason phrase should not be "{reason}"')
 def http_reason_phrase_should_not_be(context, reason):
-    assert(context.api_response.reason != reason)
+    assert context.api_response.reason != reason, "%s is equal to %s" % (context.api_response.reason, reason)
 
 
 @then('The HTTP reason phrase should contain "{reason}"')
 def http_reason_phrase_should_contain(context, reason):
-    assert(reason in context.api_response.reason)
+    assert reason in context.api_response.reason, "%s should contain %s" % (context.api_response.reason, reason)
 
 
 @then('The response header "{header_name}" should be "{header_value}"')
