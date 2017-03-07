@@ -16,6 +16,7 @@ Sdklib 1.8
 Sdklib 1.8.7
 ------------
 
+- Update cookies rather than replace them.
 - Fix "The HTTP reason phrase should not be" behave step.
 - Add "The HTTP reason phrase should contain" behave step.
 - Add BaseHttpResponse class.

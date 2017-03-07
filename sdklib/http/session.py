@@ -11,7 +11,7 @@ class Cookie(object):
     """
 
     def __init__(self, headers=None):
-        self._cookie = None
+        self._cookie = cookies.SimpleCookie()
         self.load_from_headers(headers)
 
     def load_from_headers(self, headers):
@@ -19,9 +19,7 @@ class Cookie(object):
             return
         set_cookie_header = headers.get("Set-Cookie", None)
         if set_cookie_header:
-            ck = cookies.SimpleCookie()
-            ck.load(set_cookie_header)
-            self._cookie = ck
+            self._cookie.load(set_cookie_header)
 
     def as_cookie_header_value(self):
         if self.is_empty():
@@ -45,3 +43,7 @@ class Cookie(object):
 
     def get(self, key, default=None):
         return self._cookie.get(key, default)
+
+    def update(self, cookie):
+        for key, morsel in cookie.items():
+            self._cookie[key] = morsel.value

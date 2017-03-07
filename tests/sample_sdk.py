@@ -22,6 +22,15 @@ class SampleHttpSdk(HttpSdk):
         """
         return self.get(self.API_ITEMS_URL_PATH)
 
+    def get_items_with_empty_query_params_parameter(self):
+        """
+        Get all items.
+
+        :return: SdkResponse
+        """
+        params = {}
+        return self.get(self.API_ITEMS_URL_PATH, query_params=params)
+
     def create_item(self, name, description=None, city=None):
         """
         Create an item.

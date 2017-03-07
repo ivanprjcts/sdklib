@@ -23,6 +23,11 @@ class TestSampleSdk(unittest.TestCase):
         self.assertEqual(response.status, 200)
         self.assertTrue(isinstance(response.data, list))
 
+    def test_get_items_with_empty_query_params_parameter(self):
+        response = self.api.get_items_with_empty_query_params_parameter()
+        self.assertEqual(response.status, 200)
+        self.assertTrue(isinstance(response.data, list))
+
     def test_create_item(self):
         response = self.api.create_item("mi nombre", "algo")
         self.assertEqual(response.status, 201)

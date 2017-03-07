@@ -27,3 +27,12 @@ class TestSession(unittest.TestCase):
     def test_get_cookie(self):
         res = self.cookie.getcookie()
         self.assertTrue(isinstance(res, cookies.SimpleCookie))
+
+    def test_update_cookie(self):
+        c = Cookie({"Set-Cookie": "new_param=marcos; another_new=ivan"})
+        c.update(self.cookie)
+        res = c.as_cookie_header_value()
+        self.assertIn("chips=ahoy", res)
+        self.assertIn("vienna=finger", res)
+        self.assertIn("new_param=marcos", res)
+        self.assertIn("another_new=ivan", res)

@@ -2,6 +2,7 @@ import copy
 import urllib3
 
 from sdklib.http.renderers import JSONRenderer, MultiPartRenderer, get_renderer
+from sdklib.http.session import Cookie
 from sdklib.compat import urlencode, convert_unicode_to_native_str
 from sdklib.util.parser import parse_args
 from sdklib.util.urls import (
@@ -193,7 +194,7 @@ class HttpSdk(object):
         self.host = host or self.DEFAULT_HOST
         self.proxy = proxy or self.DEFAULT_PROXY
         self.default_renderer = default_renderer or self.DEFAULT_RENDERER
-        self._cookie = None
+        self.cookie = None
         self.incognito_mode = False
 
     @property
@@ -248,6 +249,8 @@ class HttpSdk(object):
         """
         if value and not value.is_empty():
             self._cookie = value
+        else:
+            self._cookie = Cookie()
 
     def default_headers(self):
         headers = dict()
@@ -395,7 +398,7 @@ class HttpSdk(object):
             redirect=redirect
         )
         res = self.http_request_from_context(context)
-        self.cookie = res.cookie
+        self.cookie.update(res.cookie)
         return res
 
     def get(self, url_path, headers=None, query_params=None, **kwargs):
