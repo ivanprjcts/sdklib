@@ -312,8 +312,12 @@ class HttpSdk(object):
         new_context = copy.deepcopy(context)
         assert new_context.method in ALLOWED_METHODS
 
-        new_context.url_path = generate_url_path(new_context.url_path, prefix=new_context.prefix_url_path,
-                                             format_suffix=new_context.url_path_format, **new_context.url_path_params)
+        new_context.url_path = generate_url_path(
+            new_context.url_path,
+            prefix=new_context.prefix_url_path,
+            format_suffix=new_context.url_path_format,
+            **new_context.url_path_params
+        )
 
         if new_context.body_params or new_context.files:
             body, content_type = new_context.renderer.encode_params(new_context.body_params, files=new_context.files)
@@ -327,7 +331,7 @@ class HttpSdk(object):
             new_context = auth_obj.apply_authentication(new_context)
 
         url = "%s%s" % (new_context.host, new_context.url_path)
-        if new_context.query_params is not None:
+        if new_context.query_params:
             url += "?%s" % (urlencode(new_context.query_params))
 
         log_print_request(new_context.method, url, new_context.query_params, new_context.headers, body)

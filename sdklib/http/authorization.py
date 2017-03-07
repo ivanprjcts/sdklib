@@ -45,7 +45,7 @@ def x_11paths_authorization(app_id, secret, context, utc=None):
 
     url_path = ensure_url_path_starts_with_slash(context.url_path)
     url_path_query = url_path
-    if context.query_params is not None:
+    if context.query_params:
         url_path_query += "?%s" % (url_encode(context.query_params))
 
     string_to_sign = (context.method.upper().strip() + "\n" +
