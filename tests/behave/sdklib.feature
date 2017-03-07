@@ -29,6 +29,7 @@ Feature: Test 11Paths APIs
        | param        | value         |
     When I send a HTTP "GET" request
     Then The HTTP status code should be "404"
+      And The HTTP reason phrase should not be "OK"
 
 
   Scenario: Try to pair a Latch application using an invalid secret
@@ -46,6 +47,7 @@ Feature: Test 11Paths APIs
        """
        {"error":{"code":102,"message":"Invalid application signature"}}
        """
+      And The HTTP reason phrase should be "OK"
 
     Scenario: Analyze a file
     # Enter steps here
@@ -61,3 +63,4 @@ Feature: Test 11Paths APIs
       And The default renderer
     When I send a HTTP "POST" request
     Then The HTTP status code should be "404"
+      And The HTTP reason phrase should contain "Not"

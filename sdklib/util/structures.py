@@ -16,7 +16,7 @@ def get_dict_from_list(l, **kwargs):
             return e
 
 
-def to_key_val_list(value, sort=False):
+def to_key_val_list(value, sort=False, insensitive=False):
     """
     Take an object and test to see if it can be represented as a
     dictionary. If it can be, return a list of tuples, e.g.,
@@ -39,8 +39,10 @@ def to_key_val_list(value, sort=False):
     if isinstance(value, collections.Mapping):
         value = value.items()
 
-    if sort:
+    if sort and not insensitive:
         values = sorted(value)
+    elif sort:
+        values = sorted(value, key=lambda t: t[0].lower())
     else:
         values = value
     return list(values)

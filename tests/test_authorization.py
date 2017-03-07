@@ -80,7 +80,7 @@ class TestAuthorization(unittest.TestCase):
     def test_11paths_authentication_get_serialized_headers(self):
         serializer_headers = _get_11paths_serialized_headers(
             {
-                "X-11paths-profile-id": "77ed609a-1a9b-4c16-97c2-ba32f72f5499",
+                "X-11Paths-profile-id": "77ed609a-1a9b-4c16-97c2-ba32f72f5499",
                 "X-11paths-file-hash": "a30d2aef3f9da7f3273100bb7d412ccedb4c481f"
             }
         )
