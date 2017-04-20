@@ -1,17 +1,16 @@
-import html5lib
-
-from sdklib.compat import StringIO, str, convert_bytes_to_str
 
 
-class HTMLBase(object):
+class AbstractBaseHTML(object):
     """
-    HTMLObject abstract class.
+    HTML base abstract class.
 
     .. note::
 
        This class emulates some methods of selenium Web Driver.
        See `selenium Web Driver <https://github.com/SeleniumHQ/selenium/blob/master/py/selenium/webdriver/remote/webdriver.py>`_.
     """
+    html_obj = None  # encapsulated html object
+
     def find_element_by_id(self, id_):
         """
         Finds an element by id.
@@ -37,7 +36,7 @@ class HTMLBase(object):
         :param xpath: The xpath locator of the element to find.
         :return:
         """
-        pass
+        raise NotImplementedError
 
     def find_elements_by_xpath(self, xpath):
         """
@@ -46,63 +45,52 @@ class HTMLBase(object):
         :param xpath: The xpath locator of the elements to be found.
         :return:
         """
-        pass
+        raise NotImplementedError
 
 
-class HTMLxml(HTMLBase):
+class AbstractBaseHTMLElem(AbstractBaseHTML):
     """
-    HTMLObject class using lxml parser.
+    HTML elem base abstract class.
     """
-    def __init__(self, dom):
-        self._parse(dom=dom)
+    def get(self, attribute):
+        return self.html_obj.get(attribute)
 
-    def _parse(self, dom):
-        from lxml import etree
+    @property
+    def text(self):
+        return self.html_obj.text
 
-        parser = etree.HTMLParser()
-        self.tree = etree.parse(StringIO(convert_bytes_to_str(dom)), parser)
+
+class HTMLLxmlMixin(object):
 
     def find_element_by_xpath(self, xpath):
         """
         Finds an element by xpath.
 
         :param xpath: The xpath locator of the element to find.
-        :return:
-
-        http://lxml.de/xpathxslt.html#xpath
+        :return: ElemLxml
+        
+        See lxml xpath expressions `here <http://lxml.de/xpathxslt.html#xpath>`_
         """
-        e = self.tree.xpath(xpath)
-        if isinstance(e, list) and len(e) > 0:
-            return e[0]
+        elems = self.find_elements_by_xpath(xpath)
+        if isinstance(elems, list) and len(elems) > 0:
+            return elems[0]
 
     def find_elements_by_xpath(self, xpath):
         """
         Finds multiple elements by xpath.
 
         :param xpath: The xpath locator of the elements to be found.
-        :return:
-
-        http://lxml.de/xpathxslt.html#xpath
+        :return: list of ElemLxml
+        
+        See lxml xpath expressions `here <http://lxml.de/xpathxslt.html#xpath>`_
         """
-        return self.tree.xpath(xpath)
+        from sdklib.html.elem import ElemLxml
+
+        elements = self.html_obj.xpath(xpath)
+        return [ElemLxml(e) for e in elements]
 
 
-class HTML5lib(HTMLBase):
-    """
-    HTMLObject class using html5lib parser.
-    """
-    def __init__(self, dom):
-        self._parse(dom=dom)
-        self._remove_namespaces()
-
-    def _parse(self, dom):
-        self.tree = html5lib.parse(dom)
-
-    def _remove_namespaces(self):
-        for el in self.tree.iter():
-            if isinstance(el.tag, str) and '}' in el.tag:
-                el.tag = el.tag.split('}', 1)[1]  # strip all namespaces
-
+class HTML5libMixin(object):
     @staticmethod
     def _convert_xpath(xpath):
         return "." + xpath if xpath.startswith("/") else xpath
@@ -114,9 +102,11 @@ class HTML5lib(HTMLBase):
         :param xpath: The xpath locator of the element to find.
         :return:
 
-        https://docs.python.org/2/library/xml.etree.elementtree.html#supported-xpath-syntax
+        See html5lib xpath expressions `here <https://docs.python.org/2/library/xml.etree.elementtree.html#supported-xpath-syntax>`_
         """
-        return self.tree.find(self._convert_xpath(xpath))
+        from sdklib.html.elem import Elem5lib
+
+        return Elem5lib(self.html_obj.find(self._convert_xpath(xpath)))
 
     def find_elements_by_xpath(self, xpath):
         """
@@ -125,6 +115,8 @@ class HTML5lib(HTMLBase):
         :param xpath: The xpath locator of the elements to be found.
         :return:
 
-        https://docs.python.org/2/library/xml.etree.elementtree.html#supported-xpath-syntax
+        See html5lib xpath expressions `here <https://docs.python.org/2/library/xml.etree.elementtree.html#supported-xpath-syntax>`_
         """
-        return self.tree.findall(self._convert_xpath(xpath))
+        from sdklib.html.elem import Elem5lib
+
+        return [Elem5lib(e) for e in self.html_obj.findall(self._convert_xpath(xpath))]
