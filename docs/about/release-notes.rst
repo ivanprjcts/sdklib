@@ -13,6 +13,11 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.8
 ==========
 
+Sdklib 1.8.8
+------------
+
+- Do http request from hax.
+
 Sdklib 1.8.7
 ------------
 

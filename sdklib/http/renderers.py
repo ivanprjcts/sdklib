@@ -331,17 +331,20 @@ class CustomRenderer(BaseRenderer):
         return data, self.content_type
 
 
-def get_renderer(name):
-    if name == 'json':
+default_renderer = JSONRenderer()
+
+
+def get_renderer(name=None, mime_type=None):
+    if name == 'json' or mime_type == JSONRenderer.DEFAULT_CONTENT_TYPE:
         return JSONRenderer()
-    elif name == 'form':
+    elif name == 'form' or mime_type == FormRenderer.DEFAULT_CONTENT_TYPE:
         return FormRenderer()
-    elif name == 'multipart':
+    elif name == 'multipart' or mime_type == MultiPartRenderer.DEFAULT_CONTENT_TYPE:
         return MultiPartRenderer()
-    elif name == 'plain':
+    elif name == 'plain' or mime_type == PlainTextRenderer.DEFAULT_CONTENT_TYPE:
         return PlainTextRenderer()
     else:
-        return JSONRenderer()
+        return default_renderer
 
 
 def url_encode(params, sort=False):
