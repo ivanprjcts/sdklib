@@ -4,7 +4,7 @@
 Renderers
 =========
 
-Renderers are the managers of request body enconding.
+Renderers are the managers of request body enconding and the content-type header.
 
 
 +-----------------+-------------------------------------+----------------------------------------------------------+
@@ -12,7 +12,7 @@ Renderers are the managers of request body enconding.
 +=================+=====================================+==========================================================+
 | form            | application/x-www-form-urlencoded   | param1=value1&param2=value2                              |
 +-----------------+-------------------------------------+----------------------------------------------------------+
-| multpart        | multipart/form-data                 | Content-Disposition: form-data; name="param1"\n\nvalue1  |
+| multipart       | multipart/form-data                 | Content-Disposition: form-data; name="param1"\n\nvalue1  |
 +-----------------+-------------------------------------+----------------------------------------------------------+
 | plain           | text/plain; charset=utf-8           | param1=value1\\nparam2=value2                            |
 +-----------------+-------------------------------------+----------------------------------------------------------+
