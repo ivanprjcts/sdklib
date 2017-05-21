@@ -75,7 +75,7 @@ We'll need to edit our `first_sdk/first_sdk.py` file:
             :return: SdkResponse
             """
             params = parse_args(name=name, description=description)
-            return self._http_request("POST", self.API_ITEMS_URL_PATH, body_params=params)
+            return self.post(self.API_ITEMS_URL_PATH, body_params=params)
 
         def get_items(self, item_id=None):
             """
@@ -83,7 +83,7 @@ We'll need to edit our `first_sdk/first_sdk.py` file:
             :param item_id: str (optional)
             :return: SdkResponse
             """
-            return self._http_request("GET", self.API_ITEMS_URL_PATH + safe_add_end_slash(item_id))
+            return self.get(self.API_ITEMS_URL_PATH + safe_add_end_slash(item_id))
 
         def update_item(self, item_id, name, description=None):
             """
@@ -94,7 +94,7 @@ We'll need to edit our `first_sdk/first_sdk.py` file:
             :return: SdkResponse
             """
             params = parse_args(name=name, description=description)
-            return self._http_request("PUT", self.API_ITEMS_URL_PATH + item_id + '/', body_params=params)
+            return self.put(self.API_ITEMS_URL_PATH + item_id + '/', body_params=params)
 
         def delete_item(self, item_id):
             """
@@ -102,7 +102,7 @@ We'll need to edit our `first_sdk/first_sdk.py` file:
             :param item_id: str
             :return: SdkResponse
             """
-            return self._http_request("DELETE", self.API_ITEMS_URL_PATH + item_id + '/')
+            return self.delete(self.API_ITEMS_URL_PATH + item_id + '/')
 
 
 Okay, we're ready to test.

@@ -4,7 +4,7 @@
 Renderers
 =========
 
-Renderers are the managers of request body enconding.
+Renderers are the managers of request body enconding and the content-type header.
 
 
 +-----------------+-------------------------------------+----------------------------------------------------------+

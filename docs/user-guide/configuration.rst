@@ -12,6 +12,17 @@ By default, ssl certificates are not validated.
 Default Configuration
 =====================
 
++------------------+-------------------------------------+
+| Parameter        | Default value                       |
++==================+=====================================+
+| DEFAULT_HOST     | http://127.0.0.1:80                 |
++------------------+-------------------------------------+
+| DEFAULT_PROXY    | None                                |
++------------------+-------------------------------------+
+| DEFAULT_RENDERER | JSONRenderer()                      |
++------------------+-------------------------------------+
+
+
 DEFAULT_HOST
 ~~~~~~~~~~~~
 Value: "http://127.0.0.1:80"
@@ -47,14 +58,6 @@ host
 Default: DEFAULT_HOST_
 
 A string that will be automatically included at the beginning of the url generated for doing each http request.
-
-
-proxy
-~~~~~
-Default: DEFAULT_PROXY_
-
-A string that will be used to tell each request must be sent through this proxy server.
-If you need to use a proxy, you can configure individual requests with the *proxy* argument to any request method.
 
 
 prefix_url_path
