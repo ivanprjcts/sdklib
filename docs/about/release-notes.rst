@@ -17,6 +17,7 @@ Sdklib 1.8.8
 ------------
 
 - Create HTMLElem including AbstractBaseHTML functionality.
+- Add HAR objects.
 
 Sdklib 1.8.7
 ------------

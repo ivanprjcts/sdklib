@@ -1,7 +1,7 @@
 import copy
 import urllib3
 
-from sdklib.http.renderers import JSONRenderer, MultiPartRenderer, get_renderer
+from sdklib.http.renderers import JSONRenderer, MultiPartRenderer, get_renderer, default_renderer
 from sdklib.http.session import Cookie
 from sdklib.compat import urlencode, convert_unicode_to_native_str
 from sdklib.util.parser import parse_args
@@ -100,7 +100,7 @@ class HttpRequestContext(object):
 
     @renderer.setter
     def renderer(self, value):
-        self._renderer = value or JSONRenderer() if not self.files else MultiPartRenderer()
+        self._renderer = value or default_renderer if not self.files else MultiPartRenderer()
 
     @property
     def url_path(self):
@@ -180,7 +180,7 @@ class HttpSdk(object):
 
     DEFAULT_HOST = "http://127.0.0.1:80"
     DEFAULT_PROXY = None
-    DEFAULT_RENDERER = JSONRenderer()
+    DEFAULT_RENDERER = default_renderer
 
     LOGIN_URL_PATH = None
 
