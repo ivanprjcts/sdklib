@@ -1,5 +1,6 @@
 import json
 from sdklib.compat import str
+from sdklib import http
 from sdklib.http import HttpRequestContext
 from sdklib.http.renderers import get_renderer
 from sdklib.util.urls import urlsplit
@@ -163,3 +164,14 @@ class HAR(object):
     def log(self):
         l = self._dict.get("log", None)
         return None if l is None else Log(l)
+
+
+def sequential_requests(entries, **kwargs):
+    req_res = []
+    for entry in entries:
+        context = entry.request.as_http_request_context()
+        for k, v in kwargs.items():
+            setattr(context, k, v)
+        response = http.request_from_context(context=context)
+        req_res.append((context, response))
+    return req_res
