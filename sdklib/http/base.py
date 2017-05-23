@@ -1,7 +1,7 @@
 import copy
 import urllib3
 
-from sdklib.http.renderers import JSONRenderer, MultiPartRenderer, get_renderer, default_renderer
+from sdklib.http.renderers import MultiPartRenderer, get_renderer, default_renderer
 from sdklib.http.session import Cookie
 from sdklib.compat import urlencode, convert_unicode_to_native_str
 from sdklib.util.parser import parse_args
@@ -40,7 +40,8 @@ class HttpRequestContext(object):
 
     def __init__(self, host=None, proxy=None, method=None, prefix_url_path=None, url_path=None, url_path_params=None,
                  url_path_format=None, headers=None, query_params=None, body_params=None, files=None, renderer=None,
-                 authentication_instances=None, response_class=None, update_content_type=None, redirect=None):
+                 authentication_instances=None, response_class=None, update_content_type=None, redirect=None,
+                 cookie=None):
         """
 
         :param host:
@@ -60,6 +61,7 @@ class HttpRequestContext(object):
         :param update_content_type: (bool) Update headers before performing the request, adding the Content-Type value
             according to the rendered body. By default: True.
         :param redirect: redirect requests automatically. By default: False
+        :param cookie:
         """
         self.host = host
         self.proxy = proxy
@@ -77,6 +79,7 @@ class HttpRequestContext(object):
         self.response_class = response_class
         self.update_content_type = update_content_type
         self.redirect = redirect
+        self.cookie = cookie
 
     @property
     def headers(self):
@@ -157,6 +160,14 @@ class HttpRequestContext(object):
     @redirect.setter
     def redirect(self, value):
         self._redirect = value if value is True else False
+
+    @property
+    def cookie(self):
+        return self._cookie
+
+    @cookie.setter
+    def cookie(self, value):
+        self._cookie = value or Cookie()
 
     def clear(self, *args):
         """
