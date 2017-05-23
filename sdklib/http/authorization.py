@@ -129,7 +129,7 @@ class X11PathsAuthentication(AbstractAuthentication):
         context.headers[X_11PATHS_DATE_HEADER_NAME] = self.utc or _get_utc()
         if isinstance(context.renderer, MultiPartRenderer):
             context.headers[X_11PATHS_FILE_HASH_HEADER_NAME] = _hash_file(context)
-        elif isinstance(context.renderer, JSONRenderer):
+        elif isinstance(context.renderer, JSONRenderer) and context.body_params:
             context.headers[X_11PATHS_BODY_HASH_HEADER_NAME] = _hash_body(context)
         context.headers[AUTHORIZATION_HEADER_NAME] = x_11paths_authorization(
             self.app_id,
