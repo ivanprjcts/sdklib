@@ -56,6 +56,9 @@ def request_from_context(context):
     for auth_obj in authentication_instances:
         new_context = auth_obj.apply_authentication(new_context)
 
+    if HttpSdk.COOKIE_HEADER_NAME not in new_context.headers and not new_context.cookie.is_empty():
+        new_context.headers[HttpSdk.COOKIE_HEADER_NAME] = new_context.cookie.as_cookie_header_value()
+
     url = "%s%s" % (new_context.host, new_context.url_path)
     if new_context.query_params:
         url += "?%s" % (urlencode(new_context.query_params))
