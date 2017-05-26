@@ -18,6 +18,8 @@ Sdklib 1.8.8
 
 - Create HTMLElem including AbstractBaseHTML functionality.
 - Add HAR objects.
+- Add cookie property to HttpRequestContext.
+- Do not add *X_11PATHS_BODY_HASH* header when body is empty.
 
 Sdklib 1.8.7
 ------------
