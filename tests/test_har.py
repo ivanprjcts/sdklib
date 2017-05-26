@@ -38,3 +38,8 @@ class TestHAR(unittest.TestCase):
         self.assertEqual("GET", request_responses[0][0].method)
         self.assertEqual("https://github.com", request_responses[0][0].host)
         self.assertTrue(isinstance(request_responses[0][0].renderer, type(default_renderer)))
+
+    def test_get_http_response(self):
+        response = self.github_com_har.log.entries[0].response
+        self.assertEqual(16521, response.body_size)
+        self.assertEqual(200, response.status)

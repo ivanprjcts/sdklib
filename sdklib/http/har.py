@@ -1,7 +1,8 @@
 import json
+import copy
 from sdklib.compat import str
 from sdklib import http
-from sdklib.http import HttpRequestContext, HttpResponse
+from sdklib.http import HttpRequestContext
 from sdklib.http.renderers import get_renderer
 from sdklib.util.urls import urlsplit
 
@@ -90,13 +91,74 @@ class Request(object):
         )
 
 
+class Content(object):
+
+    def __init__(self, j):
+        self._dict =json.loads(j) if isinstance(j, str) else j
+
+    @property
+    def size(self):
+        return self._dict.get("size", None)
+
+    @property
+    def mime_type(self):
+        return self._dict.get("mimeType", None)
+
+    @property
+    def compression(self):
+        return self._dict.get("compression", None)
+
+    @property
+    def text(self):
+        return self._dict.get("text", None)
+
+
 class Response(object):
 
     def __init__(self, j):
         self._dict =json.loads(j) if isinstance(j, str) else j
 
-    def as_http_response(self):
-        return HttpResponse()
+    @property
+    def status(self):
+        return self._dict.get("status", None)
+
+    @property
+    def status_text(self):
+        return self._dict.get("statusText", None)
+
+    @property
+    def http_version(self):
+        return self._dict.get("httpVersion", None)
+
+    @property
+    def headers(self):
+        headers = self._dict.get("headers", None)
+        return {h["name"]: h["value"] for h in headers}
+
+    @property
+    def cookies(self):
+        return [Cookie(c) for c in self._dict.get("cookies", [])]
+
+    @property
+    def redirect_url(self):
+        return self._dict.get("redirectURL", None)
+
+    @property
+    def headers_size(self):
+        return self._dict.get("headersSize", None)
+
+    @property
+    def body_size(self):
+        return self._dict.get("bodySize", None)
+
+    @property
+    def transfer_size(self):
+        return self._dict.get("_transferSize", None)
+
+    @property
+    def content(self):
+        c = self._dict.get("content", None)
+        return None if c is None else Content(c)
 
 
 class Entry(object):
@@ -119,7 +181,8 @@ class Entry(object):
 
     @property
     def response(self):
-        return self._dict.get("response", None)
+        r = self._dict.get("response", None)
+        return None if r is None else Response(r)
 
     @property
     def cache(self):
@@ -175,9 +238,24 @@ class HAR(object):
         return None if l is None else Log(l)
 
 
+def _find_elem_in_new_response_html(value, prev_response_ctx, new_response_ctx):
+    try:
+        elem = prev_response_ctx.html.find_element_by_xpath("//*[@*='{}']".format(value))
+    except:
+        pass
+
+
+def _find_elem_in_new_response(value, prev_response_ctx, new_response_ctx):
+    pass
+
+
 def _update_dynamic_elements(prev_response_ctx, response_ctx, request_ctx):
-    ctx = HttpRequestContext()
-    ctx.co
+    ctx = copy.deepcopy(request_ctx)
+    ctx.headers["Cookie"] = response_ctx.cookie.as_cookie_header_value()
+    for k, v in request_ctx.body_params.items():
+        if v in prev_response_ctx.raw:
+            elem = _find_elem_in_new_response(v, prev_response_ctx, response_ctx)
+
     return ctx
 
 
@@ -196,7 +274,7 @@ def sequential_requests(entries, update_dynamic_elements=False, **kwargs):
         for k, v in kwargs.items():
             setattr(context, k, v)
         response = http.request_from_context(context=context)
-        prev_response_context = entry.response.as_http_response()
+        prev_response_context = entry.response
 
         req_res.append((context, response))
 
