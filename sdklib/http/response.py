@@ -8,16 +8,14 @@ from sdklib.util.structures import xml_string_to_dict, CaseInsensitiveDict
 from sdklib.html import HTML
 
 
-class AbstractHttpResponse(object):
-    """
-    Wrapper of Urllib3 HTTPResponse class needed to implement any HttpSdk response class.
-
-    See `Urllib3 <http://urllib3.readthedocs.io/en/latest/user-guide.html#response-content>`_.
-    """
-    def __init__(self, resp):
-        self.urllib3_response = resp
+class BaseHttpResponse(object):
+    def __init__(self, headers=None, status=None, status_text=None, http_version=None, body=None):
+        self.headers = headers
+        self.status = status
+        self.status_text = status_text
+        self.http_version = http_version
+        self.body = body
         self._cookie = None
-        self.file = None
 
     @property
     def cookie(self):
@@ -32,15 +30,65 @@ class AbstractHttpResponse(object):
         """
         Returns a dictionary of the response headers.
         """
-        return self.urllib3_response.getheaders()
+        return self._headers
+
+    @headers.setter
+    def headers(self, value):
+        self._headers = value or {}
+
+    @property
+    def status(self):
+        return self._status
+
+    @status.setter
+    def status(self, value):
+        self._status = value
+
+    @property
+    def status_text(self):
+        return self._status_text
+
+    @status_text.setter
+    def status_text(self, value):
+        self._status_text = value
+
+    @property
+    def http_version(self):
+        return self._http_version
+
+    @http_version.setter
+    def http_version(self, value):
+        self._http_version = value
+
+    @property
+    def body(self):
+        return self._body
+
+    @body.setter
+    def body(self, value):
+        self._body = value
 
 
-class BaseHttpResponse(AbstractHttpResponse):
+class Urllib3BaseHttpResponse(BaseHttpResponse):
+    """
+    Wrapper of Urllib3 HTTPResponse class needed to implement any HttpSdk response class.
+
+    See `Urllib3 <http://urllib3.readthedocs.io/en/latest/user-guide.html#response-content>`_.
+    """
+    def __init__(self, resp):
+        self.urllib3_response = resp
+        super(Urllib3BaseHttpResponse, self).__init__(
+            headers=self.urllib3_response.getheaders(),
+            status=self.urllib3_response.status,
+            status_text=self.urllib3_response.reason,
+            body=self.urllib3_response.data
+        )
+
     @property
     def json(self):
-        data = self.urllib3_response.data
+
         try:
-            return json.loads(convert_bytes_to_str(data))
+            return json.loads(convert_bytes_to_str(self.body))
         except:
             return dict()
 
@@ -49,7 +97,7 @@ class BaseHttpResponse(AbstractHttpResponse):
         return CaseInsensitiveDict(self.json)
 
 
-class HttpResponse(BaseHttpResponse):
+class HttpResponse(Urllib3BaseHttpResponse):
     """
     Wrapper of Urllib3 HTTPResponse class.
 
@@ -57,7 +105,7 @@ class HttpResponse(BaseHttpResponse):
     """
     @property
     def data(self):
-        data = self.urllib3_response.data
+        data = self.body
         try:
             data = data.decode()
         except:
@@ -72,43 +120,22 @@ class HttpResponse(BaseHttpResponse):
             return data
 
     @property
-    def status(self):
-        """
-        HTTP Status Code.
-        """
-        return self.urllib3_response.status
-
-    @property
-    def reason(self):
-        """
-        HTTP Reason phrase.
-        """
-        return self.urllib3_response.reason
-
-    def getheader(self, name, default=None):
-        """
-        Returns a given response header.
-        """
-        return self.urllib3_response.getheader(name, default)
-
-    @property
     def xml(self):
-        data = self.urllib3_response.data
-        return ElementTree.fromstring(data)
+        return ElementTree.fromstring(self.body)
 
     @property
     def raw(self):
         """
         Returns urllib3 response data.
         """
-        return self.urllib3_response.data
+        return self.body
 
     @property
     def html(self):
         """
         Returns HTML response data.
         """
-        return HTML(self.urllib3_response.data)
+        return HTML(self.body)
 
 
 class Error(object):
@@ -139,7 +166,7 @@ class Error(object):
         return self.__repr__()
 
 
-class Api11PathsResponse(BaseHttpResponse):
+class Api11PathsResponse(Urllib3BaseHttpResponse):
     """
     This class models a response from any of the endpoints in most of 11Paths APIs.
 

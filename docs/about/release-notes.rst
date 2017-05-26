@@ -20,6 +20,7 @@ Sdklib 1.8.8
 - Add HAR objects.
 - Add cookie property to HttpRequestContext.
 - Do not add *X_11PATHS_BODY_HASH* header when body is empty.
+- Refactor HttpResponse.
 
 Sdklib 1.8.7
 ------------

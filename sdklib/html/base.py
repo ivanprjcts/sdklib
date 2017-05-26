@@ -52,12 +52,17 @@ class AbstractBaseHTMLElem(AbstractBaseHTML):
     """
     HTML elem base abstract class.
     """
-    def get(self, attribute):
-        return self.html_obj.get(attribute)
-
     @property
     def text(self):
         return self.html_obj.text
+
+    def get(self, attribute):
+        return self.html_obj.get(attribute)
+
+    def get_attribute(self, value):
+        for k, v in self.html_obj.items():
+            if v == value:
+                return k
 
 
 class HTMLLxmlMixin(object):

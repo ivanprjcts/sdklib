@@ -57,6 +57,17 @@ class Urllib3ResponseMock(object):
     def __init__(self, data):
         self.data = data
 
+    def getheaders(self):
+        return {}
+
+    @property
+    def status(self):
+        return None
+
+    @property
+    def reason(self):
+        return None
+
 
 class TestResponse(unittest.TestCase):
 
