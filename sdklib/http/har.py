@@ -1,7 +1,7 @@
 import json
 from sdklib.compat import str
 from sdklib import http
-from sdklib.http import HttpRequestContext
+from sdklib.http import HttpRequestContext, HttpResponse
 from sdklib.http.renderers import get_renderer
 from sdklib.util.urls import urlsplit
 
@@ -90,6 +90,15 @@ class Request(object):
         )
 
 
+class Response(object):
+
+    def __init__(self, j):
+        self._dict =json.loads(j) if isinstance(j, str) else j
+
+    def as_http_response(self):
+        return HttpResponse()
+
+
 class Entry(object):
 
     def __init__(self, j):
@@ -166,12 +175,29 @@ class HAR(object):
         return None if l is None else Log(l)
 
 
-def sequential_requests(entries, **kwargs):
+def _update_dynamic_elements(prev_response_ctx, response_ctx, request_ctx):
+    ctx = HttpRequestContext()
+    ctx.co
+    return ctx
+
+
+def sequential_requests(entries, update_dynamic_elements=False, **kwargs):
     req_res = []
+    prev_response_context = None
+    response = None
     for entry in entries:
         context = entry.request.as_http_request_context()
+        if update_dynamic_elements:
+            context = _update_dynamic_elements(
+                prev_response_ctx=prev_response_context,
+                response_ctx=response,
+                request_ctx=context
+            )
         for k, v in kwargs.items():
             setattr(context, k, v)
         response = http.request_from_context(context=context)
+        prev_response_context = entry.response.as_http_response()
+
         req_res.append((context, response))
+
     return req_res
