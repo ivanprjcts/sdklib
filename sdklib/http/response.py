@@ -8,7 +8,22 @@ from sdklib.util.structures import xml_string_to_dict, CaseInsensitiveDict
 from sdklib.html import HTML
 
 
-class BaseHttpResponse(object):
+class JsonResponseMixin(object):
+    _body = ""
+
+    @property
+    def json(self):
+        try:
+            return json.loads(convert_bytes_to_str(self._body))
+        except:
+            return dict()
+
+    @property
+    def case_insensitive_dict(self):
+        return CaseInsensitiveDict(self.json)
+
+
+class Response(JsonResponseMixin):
     def __init__(self, headers=None, status=None, status_text=None, http_version=None, body=None):
         self.headers = headers
         self.status = status
@@ -16,14 +31,6 @@ class BaseHttpResponse(object):
         self.http_version = http_version
         self.body = body
         self._cookie = None
-
-    @property
-    def cookie(self):
-        if not self._cookie:
-            self._cookie = Cookie(self.headers)
-        else:
-            self._cookie.load_from_headers(self.headers)
-        return self._cookie
 
     @property
     def headers(self):
@@ -68,57 +75,6 @@ class BaseHttpResponse(object):
     def body(self, value):
         self._body = value
 
-
-class Urllib3BaseHttpResponse(BaseHttpResponse):
-    """
-    Wrapper of Urllib3 HTTPResponse class needed to implement any HttpSdk response class.
-
-    See `Urllib3 <http://urllib3.readthedocs.io/en/latest/user-guide.html#response-content>`_.
-    """
-    def __init__(self, resp):
-        self.urllib3_response = resp
-        super(Urllib3BaseHttpResponse, self).__init__(
-            headers=self.urllib3_response.getheaders(),
-            status=self.urllib3_response.status,
-            status_text=self.urllib3_response.reason,
-            body=self.urllib3_response.data
-        )
-
-    @property
-    def json(self):
-
-        try:
-            return json.loads(convert_bytes_to_str(self.body))
-        except:
-            return dict()
-
-    @property
-    def case_insensitive_dict(self):
-        return CaseInsensitiveDict(self.json)
-
-
-class HttpResponse(Urllib3BaseHttpResponse):
-    """
-    Wrapper of Urllib3 HTTPResponse class.
-
-    See `Urllib3 <http://urllib3.readthedocs.io/en/latest/user-guide.html#response-content>`_.
-    """
-    @property
-    def data(self):
-        data = self.body
-        try:
-            data = data.decode()
-        except:
-            pass
-        try:
-            return json.loads(data)
-        except:
-            pass
-        try:
-            return xml_string_to_dict(data)
-        except:
-            return data
-
     @property
     def xml(self):
         return ElementTree.fromstring(self.body)
@@ -136,6 +92,70 @@ class HttpResponse(Urllib3BaseHttpResponse):
         Returns HTML response data.
         """
         return HTML(self.body)
+
+    @property
+    def data(self):
+        data = self.body
+        try:
+            data = data.decode()
+        except:
+            pass
+        try:
+            return json.loads(data)
+        except:
+            pass
+        try:
+            return xml_string_to_dict(data)
+        except:
+            return data
+
+
+class AbstractBaseHttpResponse(object):
+    """
+    Wrapper of Urllib3 HTTPResponse class needed to implement any HttpSdk response class.
+
+    See `Urllib3 <http://urllib3.readthedocs.io/en/latest/user-guide.html#response-content>`_.
+    """
+    urllib3_response = None
+    _cookie = None
+
+    def __init__(self, resp):
+        self.urllib3_response = resp
+
+    @property
+    def cookie(self):
+        if not self._cookie:
+            self._cookie = Cookie(self.headers)
+        else:
+            self._cookie.load_from_headers(self.headers)
+        return self._cookie
+
+    @property
+    def headers(self):
+        """
+        Returns a dictionary of the response headers.
+        """
+        return self.urllib3_response.getheaders()
+
+
+class HttpResponse(Response, AbstractBaseHttpResponse):
+    """
+    Wrapper of Urllib3 HTTPResponse class compatible with AbstractBaseHttpResponse.
+
+    See `Urllib3 <http://urllib3.readthedocs.io/en/latest/user-guide.html#response-content>`_.
+    """
+    def __init__(self, resp):
+        self.urllib3_response = resp
+        super(HttpResponse, self).__init__(
+            headers=self.urllib3_response.getheaders(),
+            status=self.urllib3_response.status,
+            status_text=self.urllib3_response.reason,
+            body=self.urllib3_response.data
+        )
+
+    @property
+    def reason(self):
+        return self.status_text
 
 
 class Error(object):
@@ -166,7 +186,7 @@ class Error(object):
         return self.__repr__()
 
 
-class Api11PathsResponse(Urllib3BaseHttpResponse):
+class Api11PathsResponse(AbstractBaseHttpResponse, JsonResponseMixin):
     """
     This class models a response from any of the endpoints in most of 11Paths APIs.
 
@@ -174,6 +194,10 @@ class Api11PathsResponse(Urllib3BaseHttpResponse):
     mutually exclusive, since errors can be non fatal, and therefore a response could have valid information in the data
     field and at the same time inform of an error.
     """
+    def __init__(self, resp):
+        super(Api11PathsResponse, self).__init__(resp)
+        self._body = self.urllib3_response.data
+
     @property
     def data(self):
         """
