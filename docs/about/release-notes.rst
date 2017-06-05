@@ -21,6 +21,7 @@ Sdklib 1.8.8
 - Add cookie property to HttpRequestContext.
 - Do not add *X_11PATHS_BODY_HASH* header when body is empty.
 - Refactor HttpResponse.
+- Add find_by_name method to html objects.
 
 Sdklib 1.8.7
 ------------

@@ -11,6 +11,8 @@ class TestHAR(unittest.TestCase):
     def setUpClass(cls):
         with open("tests/resources/github.com.har", "r") as f:
             cls.github_com_har = HAR(f.read())
+        with open("tests/resources/latch.elevenpaths.com.har.json", "r") as f:
+            cls.latch_elevenpaths_com_har = HAR(f.read())
 
     @classmethod
     def tearDownClass(cls):
@@ -38,6 +40,16 @@ class TestHAR(unittest.TestCase):
         self.assertEqual("GET", request_responses[0][0].method)
         self.assertEqual("https://github.com", request_responses[0][0].host)
         self.assertTrue(isinstance(request_responses[0][0].renderer, type(default_renderer)))
+
+    def test_sequential_dynamic_requests(self):
+        request_responses = sequential_requests(self.latch_elevenpaths_com_har.log.entries,
+                                                update_dynamic_elements=True)
+        self.assertEqual(4, len(request_responses))
+        self.assertEqual("GET", request_responses[0][0].method)
+        self.assertEqual("https://latch.elevenpaths.com", request_responses[0][0].host)
+        self.assertIsNotNone(request_responses[1][0].body_params["authenticityToken"])
+        self.assertNotEqual(
+            "d0f547b43770f586d5e0883c48a98e3c73736ef2", request_responses[1][0].body_params["authenticityToken"])
 
     def test_get_http_response(self):
         response = self.github_com_har.log.entries[0].response

@@ -1,0 +1,996 @@
+{
+  "log": {
+    "version": "1.2",
+    "creator": {
+      "name": "WebInspector",
+      "version": "537.36"
+    },
+    "pages": [
+      {
+        "startedDateTime": "2017-06-05T15:27:27.355Z",
+        "id": "page_2",
+        "title": "https://latch.elevenpaths.com/www/secure/authenticate",
+        "pageTimings": {
+          "onContentLoad": 705.0559999997859,
+          "onLoad": 1119.372999999996
+        }
+      }
+    ],
+    "entries": [
+      {
+        "startedDateTime": "2017-06-05T15:54:22.872Z",
+        "time": 57.90300000080606,
+        "request": {
+          "method": "GET",
+          "url": "https://latch.elevenpaths.com/www/login",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, sdch, br"
+            },
+            {
+              "name": "Host",
+              "value": "latch.elevenpaths.com"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "es-ES,es;q=0.8,en;q=0.6"
+            },
+            {
+              "name": "Upgrade-Insecure-Requests",
+              "value": "1"
+            },
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+            },
+            {
+              "name": "Accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+            },
+            {
+              "name": "Referer",
+              "value": "https://latch.elevenpaths.com/"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            }
+          ],
+          "queryString": [],
+          "cookies": [
+            {
+              "name": "__utma",
+              "value": "258501982.1605358224.1435332487.1474302334.1474806268.4",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "_ga",
+              "value": "GA1.2.1605358224.1435332487",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmt",
+              "value": "1",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "PATH2_SESSION",
+              "value": "\"bb82efe81d14bf84312163a862ad4f7197f58ecf-___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\"",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "PATH2_FLASH",
+              "value": "\"url=%2Fwww%2FdeveloperArea\"",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utma",
+              "value": "221999493.1605358224.1435332487.1496675355.1496675355.1",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmb",
+              "value": "221999493.14.10.1496675355",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmc",
+              "value": "221999493",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmz",
+              "value": "221999493.1496675355.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            }
+          ],
+          "headersSize": 955,
+          "bodySize": 0
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "X-Conspiration-Day",
+              "value": "There is no conspiration, rly"
+            },
+            {
+              "name": "Date",
+              "value": "Mon, 05 Jun 2017 15:54:22 GMT"
+            },
+            {
+              "name": "Content-Encoding",
+              "value": "gzip"
+            },
+            {
+              "name": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "name": "Server",
+              "value": "nginx/1.10.1"
+            },
+            {
+              "name": "X-Frame-Options",
+              "value": "SAMEORIGIN"
+            },
+            {
+              "name": "Content-Type",
+              "value": "text/html; charset=utf-8"
+            },
+            {
+              "name": "Set-Cookie",
+              "value": "PATH2_SESSION=\"bb82efe81d14bf84312163a862ad4f7197f58ecf-___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\"; Path=/; Secure; HTTPOnly"
+            },
+            {
+              "name": "Set-Cookie",
+              "value": "PATH2_FLASH=\"url=%2Fwww%2FdeveloperArea\"; Path=/; Secure"
+            },
+            {
+              "name": "Set-Cookie",
+              "value": "PATH2_ERRORS=; Expires=Mon, 5-Jun-2017 15:54:22 GMT; Path=/"
+            },
+            {
+              "name": "Content-Security-Policy-Report-Only",
+              "value": "default-src https:;script-src 'unsafe-inline' https://www.google-analytics.com/ga.js http://a.vimeocdn.com/js/froogaloop2.min.js https:;font-src https:;img-src https:;style-src 'unsafe-inline' https:;frame-src http://player.vimeo.com/ https://www.youtube.com/embed/hvCzOBkzRvg https:;report-uri https://report-uri.io/report/79d6f8ec27404fdaf8a729c0fad36721/reportOnly"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            },
+            {
+              "name": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "name": "X-XSS-Protection",
+              "value": "1; mode=block"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "PATH2_SESSION",
+              "value": "\"bb82efe81d14bf84312163a862ad4f7197f58ecf-___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\"",
+              "path": "/",
+              "expires": null,
+              "httpOnly": true,
+              "secure": true
+            },
+            {
+              "name": "PATH2_FLASH",
+              "value": "\"url=%2Fwww%2FdeveloperArea\"",
+              "path": "/",
+              "expires": null,
+              "httpOnly": false,
+              "secure": true
+            },
+            {
+              "name": "PATH2_ERRORS",
+              "value": "",
+              "path": "/",
+              "expires": "2017-06-05T15:54:22.000Z",
+              "httpOnly": false,
+              "secure": false
+            }
+          ],
+          "content": {
+            "size": 7747,
+            "mimeType": "text/html",
+            "compression": 5367,
+            "text": "<!DOCTYPE html>\n<!--[if IE 8]> <html lang=\"en\" class=\"ie8 no-js\"> <![endif]-->\n<!--[if IE 9]> <html lang=\"en\" class=\"ie9 no-js\"> <![endif]-->\n<!--[if !IE]><!--> <html lang=\"en\" class=\"no-js\"> <!--<![endif]-->\n<!-- BEGIN HEAD -->\n<head>\n\t<meta charset=\"utf-8\" />\n\t<title>Latch | Área de Desarrolladores</title>\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n\t<meta content=\"width=device-width, initial-scale=1.0\" name=\"viewport\" />\n\t<meta content=\"\" name=\"description\" />\n\t<meta content=\"\" name=\"author\" />\n\t<meta name=\"MobileOptimized\" content=\"320\">\n\t<!-- BEGIN GLOBAL MANDATORY STYLES -->\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/../plugins/font-awesome/css/font-awesome.min.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/../plugins/bootstrap/css/bootstrap.min.css\" charset=\"utf-8\" ></link>\n          \n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/../plugins/uniform/css/uniform.default.css\" charset=\"utf-8\" ></link>\n          \n\t<!-- END GLOBAL MANDATORY STYLES -->\n\t<!-- BEGIN THEME STYLES --> \n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/style-metronic.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/style.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/style-responsive.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/plugins.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" id=\"style_color\" href=\"/www/public/stylesheets/themes/default.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/custom.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/font.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/pages/login.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/login-custom.css\" charset=\"utf-8\" ></link>\n    \t<!-- END THEME STYLES -->\n    <link rel=\"shortcut icon\" href=\"/www/public/images/favicon.ico\" />\n</head>\n<!-- BEGIN BODY -->\n<body class=\"login\">\n\t<!-- BEGIN LOGO -->\n\t<div class=\"logo\">\n\t  <a href=\"/www/index.html\"><img src=\"/www/public/images/logo_00b9be.png\" alt=\"\" /></a>\n</div>\n\t<!-- END LOGO -->\n\t<!-- BEGIN LOGIN -->\n\t<div class=\"content  more-width \">\n\t\t\n\n<div class=\"more-width\">\n    <div class=\"row\">\n        <div class=\"col-xs-12 col-sm-12 col-md-5 col-lg-5\">\n            <h2 class=\"justify_left\">Inicia sesión</h2>\n            <div class=\"alert alert-error hide\">\n                <button class=\"close\" data-dismiss=\"alert\"></button>\n                <span>Introduce tu correo electrónico y tu contraseña.</span>\n            </div>\n                                    <form action=\"/www/secure/authenticate\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                <div class=\"form-group\">\n                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->\n                    <label class=\"control-label visible-ie8 visible-ie9\">Correo electrónico</label>\n                    <div class=\"input-icon\">\n                        <i class=\"icon-envelope\"></i> <input class=\"form-control placeholder-no-fix\" type=\"text\" value=\"\"\n                                                             placeholder=\"Correo electrónico\" id=\"username\" name=\"username\" />\n                    </div>\n                </div>\n                <div class=\"form-group\">\n                    <label class=\"control-label visible-ie8 visible-ie9\">Contraseña</label>\n                    <div class=\"input-icon\">\n                        <i class=\"icon-lock\"></i> <input class=\"form-control placeholder-no-fix\" type=\"password\" autocomplete=\"off\" name=\"password\" id=\"password\"\n                                                         value=\"\" placeholder=\"Contraseña\" />\n                    </div>\n                </div>\n                <div class=\"form-actions\">\n                    <label class=\"checkbox\">\n                        <input type=\"checkbox\" name=\"remember\" value=\"true\" /> Recuérdame\n                    </label>\n                    <button type=\"submit\" class=\"submit right\" value=\"Sign in\">\n                        Iniciar sesión <i class=\"icon-circle-arrow-right icon-white\"></i>\n                    </button>\n                </div>\n            \n</form>                        <hr>\n            <div class=\"forget-password\">\n                <h2 class=\"justify_left\">¿Has olvidado tu contraseña?</h2>\n                <p>\n                    No te preocupes, haz clic \n                    <a href=\"/www/requestPasswordReset\">aquí </a>\n                    para cambiar tu contraseña.\n                </p>\n            </div>\n            <div class=\"create-account\">\n                <p>\n                    ¿Aún no tienes una cuenta?&nbsp; <a href=\"/www/\">Crear una cuenta <i\n                        class=\"icon-circle-arrow-right\"></i></a>\n                </p>\n            </div>\n        </div>\n        <div class=\"visible-md visible-lg col-md-7 col-lg-7\">\n            <a target=\"_blank\" href=\"https://community.elevenpaths.com/\"><img class=\"img-responsive\" src=\"public/images/promo/latch_login_community_es.jpg\" alt=\"\"></a>\n\n            <img class=\"img-responsive m-t-20\" src=\"public/images/promo/latch_login_satallite_es.jpg\" alt=\"\" usemap=\"#satellite-map\"/>\n            <map name=\"satellite-map\">\n                <area shape=\"rect\" coords=\"303,16,399,75\" alt=\"Latch Satellite\" href=\"https://latch.elevenpaths.com/www/satellite.html\">\n            </map>\n        </div>\n    </div>\n</div>\n\n       \n\t</div>\n\t<!-- END LOGIN -->\n\t<!-- BEGIN COPYRIGHT -->\n\t<div class=\"copyright\">2017 © <a href=\"/index.html\" title=\"ElevenPaths\" target=\"_blank\">ElevenPaths</a>. Todos los derechos reservados.\n\t</div>\n\t<!-- END COPYRIGHT -->\n\t<script type=\"text/javascript\" language=\"javascript\"  src=\"/www/public/javascripts/../assets/plugins/jquery-1.11.2.min.js\"></script>\n\t<script type=\"text/javascript\" language=\"javascript\"  src=\"/www/public/javascripts/../plugins/bootstrap/js/bootstrap.min.js\"></script>\n\t\n\t<script type=\"text/javascript\" language=\"javascript\"  src=\"/www/public/javascripts/../plugins/jquery.cookie.min.js\"></script>\n\t<script type=\"text/javascript\" language=\"javascript\"  src=\"/www/public/javascripts/../plugins/uniform/jquery.uniform.min.js\"></script>\n\t<script type=\"text/javascript\" language=\"javascript\"  src=\"/www/public/javascripts/app.js\"></script>\n\t<script>\n    $(document).ready(function() {\n        $(\"input\").keypress(function(event) {\n            var code = event.keyCode || event.which;\n            if (code == 13) { // ENTER\n                $(\"form\").submit();\n            }\n        });\n    })\n</script>\n\t<!-- END CORE PLUGINS -->\n\t<script>\n\t\tjQuery(document).ready(function() {     \n\t\t  App.init();\n\t\t});\n\t</script>\n\t<!-- END JAVASCRIPTS -->\n\t<!-- BEGIN GOOGLE ANALYTICS -->\n<script type=\"text/javascript\">\n\n  var _gaq = _gaq || [];\n  _gaq.push(['_setAccount', 'UA-41563013-3']);\n  _gaq.push(['_trackPageview']);\n\n  (function() {\n    var ga = document.createElement('script'); ga.type = 'text/javascript';\nga.async = true;\n    ga.src = ('https:' == document.location.protocol ? 'https://ssl' :\n'http://www') + '.google-analytics.com/ga.js';\n    var s = document.getElementsByTagName('script')[0];\ns.parentNode.insertBefore(ga, s);\n  })();\n\n</script>\n<!-- END GOOGLE ANALYTICS -->\n\t\n</body>\n<!-- END BODY -->\n</html>"
+          },
+          "redirectURL": "",
+          "headersSize": 1080,
+          "bodySize": 2380,
+          "_transferSize": 3460
+        },
+        "cache": {},
+        "timings": {
+          "blocked": 2.77400000049965,
+          "dns": -1,
+          "connect": -1,
+          "send": 0.14800000008108993,
+          "wait": 49.94699999951986,
+          "receive": 5.034000000705461,
+          "ssl": -1
+        },
+        "serverIPAddress": "54.77.173.238",
+        "connection": "39618",
+        "pageref": "page_1"
+      },
+      {
+        "startedDateTime": "2017-06-05T15:27:27.355Z",
+        "time": 60.420999999678315,
+        "request": {
+          "method": "POST",
+          "url": "https://latch.elevenpaths.com/www/secure/authenticate",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "name": "Origin",
+              "value": "https://latch.elevenpaths.com"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, br"
+            },
+            {
+              "name": "Host",
+              "value": "latch.elevenpaths.com"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "es-ES,es;q=0.8,en;q=0.6"
+            },
+            {
+              "name": "Upgrade-Insecure-Requests",
+              "value": "1"
+            },
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded"
+            },
+            {
+              "name": "Accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            },
+            {
+              "name": "Referer",
+              "value": "https://latch.elevenpaths.com/www/login"
+            },
+            {
+              "name": "Cookie",
+              "value": "__utma=258501982.1605358224.1435332487.1474302334.1474806268.4; _ga=GA1.2.1605358224.1435332487; __utmt=1; PATH2_SESSION=\"1cd27777ef7f083181fd2d58fcab633154ff9aed-___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\"; PATH2_FLASH=\"url=%2Fwww%2FdeveloperArea\"; __utma=221999493.1605358224.1435332487.1496675355.1496675355.1; __utmb=221999493.11.10.1496675355; __utmc=221999493; __utmz=221999493.1496675355.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Content-Length",
+              "value": "112"
+            }
+          ],
+          "queryString": [],
+          "cookies": [
+            {
+              "name": "__utma",
+              "value": "258501982.1605358224.1435332487.1474302334.1474806268.4",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "_ga",
+              "value": "GA1.2.1605358224.1435332487",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmt",
+              "value": "1",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "PATH2_SESSION",
+              "value": "\"1cd27777ef7f083181fd2d58fcab633154ff9aed-___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\"",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "PATH2_FLASH",
+              "value": "\"url=%2Fwww%2FdeveloperArea\"",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utma",
+              "value": "221999493.1605358224.1435332487.1496675355.1496675355.1",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmb",
+              "value": "221999493.11.10.1496675355",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmc",
+              "value": "221999493",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmz",
+              "value": "221999493.1496675355.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            }
+          ],
+          "headersSize": 1082,
+          "bodySize": 112,
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "text": "authenticityToken=d0f547b43770f586d5e0883c48a98e3c73736ef2&username=sdklib%40hotmail.com&password=myPassword01",
+            "params": [
+              {
+                "name": "authenticityToken",
+                "value": "d0f547b43770f586d5e0883c48a98e3c73736ef2"
+              },
+              {
+                "name": "username",
+                "value": "sdklib%40hotmail.com"
+              },
+              {
+                "name": "password",
+                "value": "myPassword01"
+              }
+            ]
+          }
+        },
+        "response": {
+          "status": 302,
+          "statusText": "Found",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "X-Conspiration-Day",
+              "value": "There is no conspiration, rly"
+            },
+            {
+              "name": "Date",
+              "value": "Mon, 05 Jun 2017 15:27:27 GMT"
+            },
+            {
+              "name": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "name": "Server",
+              "value": "nginx/1.10.1"
+            },
+            {
+              "name": "X-Frame-Options",
+              "value": "SAMEORIGIN"
+            },
+            {
+              "name": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            },
+            {
+              "name": "Location",
+              "value": "https://latch.elevenpaths.com/www/developerArea"
+            },
+            {
+              "name": "Set-Cookie",
+              "value": "PATH2_SESSION=\"181914839e93c89f88d8b1f425579151b66dfaf4-username=sdklib%40hotmail.com&sca=1496676447391&token=91afff75475b6003f0688e83b47b45f17a4e0be9&___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\"; Path=/; Secure; HTTPOnly"
+            },
+            {
+              "name": "Set-Cookie",
+              "value": "PATH2_FLASH=; Expires=Mon, 5-Jun-2017 15:27:27 GMT; Path=/; Secure"
+            },
+            {
+              "name": "Set-Cookie",
+              "value": "PATH2_ERRORS=; Expires=Mon, 5-Jun-2017 15:27:27 GMT; Path=/"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Content-Security-Policy-Report-Only",
+              "value": "default-src https:;script-src 'unsafe-inline' https://www.google-analytics.com/ga.js http://a.vimeocdn.com/js/froogaloop2.min.js https:;font-src https:;img-src https:;style-src 'unsafe-inline' https:;frame-src http://player.vimeo.com/ https://www.youtube.com/embed/hvCzOBkzRvg https:;report-uri https://report-uri.io/report/79d6f8ec27404fdaf8a729c0fad36721/reportOnly"
+            },
+            {
+              "name": "Content-Length",
+              "value": "0"
+            },
+            {
+              "name": "X-XSS-Protection",
+              "value": "1; mode=block"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "PATH2_SESSION",
+              "value": "\"181914839e93c89f88d8b1f425579151b66dfaf4-username=sdklib%40hotmail.com&sca=1496676447391&token=91afff75475b6003f0688e83b47b45f17a4e0be9&___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\"",
+              "path": "/",
+              "expires": null,
+              "httpOnly": true,
+              "secure": true
+            },
+            {
+              "name": "PATH2_FLASH",
+              "value": "",
+              "path": "/",
+              "expires": "2017-06-05T15:27:27.000Z",
+              "httpOnly": false,
+              "secure": true
+            },
+            {
+              "name": "PATH2_ERRORS",
+              "value": "",
+              "path": "/",
+              "expires": "2017-06-05T15:27:27.000Z",
+              "httpOnly": false,
+              "secure": false
+            }
+          ],
+          "content": {
+            "size": 0,
+            "mimeType": "text/plain",
+            "compression": 0
+          },
+          "redirectURL": "https://latch.elevenpaths.com/www/developerArea",
+          "headersSize": 1196,
+          "bodySize": 0,
+          "_transferSize": 1196
+        },
+        "cache": {},
+        "timings": {
+          "blocked": 3.13199999982317,
+          "dns": -1,
+          "connect": -1,
+          "send": 0.13099999978294008,
+          "wait": 51.71300000029079,
+          "receive": 5.444999999781416,
+          "ssl": -1
+        },
+        "serverIPAddress": "52.30.153.108",
+        "connection": "31156",
+        "pageref": "page_2"
+      },
+      {
+        "startedDateTime": "2017-06-05T15:27:27.417Z",
+        "time": 119.55000000034488,
+        "request": {
+          "method": "GET",
+          "url": "https://latch.elevenpaths.com/www/developerArea",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, sdch, br"
+            },
+            {
+              "name": "Host",
+              "value": "latch.elevenpaths.com"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "es-ES,es;q=0.8,en;q=0.6"
+            },
+            {
+              "name": "Upgrade-Insecure-Requests",
+              "value": "1"
+            },
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+            },
+            {
+              "name": "Accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+            },
+            {
+              "name": "Referer",
+              "value": "https://latch.elevenpaths.com/www/login"
+            },
+            {
+              "name": "Cookie",
+              "value": "__utma=258501982.1605358224.1435332487.1474302334.1474806268.4; _ga=GA1.2.1605358224.1435332487; __utmt=1; __utma=221999493.1605358224.1435332487.1496675355.1496675355.1; __utmb=221999493.11.10.1496675355; __utmc=221999493; __utmz=221999493.1496675355.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); PATH2_SESSION=\"181914839e93c89f88d8b1f425579151b66dfaf4-username=sdklib%40hotmail.com&sca=1496676447391&token=91afff75475b6003f0688e83b47b45f17a4e0be9&___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\""
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            }
+          ],
+          "queryString": [],
+          "cookies": [
+            {
+              "name": "__utma",
+              "value": "258501982.1605358224.1435332487.1474302334.1474806268.4",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "_ga",
+              "value": "GA1.2.1605358224.1435332487",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmt",
+              "value": "1",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utma",
+              "value": "221999493.1605358224.1435332487.1496675355.1496675355.1",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmb",
+              "value": "221999493.11.10.1496675355",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmc",
+              "value": "221999493",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmz",
+              "value": "221999493.1496675355.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "PATH2_SESSION",
+              "value": "\"181914839e93c89f88d8b1f425579151b66dfaf4-username=sdklib%40hotmail.com&sca=1496676447391&token=91afff75475b6003f0688e83b47b45f17a4e0be9&___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\"",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            }
+          ],
+          "headersSize": 1029,
+          "bodySize": 0
+        },
+        "response": {
+          "status": 302,
+          "statusText": "Found",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "X-Conspiration-Day",
+              "value": "There is no conspiration, rly"
+            },
+            {
+              "name": "Date",
+              "value": "Mon, 05 Jun 2017 15:27:27 GMT"
+            },
+            {
+              "name": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "name": "Server",
+              "value": "nginx/1.10.1"
+            },
+            {
+              "name": "X-Frame-Options",
+              "value": "SAMEORIGIN"
+            },
+            {
+              "name": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            },
+            {
+              "name": "Location",
+              "value": "https://latch.elevenpaths.com/www/developers/editapplication"
+            },
+            {
+              "name": "Set-Cookie",
+              "value": "PATH2_SESSION=\"a518a79f8e6e430fad7f31c0936da21a9ce4db7f-sca=1496676447391&username=sdklib%40hotmail.com&token=91afff75475b6003f0688e83b47b45f17a4e0be9&___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\"; Path=/; Secure; HTTPOnly"
+            },
+            {
+              "name": "Set-Cookie",
+              "value": "PATH2_FLASH=; Expires=Mon, 5-Jun-2017 15:27:27 GMT; Path=/; Secure"
+            },
+            {
+              "name": "Set-Cookie",
+              "value": "PATH2_ERRORS=; Expires=Mon, 5-Jun-2017 15:27:27 GMT; Path=/"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Content-Security-Policy-Report-Only",
+              "value": "default-src https:;script-src 'unsafe-inline' https://www.google-analytics.com/ga.js http://a.vimeocdn.com/js/froogaloop2.min.js https:;font-src https:;img-src https:;style-src 'unsafe-inline' https:;frame-src http://player.vimeo.com/ https://www.youtube.com/embed/hvCzOBkzRvg https:;report-uri https://report-uri.io/report/79d6f8ec27404fdaf8a729c0fad36721/reportOnly"
+            },
+            {
+              "name": "Content-Length",
+              "value": "0"
+            },
+            {
+              "name": "X-XSS-Protection",
+              "value": "1; mode=block"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "PATH2_SESSION",
+              "value": "\"a518a79f8e6e430fad7f31c0936da21a9ce4db7f-sca=1496676447391&username=sdklib%40hotmail.com&token=91afff75475b6003f0688e83b47b45f17a4e0be9&___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\"",
+              "path": "/",
+              "expires": null,
+              "httpOnly": true,
+              "secure": true
+            },
+            {
+              "name": "PATH2_FLASH",
+              "value": "",
+              "path": "/",
+              "expires": "2017-06-05T15:27:27.000Z",
+              "httpOnly": false,
+              "secure": true
+            },
+            {
+              "name": "PATH2_ERRORS",
+              "value": "",
+              "path": "/",
+              "expires": "2017-06-05T15:27:27.000Z",
+              "httpOnly": false,
+              "secure": false
+            }
+          ],
+          "content": {
+            "size": 0,
+            "mimeType": "text/plain",
+            "compression": 0
+          },
+          "redirectURL": "https://latch.elevenpaths.com/www/developers/editapplication",
+          "headersSize": 1209,
+          "bodySize": 0,
+          "_transferSize": 1209
+        },
+        "cache": {},
+        "timings": {
+          "blocked": 1.33100000039121,
+          "dns": -1,
+          "connect": -1,
+          "send": 0.09899999986374008,
+          "wait": 111.17100000001305,
+          "receive": 6.949000000076879,
+          "ssl": -1
+        },
+        "serverIPAddress": "52.30.153.108",
+        "connection": "31156",
+        "pageref": "page_2"
+      },
+      {
+        "startedDateTime": "2017-06-05T15:27:27.538Z",
+        "time": 90.29499999996915,
+        "request": {
+          "method": "GET",
+          "url": "https://latch.elevenpaths.com/www/developers/editapplication",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, sdch, br"
+            },
+            {
+              "name": "Host",
+              "value": "latch.elevenpaths.com"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "es-ES,es;q=0.8,en;q=0.6"
+            },
+            {
+              "name": "Upgrade-Insecure-Requests",
+              "value": "1"
+            },
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+            },
+            {
+              "name": "Accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+            },
+            {
+              "name": "Referer",
+              "value": "https://latch.elevenpaths.com/www/login"
+            },
+            {
+              "name": "Cookie",
+              "value": "__utma=258501982.1605358224.1435332487.1474302334.1474806268.4; _ga=GA1.2.1605358224.1435332487; __utmt=1; __utma=221999493.1605358224.1435332487.1496675355.1496675355.1; __utmb=221999493.11.10.1496675355; __utmc=221999493; __utmz=221999493.1496675355.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); PATH2_SESSION=\"a518a79f8e6e430fad7f31c0936da21a9ce4db7f-sca=1496676447391&username=sdklib%40hotmail.com&token=91afff75475b6003f0688e83b47b45f17a4e0be9&___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\""
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            }
+          ],
+          "queryString": [],
+          "cookies": [
+            {
+              "name": "__utma",
+              "value": "258501982.1605358224.1435332487.1474302334.1474806268.4",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "_ga",
+              "value": "GA1.2.1605358224.1435332487",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmt",
+              "value": "1",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utma",
+              "value": "221999493.1605358224.1435332487.1496675355.1496675355.1",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmb",
+              "value": "221999493.11.10.1496675355",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmc",
+              "value": "221999493",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "__utmz",
+              "value": "221999493.1496675355.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            },
+            {
+              "name": "PATH2_SESSION",
+              "value": "\"a518a79f8e6e430fad7f31c0936da21a9ce4db7f-sca=1496676447391&username=sdklib%40hotmail.com&token=91afff75475b6003f0688e83b47b45f17a4e0be9&___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\"",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            }
+          ],
+          "headersSize": 1042,
+          "bodySize": 0
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "X-Conspiration-Day",
+              "value": "There is no conspiration, rly"
+            },
+            {
+              "name": "Date",
+              "value": "Mon, 05 Jun 2017 15:27:27 GMT"
+            },
+            {
+              "name": "Content-Encoding",
+              "value": "gzip"
+            },
+            {
+              "name": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "name": "Server",
+              "value": "nginx/1.10.1"
+            },
+            {
+              "name": "X-Frame-Options",
+              "value": "SAMEORIGIN"
+            },
+            {
+              "name": "Content-Type",
+              "value": "text/html; charset=utf-8"
+            },
+            {
+              "name": "Set-Cookie",
+              "value": "PATH2_SESSION=\"181914839e93c89f88d8b1f425579151b66dfaf4-username=sdklib%40hotmail.com&sca=1496676447391&token=91afff75475b6003f0688e83b47b45f17a4e0be9&___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\"; Path=/; Secure; HTTPOnly"
+            },
+            {
+              "name": "Set-Cookie",
+              "value": "PATH2_FLASH=; Expires=Mon, 5-Jun-2017 15:27:27 GMT; Path=/; Secure"
+            },
+            {
+              "name": "Set-Cookie",
+              "value": "PATH2_ERRORS=; Path=/"
+            },
+            {
+              "name": "Content-Security-Policy-Report-Only",
+              "value": "default-src https:;script-src 'unsafe-inline' https://www.google-analytics.com/ga.js http://a.vimeocdn.com/js/froogaloop2.min.js https:;font-src https:;img-src https:;style-src 'unsafe-inline' https:;frame-src http://player.vimeo.com/ https://www.youtube.com/embed/hvCzOBkzRvg https:;report-uri https://report-uri.io/report/79d6f8ec27404fdaf8a729c0fad36721/reportOnly"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            },
+            {
+              "name": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Vary",
+              "value": "Accept-Encoding"
+            },
+            {
+              "name": "X-XSS-Protection",
+              "value": "1; mode=block"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "PATH2_SESSION",
+              "value": "\"181914839e93c89f88d8b1f425579151b66dfaf4-username=sdklib%40hotmail.com&sca=1496676447391&token=91afff75475b6003f0688e83b47b45f17a4e0be9&___AT=d0f547b43770f586d5e0883c48a98e3c73736ef2\"",
+              "path": "/",
+              "expires": null,
+              "httpOnly": true,
+              "secure": true
+            },
+            {
+              "name": "PATH2_FLASH",
+              "value": "",
+              "path": "/",
+              "expires": "2017-06-05T15:27:27.000Z",
+              "httpOnly": false,
+              "secure": true
+            },
+            {
+              "name": "PATH2_ERRORS",
+              "value": "",
+              "path": "/",
+              "expires": null,
+              "httpOnly": false,
+              "secure": false
+            }
+          ],
+          "content": {
+            "size": 47767,
+            "mimeType": "text/html",
+            "compression": 41699,
+            "text": "<!DOCTYPE html>\n<!--[if IE 8]> <html lang=\"en\" class=\"ie8 no-js\"> <![endif]-->\n<!--[if IE 9]> <html lang=\"en\" class=\"ie9 no-js\"> <![endif]-->\n<!--[if !IE]><!--> <html lang=\"en\" class=\"no-js\"> <!--<![endif]-->\n<!-- BEGIN HEAD -->\n<head>\n    <meta charset=\"utf-8\">\n    <title>Mis aplicaciones</title>\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n\t<meta content=\"width=device-width, initial-scale=1.0\" name=\"viewport\" />\n\t<meta name=\"MobileOptimized\" content=\"320\">\n\t<!-- BEGIN GLOBAL MANDATORY STYLES -->\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/../plugins/font-awesome/css/font-awesome.min.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/../plugins/bootstrap/css/bootstrap.min.css\" charset=\"utf-8\" ></link>\n\t<!-- END GLOBAL MANDATORY STYLES -->\n\t<!-- BEGIN THEME STYLES -->\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/style-metronic.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/style.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/style-responsive.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/plugins.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" id=\"style_color\" href=\"/www/public/stylesheets/themes/default.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/custom.css\" charset=\"utf-8\" ></link>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/www/public/stylesheets/font.css\" charset=\"utf-8\" ></link>\n    <link href=\"/www/public/assets/plugins/font-awesome/css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\">\n\t<link href=\"https://assets.zendesk.com/external/zenbox/v2.6/zenbox.css\" rel=\"stylesheet\" type=\"text/css\"/>\n\t<!-- END THEME STYLES -->\n\t<link href=\"/www/public/assets/plugins/font-awesome/css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\"/>\n<link href=\"/www/public/plugins/select2/select2.css\" rel=\"stylesheet\" type=\"text/css\"/>\n<link href=\"/www/public/plugins/select2/select2-bootstrap.css\" rel=\"stylesheet\" type=\"text/css\"/>\n       \n\t<link rel=\"shortcut icon\" type=\"image/png\" href=\"/www/public/images/favicon.ico\">\n</head>\n<!-- END HEAD -->\n<!-- BEGIN BODY -->\n<body class=\"page-header-fixed\">\n\t<!-- BEGIN HEADER -->   \n\t<div class=\"header navbar navbar-inverse navbar-fixed-top\">\n\t<!-- BEGIN TOP NAVIGATION BAR -->\n\t\t<div class=\"header-inner\">\n\t\t<!-- BEGIN LOGO -->  \n\t\t<a class=\"navbar-brand\" href=\"/www/index.html\">\n\t\t<img src=\"/www/public/images/logo_00b9be.png\" alt=\"logo\" width=\"100px\" class=\"img-responsive\" />\n\t\t</a>\n\t\t<!-- END LOGO -->\n\t\t<!-- BEGIN RESPONSIVE MENU TOGGLER --> \n\t\t<a href=\"javascript:;\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\n\t\t<img src=\"/www/public/images/menu-toggler.png\" alt=\"\" />\n\t\t</a> \n\t\t<!-- END RESPONSIVE MENU TOGGLER -->\n\t\t<!-- BEGIN TOP NAVIGATION MENU -->\n\t\t<ul class=\"nav navbar-nav pull-right\">\n\t\t\t            <!-- BEGIN LANGUAGES DROPDOWN -->\n                <li id=\"languagesDropdown\" class=\"dropdown\">\n                    <a href=\"\" data-toggle=\"dropdown\" data-hover=\"dropdown\" data-delay=\"0\" data-close-others=\"false\">Idiomas <i class=\"fa fa-angle-down\"></i></a>\n                    <ul class=\"dropdown-menu\">\n                        <li>\n                            <a href=\"#\" onclick=\"$('#changeToSpanish').submit(); return false;\">Español</a>\n                            <form action=\"/www/setLanguage\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" id=\"changeToSpanish\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                <input type=\"hidden\" name=\"language\" value=\"es\">\n                            \n</form>                        </li>\n                        <li>\n                            <a href=\"#\" onclick=\"$('#changeToEnglish').submit(); return false;\">English</a>\n                            <form action=\"/www/setLanguage\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" id=\"changeToEnglish\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                <input type=\"hidden\" name=\"language\" value=\"en\">\n                            \n</form>                        </li>\n                        <li>\n                            <a href=\"#\" onclick=\"$('#changeToPortuguese').submit(); return false;\">Português</a>\n                            <form action=\"/www/setLanguage\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" id=\"changeToPortuguese\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                <input type=\"hidden\" name=\"language\" value=\"pt\">\n                            \n</form>                        </li>\n                    </ul>\n                </li>\n            <!-- END LANGUAGES DROPDOWN -->\n\t\t\t<!-- BEGIN USER LOGIN DROPDOWN -->\n\t\t\t<li class=\"dropdown user\">\n\t\t\t\t<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" data-hover=\"dropdown\" data-close-others=\"true\">\n\t\t\t\t\t<span class=\"username\"><i class=\"icon-user\"></i> sdklib@hotmail.com</span>\n\t\t\t\t\t<i class=\"icon-angle-down\"></i>\n\t\t\t\t</a> \n\t\t\t\t<ul class=\"dropdown-menu\">\n\t\t\t\t\t<li><a href=\"/www/latch/checklatch\"><i class=\"icon-latch\"></i> Usa Latch con tu cuenta</a></li>\n                                        <li><a href=\"/www/requestPasswordReset\"><i class=\"icon-key\"></i> Cambiar la contraseña</a></li>\n                    <li><a href=\"/www/personalinfo.html\"><i class=\"icon-gear\"></i> Opciones de la cuenta</a></li>\n                    <li><a href=\"/www/developers/changelog\"><i class=\"icon-bullhorn\"></i> Changelog</a></li>\n                    \t\t\t\t\t<form action=\"/www/logout\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" id=\"logout\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n\t\t\t\t\t\t<li><a onclick=\"$('#logout').submit()\" style=\"cursor:pointer\"><i class=\"icon-signout\"></i> Cerrar sesión</a></li>\n\t\t\t\t\t\n</form>\t\t\t\t</ul>\n            </li>\n         \t<!-- END USER LOGIN DROPDOWN -->\n\t\t\t\t\t</ul>\n\t\t<!-- END TOP NAVIGATION MENU -->\n\t\t</div>\n      \t<!-- END TOP NAVIGATION BAR -->\n\t</div>\n\t<!-- END HEADER -->\n\t<div class=\"clearfix\"></div>\n\t<!-- BEGIN CONTAINER -->\n\t<div class=\"page-container\">\n\t\t<!-- BEGIN SIDEBAR -->\n\t\t<div class=\"page-sidebar navbar-collapse collapse\">\n\t\t\t<!-- BEGIN SIDEBAR MENU -->\n<ul class=\"page-sidebar-menu\">\n\t<li>\n\t\t<div class=\"sidebar-toggler hidden-phone\"></div>\n\t</li>\n\t<li class=\"\">\n\t\t<a href=\"/www/index.html\"><i class=\"icon-home\"></i>\n\t\t\t<span class=\"title\">Sitio web de Latch</span>\n\t\t</a>\n\t</li>\n\t<li >\n\t\t<a href=\"javascript:;\"> <i class=\"icon-cogs\"></i>\n\t\t\t<span class=\"title\">Cómo funciona</span><span class=\"arrow\"></span>\n\t\t\t\t\t</a>\n\t\t<ul class=\"sub-menu\">\n\t\t\t<li >\n\t\t\t\t<a href=\"/www/developers/how_getting_started\">Cómo empezar</a>\n\t\t\t</li>\n\t\t\t<li >\n\t\t\t\t<a href=\"/www/developers/how_components\">Qué puedes hacer con Latch</a>\n\t\t\t</li>\n\t\t</ul>\n\t</li>\n\t<li  class=\"active\">\n\t\t<a href=\"/www/developers/editapplication\"> <i class=\"icon-heart\"></i>\n\t\t\t<span class=\"title\">Mis aplicaciones</span>\n\t\t\t <span class=\"selected\"></span>\t\t</a>\n\t</li>\n\t<li >\n\t\t<a href=\"javascript:;\"> <i class=\"icon-wrench\"></i>\n\t\t\t<span class=\"title\">Documentación y SDKs</span><span class=\"arrow\"></span>\n\t\t\t\t\t</a>\n\t\t<ul class=\"sub-menu\">\n\t\t\t<li >\n\t\t\t\t<a href=\"/www/developers/doc_api\">Documentación de API</a>\n\t\t\t</li>\n\t\t\t<li >\n\t\t\t\t<a href=\"/www/developers/webhooks\">Webhooks</a>\n\t\t\t</li>\n\t\t\t<li >\n\t\t\t<a href=\"/www/developers/limitedsecrets\">Secretos limitados</a>\n\t\t\t</li>\n\t\t\t<li >\n\t\t\t\t<a href=\"/www/developers/deep_linking\">Deep Linking</a>\n\t\t\t</li>\n\t\t\t<li >\n\t\t\t\t<a href=\"/www/developers/doc_sdk_plugins\">Plugins y SDKs</a>\n\t\t\t</li>\n\t\t\t<li >\n\t\t\t\t<a href=\"/www/developers/resources\">Recursos</a>\n\t\t\t</li>\n\t\t</ul>\n\t</li>\n    <li >\n        <a href=\"/www/developers/help_support\"> <i class=\"icon-question-sign\"></i>\n            <span class=\"title\">Ayuda y soporte técnico</span><span class=\"arrow\"></span>\n                </a>\n        <ul class=\"sub-menu\">\n            <li >\n                <a href=\"/www/developers/faq\">Ayuda</a>\n            </li>\n            <li >\n                <a href=\"/www/developers/help_support\">Soporte</a>\n            </li>\n        </ul>\n    </li>\n    <li   class=\"last\" >\n        <a href=\"/www/payments/currentplan\">\n            <i class=\"icon-certificate \"></i>\n            <span class=\"title\">Mi Suscripción/Contratar</span>\n                    </a>\n    </li>\n    </ul>\n<!-- END SIDEBAR MENU -->\n\t\t</div>\n\t\t<!-- END SIDEBAR -->\n\t\t<!-- BEGIN PAGE -->\n\t\t<div class=\"page-content\">\n\t\t\t<!-- BEGIN PAGE HEADER-->\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t<!-- BEGIN PAGE TITLE & BREADCRUMB-->\n\t\t\t\t\t<h3 class=\"page-title\">Mis aplicaciones</h3>\n\t\t\t\t\t<ul class=\"page-breadcrumb breadcrumb\">\n\t\t\t\t\t\t<li><i class=\"icon-home\"></i>Inicio<i class=\"icon-angle-right\"></i></li>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<li>Mis aplicaciones</li>\n\t\t\t\t\t\t<li class=\"breadcrumb-date\"></li>\n\t\t\t\t\t</ul>\n\t\t\t\t\t<!-- END PAGE TITLE & BREADCRUMB-->\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<!-- END PAGE HEADER-->\n\t\t\t<div id=\"twoFactorContent\" style=\"display: none\">\n    <select name='twoFactor'  >\n    <option value='DISABLED'  selected='selected' >\n        OTP - Deshabilitado\n    </option>\n    <option value='OPT_IN' >\n        OTP - Opcional\n    </option>\n    <option value='MANDATORY' >\n        OTP - Obligatorio\n    </option>\n</select></div>\n<div id=\"lorContent\" style=\"display: none\">\n    <select name='lockOnRequest'  >\n    <option value='DISABLED'  selected='selected' >\n        LOR - Deshabilitado\n    </option>\n    <option value='OPT_IN' >\n        LOR - Opcional\n    </option>\n    <option value='MANDATORY' >\n        LOR - Obligatorio\n    </option>\n</select></div>\n\n\n<div class=\"row\">\n    <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-10\">\n        <h2 class=\"margin-left-0\">Gestiona tus aplicaciones <a class=\"pull-right\" href=\"/www/public/documents/tutorials/Guia_creacion_Aplicacion_es.pdf\" target=\"_blank\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Descargar guía de uso\"><i class=\"fa fa-question-circle\"></i></a></h2>\n    </div>\n    <div class=\"clearfix\"></div>\n    <div class=\"col-lg-10\">\n                    <ul id=\"item_services_list\" class=\"item_services_list\">\n                            <li><div class=\"service_logo\"><img src=\"https://s3-eu-west-1.amazonaws.com/latch-ireland/avatar1.jpg\" alt=\"\"/></div>\n                    <div title=\"ivanprjcts.com.es\" class=\"service_name truncate\">ivanprjcts.com.es</div>\n                    <div class=\"clearfix-btn-applications\"></div>\n                    <a class=\"appButton small-button remove_button\" data-toggle=\"modal\" href=\"#x6hF3ZG0k6LPBEOg9xHnRemoveModal\" title=\"Eliminar aplicación\"><i class=\"fa fa-times\"></i></a>\n                    <a class=\"appButton small-button\" href=\"/www/developers/editapplication?appId=x6hF3ZG0k6LPBEOg9xHn\" title=\"Editar\"><i class=\"fa fa-pencil\"></i></a>\n                                        <a href=\"/www/developers/dashboard?appId=x6hF3ZG0k6LPBEOg9xHn\" class=\"appButton small-button dashboard_button\" title=\"Panel de control\"><i class=\"fa fa-bar-chart-o\"></i></a>\n                </li>\n                    <!-- BEGIN REMOVE APPLICATION MODAL -->\n                    <div class=\"modal fade\" id=\"x6hF3ZG0k6LPBEOg9xHnRemoveModal\" tabindex=\"-1\" role=\"basic\" aria-hidden=\"false\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\"></button>\n                                    <h4 class=\"modal-title\">Eliminar aplicación</h4>\n                                </div>\n                                <div class=\"modal-body\" style=\"text-align: center\">\n                                    <form action=\"/www/developers/removeapplication\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                        <h5 class=\"overflow-hidden\">¿Estás seguro de que deseas eliminar la aplicación '<i>ivanprjcts.com.es</i>'?</h5> <br>\n                                        <button type=\"submit\" class=\"btn2\">Sí, eliminar la aplicación</button>\n                                        <input type=\"hidden\" name=\"appId\" value=\"x6hF3ZG0k6LPBEOg9xHn\">\n                                    \n</form>                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <!-- REMOVE APPLICATION MODAL END -->\n                            <li><div class=\"service_logo\"><img src=\"https://s3-eu-west-1.amazonaws.com/latch-ireland/avatar1.jpg\" alt=\"\"/></div>\n                    <div title=\"OpenVPN\" class=\"service_name truncate\">OpenVPN</div>\n                    <div class=\"clearfix-btn-applications\"></div>\n                    <a class=\"appButton small-button remove_button\" data-toggle=\"modal\" href=\"#gLZtkhdaCUOxLUlsMzA5RemoveModal\" title=\"Eliminar aplicación\"><i class=\"fa fa-times\"></i></a>\n                    <a class=\"appButton small-button\" href=\"/www/developers/editapplication?appId=gLZtkhdaCUOxLUlsMzA5\" title=\"Editar\"><i class=\"fa fa-pencil\"></i></a>\n                                        <a href=\"/www/developers/dashboard?appId=gLZtkhdaCUOxLUlsMzA5\" class=\"appButton small-button dashboard_button\" title=\"Panel de control\"><i class=\"fa fa-bar-chart-o\"></i></a>\n                </li>\n                    <!-- BEGIN REMOVE APPLICATION MODAL -->\n                    <div class=\"modal fade\" id=\"gLZtkhdaCUOxLUlsMzA5RemoveModal\" tabindex=\"-1\" role=\"basic\" aria-hidden=\"false\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\"></button>\n                                    <h4 class=\"modal-title\">Eliminar aplicación</h4>\n                                </div>\n                                <div class=\"modal-body\" style=\"text-align: center\">\n                                    <form action=\"/www/developers/removeapplication\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                        <h5 class=\"overflow-hidden\">¿Estás seguro de que deseas eliminar la aplicación '<i>OpenVPN</i>'?</h5> <br>\n                                        <button type=\"submit\" class=\"btn2\">Sí, eliminar la aplicación</button>\n                                        <input type=\"hidden\" name=\"appId\" value=\"gLZtkhdaCUOxLUlsMzA5\">\n                                    \n</form>                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <!-- REMOVE APPLICATION MODAL END -->\n                            <li><div class=\"service_logo\"><img src=\"https://s3-eu-west-1.amazonaws.com/latch-ireland/avatar1.jpg\" alt=\"\"/></div>\n                    <div title=\"openvpnAS\" class=\"service_name truncate\">openvpnAS</div>\n                    <div class=\"clearfix-btn-applications\"></div>\n                    <a class=\"appButton small-button remove_button\" data-toggle=\"modal\" href=\"#FfCdIRyMnqmR3fO2lMrtRemoveModal\" title=\"Eliminar aplicación\"><i class=\"fa fa-times\"></i></a>\n                    <a class=\"appButton small-button\" href=\"/www/developers/editapplication?appId=FfCdIRyMnqmR3fO2lMrt\" title=\"Editar\"><i class=\"fa fa-pencil\"></i></a>\n                                        <a href=\"/www/developers/dashboard?appId=FfCdIRyMnqmR3fO2lMrt\" class=\"appButton small-button dashboard_button\" title=\"Panel de control\"><i class=\"fa fa-bar-chart-o\"></i></a>\n                </li>\n                    <!-- BEGIN REMOVE APPLICATION MODAL -->\n                    <div class=\"modal fade\" id=\"FfCdIRyMnqmR3fO2lMrtRemoveModal\" tabindex=\"-1\" role=\"basic\" aria-hidden=\"false\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\"></button>\n                                    <h4 class=\"modal-title\">Eliminar aplicación</h4>\n                                </div>\n                                <div class=\"modal-body\" style=\"text-align: center\">\n                                    <form action=\"/www/developers/removeapplication\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                        <h5 class=\"overflow-hidden\">¿Estás seguro de que deseas eliminar la aplicación '<i>openvpnAS</i>'?</h5> <br>\n                                        <button type=\"submit\" class=\"btn2\">Sí, eliminar la aplicación</button>\n                                        <input type=\"hidden\" name=\"appId\" value=\"FfCdIRyMnqmR3fO2lMrt\">\n                                    \n</form>                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <!-- REMOVE APPLICATION MODAL END -->\n                            <li><div class=\"service_logo\"><img src=\"https://s3-eu-west-1.amazonaws.com/latch-ireland/avatar0.jpg\" alt=\"\"/></div>\n                    <div title=\"SDK javascript\" class=\"service_name truncate\">SDK javascript</div>\n                    <div class=\"clearfix-btn-applications\"></div>\n                    <a class=\"appButton small-button remove_button\" data-toggle=\"modal\" href=\"#lv3m37Xc5l5GcHlXQ206RemoveModal\" title=\"Eliminar aplicación\"><i class=\"fa fa-times\"></i></a>\n                    <a class=\"appButton small-button\" href=\"/www/developers/editapplication?appId=lv3m37Xc5l5GcHlXQ206\" title=\"Editar\"><i class=\"fa fa-pencil\"></i></a>\n                                        <a href=\"/www/developers/dashboard?appId=lv3m37Xc5l5GcHlXQ206\" class=\"appButton small-button dashboard_button\" title=\"Panel de control\"><i class=\"fa fa-bar-chart-o\"></i></a>\n                </li>\n                    <!-- BEGIN REMOVE APPLICATION MODAL -->\n                    <div class=\"modal fade\" id=\"lv3m37Xc5l5GcHlXQ206RemoveModal\" tabindex=\"-1\" role=\"basic\" aria-hidden=\"false\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\"></button>\n                                    <h4 class=\"modal-title\">Eliminar aplicación</h4>\n                                </div>\n                                <div class=\"modal-body\" style=\"text-align: center\">\n                                    <form action=\"/www/developers/removeapplication\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                        <h5 class=\"overflow-hidden\">¿Estás seguro de que deseas eliminar la aplicación '<i>SDK javascript</i>'?</h5> <br>\n                                        <button type=\"submit\" class=\"btn2\">Sí, eliminar la aplicación</button>\n                                        <input type=\"hidden\" name=\"appId\" value=\"lv3m37Xc5l5GcHlXQ206\">\n                                    \n</form>                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <!-- REMOVE APPLICATION MODAL END -->\n                            <li><div class=\"service_logo\"><img src=\"https://s3-eu-west-1.amazonaws.com/latch-ireland/JOWa332f2Pozk3QePXOI.png\" alt=\"\"/></div>\n                    <div title=\"open SSH serve\" class=\"service_name truncate\">open SSH serve</div>\n                    <div class=\"clearfix-btn-applications\"></div>\n                    <a class=\"appButton small-button remove_button\" data-toggle=\"modal\" href=\"#JOWa332f2Pozk3QePXOIRemoveModal\" title=\"Eliminar aplicación\"><i class=\"fa fa-times\"></i></a>\n                    <a class=\"appButton small-button\" href=\"/www/developers/editapplication?appId=JOWa332f2Pozk3QePXOI\" title=\"Editar\"><i class=\"fa fa-pencil\"></i></a>\n                                        <a href=\"/www/developers/dashboard?appId=JOWa332f2Pozk3QePXOI\" class=\"appButton small-button dashboard_button\" title=\"Panel de control\"><i class=\"fa fa-bar-chart-o\"></i></a>\n                </li>\n                    <!-- BEGIN REMOVE APPLICATION MODAL -->\n                    <div class=\"modal fade\" id=\"JOWa332f2Pozk3QePXOIRemoveModal\" tabindex=\"-1\" role=\"basic\" aria-hidden=\"false\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\"></button>\n                                    <h4 class=\"modal-title\">Eliminar aplicación</h4>\n                                </div>\n                                <div class=\"modal-body\" style=\"text-align: center\">\n                                    <form action=\"/www/developers/removeapplication\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                        <h5 class=\"overflow-hidden\">¿Estás seguro de que deseas eliminar la aplicación '<i>open SSH serve</i>'?</h5> <br>\n                                        <button type=\"submit\" class=\"btn2\">Sí, eliminar la aplicación</button>\n                                        <input type=\"hidden\" name=\"appId\" value=\"JOWa332f2Pozk3QePXOI\">\n                                    \n</form>                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <!-- REMOVE APPLICATION MODAL END -->\n                            <li><div class=\"service_logo\"><img src=\"https://s3-eu-west-1.amazonaws.com/latch-ireland/avatar1.jpg\" alt=\"\"/></div>\n                    <div title=\"Ubuntu\" class=\"service_name truncate\">Ubuntu</div>\n                    <div class=\"clearfix-btn-applications\"></div>\n                    <a class=\"appButton small-button remove_button\" data-toggle=\"modal\" href=\"#zeKqyBO2lo16wQoCz1HxRemoveModal\" title=\"Eliminar aplicación\"><i class=\"fa fa-times\"></i></a>\n                    <a class=\"appButton small-button\" href=\"/www/developers/editapplication?appId=zeKqyBO2lo16wQoCz1Hx\" title=\"Editar\"><i class=\"fa fa-pencil\"></i></a>\n                                        <a href=\"/www/developers/dashboard?appId=zeKqyBO2lo16wQoCz1Hx\" class=\"appButton small-button dashboard_button\" title=\"Panel de control\"><i class=\"fa fa-bar-chart-o\"></i></a>\n                </li>\n                    <!-- BEGIN REMOVE APPLICATION MODAL -->\n                    <div class=\"modal fade\" id=\"zeKqyBO2lo16wQoCz1HxRemoveModal\" tabindex=\"-1\" role=\"basic\" aria-hidden=\"false\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\"></button>\n                                    <h4 class=\"modal-title\">Eliminar aplicación</h4>\n                                </div>\n                                <div class=\"modal-body\" style=\"text-align: center\">\n                                    <form action=\"/www/developers/removeapplication\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                        <h5 class=\"overflow-hidden\">¿Estás seguro de que deseas eliminar la aplicación '<i>Ubuntu</i>'?</h5> <br>\n                                        <button type=\"submit\" class=\"btn2\">Sí, eliminar la aplicación</button>\n                                        <input type=\"hidden\" name=\"appId\" value=\"zeKqyBO2lo16wQoCz1Hx\">\n                                    \n</form>                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <!-- REMOVE APPLICATION MODAL END -->\n                            <li><div class=\"service_logo\"><img src=\"https://s3-eu-west-1.amazonaws.com/latch-ireland/avatar0.jpg\" alt=\"\"/></div>\n                    <div title=\"Test SDK C\" class=\"service_name truncate\">Test SDK C</div>\n                    <div class=\"clearfix-btn-applications\"></div>\n                    <a class=\"appButton small-button remove_button\" data-toggle=\"modal\" href=\"#tMOvbOnjGswasV4hS6UtRemoveModal\" title=\"Eliminar aplicación\"><i class=\"fa fa-times\"></i></a>\n                    <a class=\"appButton small-button\" href=\"/www/developers/editapplication?appId=tMOvbOnjGswasV4hS6Ut\" title=\"Editar\"><i class=\"fa fa-pencil\"></i></a>\n                                        <a href=\"/www/developers/dashboard?appId=tMOvbOnjGswasV4hS6Ut\" class=\"appButton small-button dashboard_button\" title=\"Panel de control\"><i class=\"fa fa-bar-chart-o\"></i></a>\n                </li>\n                    <!-- BEGIN REMOVE APPLICATION MODAL -->\n                    <div class=\"modal fade\" id=\"tMOvbOnjGswasV4hS6UtRemoveModal\" tabindex=\"-1\" role=\"basic\" aria-hidden=\"false\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\"></button>\n                                    <h4 class=\"modal-title\">Eliminar aplicación</h4>\n                                </div>\n                                <div class=\"modal-body\" style=\"text-align: center\">\n                                    <form action=\"/www/developers/removeapplication\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                        <h5 class=\"overflow-hidden\">¿Estás seguro de que deseas eliminar la aplicación '<i>Test SDK C</i>'?</h5> <br>\n                                        <button type=\"submit\" class=\"btn2\">Sí, eliminar la aplicación</button>\n                                        <input type=\"hidden\" name=\"appId\" value=\"tMOvbOnjGswasV4hS6Ut\">\n                                    \n</form>                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <!-- REMOVE APPLICATION MODAL END -->\n                            <li><div class=\"service_logo\"><img src=\"https://s3-eu-west-1.amazonaws.com/latch-ireland/avatar1.jpg\" alt=\"\"/></div>\n                    <div title=\"PS 1.6.0.4\" class=\"service_name truncate\">PS 1.6.0.4</div>\n                    <div class=\"clearfix-btn-applications\"></div>\n                    <a class=\"appButton small-button remove_button\" data-toggle=\"modal\" href=\"#nAOEkcfF2Yus2oX5ooANRemoveModal\" title=\"Eliminar aplicación\"><i class=\"fa fa-times\"></i></a>\n                    <a class=\"appButton small-button\" href=\"/www/developers/editapplication?appId=nAOEkcfF2Yus2oX5ooAN\" title=\"Editar\"><i class=\"fa fa-pencil\"></i></a>\n                                        <a href=\"/www/developers/dashboard?appId=nAOEkcfF2Yus2oX5ooAN\" class=\"appButton small-button dashboard_button\" title=\"Panel de control\"><i class=\"fa fa-bar-chart-o\"></i></a>\n                </li>\n                    <!-- BEGIN REMOVE APPLICATION MODAL -->\n                    <div class=\"modal fade\" id=\"nAOEkcfF2Yus2oX5ooANRemoveModal\" tabindex=\"-1\" role=\"basic\" aria-hidden=\"false\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\"></button>\n                                    <h4 class=\"modal-title\">Eliminar aplicación</h4>\n                                </div>\n                                <div class=\"modal-body\" style=\"text-align: center\">\n                                    <form action=\"/www/developers/removeapplication\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                        <h5 class=\"overflow-hidden\">¿Estás seguro de que deseas eliminar la aplicación '<i>PS 1.6.0.4</i>'?</h5> <br>\n                                        <button type=\"submit\" class=\"btn2\">Sí, eliminar la aplicación</button>\n                                        <input type=\"hidden\" name=\"appId\" value=\"nAOEkcfF2Yus2oX5ooAN\">\n                                    \n</form>                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <!-- REMOVE APPLICATION MODAL END -->\n                            <li><div class=\"service_logo\"><img src=\"https://s3-eu-west-1.amazonaws.com/latch-ireland/avatar0.jpg\" alt=\"\"/></div>\n                    <div title=\"Browser Proxy Server\" class=\"service_name truncate\">Browser Proxy Server</div>\n                    <div class=\"clearfix-btn-applications\"></div>\n                    <a class=\"appButton small-button remove_button\" data-toggle=\"modal\" href=\"#UfPeZkf7Kxl0dA9sk1V9RemoveModal\" title=\"Eliminar aplicación\"><i class=\"fa fa-times\"></i></a>\n                    <a class=\"appButton small-button\" href=\"/www/developers/editapplication?appId=UfPeZkf7Kxl0dA9sk1V9\" title=\"Editar\"><i class=\"fa fa-pencil\"></i></a>\n                                        <a href=\"/www/developers/dashboard?appId=UfPeZkf7Kxl0dA9sk1V9\" class=\"appButton small-button dashboard_button\" title=\"Panel de control\"><i class=\"fa fa-bar-chart-o\"></i></a>\n                </li>\n                    <!-- BEGIN REMOVE APPLICATION MODAL -->\n                    <div class=\"modal fade\" id=\"UfPeZkf7Kxl0dA9sk1V9RemoveModal\" tabindex=\"-1\" role=\"basic\" aria-hidden=\"false\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\"></button>\n                                    <h4 class=\"modal-title\">Eliminar aplicación</h4>\n                                </div>\n                                <div class=\"modal-body\" style=\"text-align: center\">\n                                    <form action=\"/www/developers/removeapplication\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                        <h5 class=\"overflow-hidden\">¿Estás seguro de que deseas eliminar la aplicación '<i>Browser Proxy Server</i>'?</h5> <br>\n                                        <button type=\"submit\" class=\"btn2\">Sí, eliminar la aplicación</button>\n                                        <input type=\"hidden\" name=\"appId\" value=\"UfPeZkf7Kxl0dA9sk1V9\">\n                                    \n</form>                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <!-- REMOVE APPLICATION MODAL END -->\n                            <li><div class=\"service_logo\"><img src=\"https://s3-eu-west-1.amazonaws.com/latch-ireland/nu3xqD7BvBFC8h9wxgHV.png\" alt=\"\"/></div>\n                    <div title=\"UNIX test\" class=\"service_name truncate\">UNIX test</div>\n                    <div class=\"clearfix-btn-applications\"></div>\n                    <a class=\"appButton small-button remove_button\" data-toggle=\"modal\" href=\"#nu3xqD7BvBFC8h9wxgHVRemoveModal\" title=\"Eliminar aplicación\"><i class=\"fa fa-times\"></i></a>\n                    <a class=\"appButton small-button\" href=\"/www/developers/editapplication?appId=nu3xqD7BvBFC8h9wxgHV\" title=\"Editar\"><i class=\"fa fa-pencil\"></i></a>\n                                        <a href=\"/www/developers/dashboard?appId=nu3xqD7BvBFC8h9wxgHV\" class=\"appButton small-button dashboard_button\" title=\"Panel de control\"><i class=\"fa fa-bar-chart-o\"></i></a>\n                </li>\n                    <!-- BEGIN REMOVE APPLICATION MODAL -->\n                    <div class=\"modal fade\" id=\"nu3xqD7BvBFC8h9wxgHVRemoveModal\" tabindex=\"-1\" role=\"basic\" aria-hidden=\"false\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\"></button>\n                                    <h4 class=\"modal-title\">Eliminar aplicación</h4>\n                                </div>\n                                <div class=\"modal-body\" style=\"text-align: center\">\n                                    <form action=\"/www/developers/removeapplication\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                        <h5 class=\"overflow-hidden\">¿Estás seguro de que deseas eliminar la aplicación '<i>UNIX test</i>'?</h5> <br>\n                                        <button type=\"submit\" class=\"btn2\">Sí, eliminar la aplicación</button>\n                                        <input type=\"hidden\" name=\"appId\" value=\"nu3xqD7BvBFC8h9wxgHV\">\n                                    \n</form>                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <!-- REMOVE APPLICATION MODAL END -->\n                            <li><div class=\"service_logo\"><img src=\"https://s3-eu-west-1.amazonaws.com/latch-ireland/avatar1.jpg\" alt=\"\"/></div>\n                    <div title=\"SDK Client Python\" class=\"service_name truncate\">SDK Client Python</div>\n                    <div class=\"clearfix-btn-applications\"></div>\n                    <a class=\"appButton small-button remove_button\" data-toggle=\"modal\" href=\"#WV8QmtWGpGrM9YxWwLD2RemoveModal\" title=\"Eliminar aplicación\"><i class=\"fa fa-times\"></i></a>\n                    <a class=\"appButton small-button\" href=\"/www/developers/editapplication?appId=WV8QmtWGpGrM9YxWwLD2\" title=\"Editar\"><i class=\"fa fa-pencil\"></i></a>\n                                        <a href=\"/www/developers/dashboard?appId=WV8QmtWGpGrM9YxWwLD2\" class=\"appButton small-button dashboard_button\" title=\"Panel de control\"><i class=\"fa fa-bar-chart-o\"></i></a>\n                </li>\n                    <!-- BEGIN REMOVE APPLICATION MODAL -->\n                    <div class=\"modal fade\" id=\"WV8QmtWGpGrM9YxWwLD2RemoveModal\" tabindex=\"-1\" role=\"basic\" aria-hidden=\"false\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\"></button>\n                                    <h4 class=\"modal-title\">Eliminar aplicación</h4>\n                                </div>\n                                <div class=\"modal-body\" style=\"text-align: center\">\n                                    <form action=\"/www/developers/removeapplication\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                        <h5 class=\"overflow-hidden\">¿Estás seguro de que deseas eliminar la aplicación '<i>SDK Client Python</i>'?</h5> <br>\n                                        <button type=\"submit\" class=\"btn2\">Sí, eliminar la aplicación</button>\n                                        <input type=\"hidden\" name=\"appId\" value=\"WV8QmtWGpGrM9YxWwLD2\">\n                                    \n</form>                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <!-- REMOVE APPLICATION MODAL END -->\n                            <li><div class=\"service_logo\"><img src=\"https://s3-eu-west-1.amazonaws.com/latch-ireland/WiG3zinFYLZqNUUn8dJC.png\" alt=\"\"/></div>\n                    <div title=\"Latch UNIX example\" class=\"service_name truncate\">Latch UNIX example</div>\n                    <div class=\"clearfix-btn-applications\"></div>\n                    <a class=\"appButton small-button remove_button\" data-toggle=\"modal\" href=\"#WiG3zinFYLZqNUUn8dJCRemoveModal\" title=\"Eliminar aplicación\"><i class=\"fa fa-times\"></i></a>\n                    <a class=\"appButton small-button\" href=\"/www/developers/editapplication?appId=WiG3zinFYLZqNUUn8dJC\" title=\"Editar\"><i class=\"fa fa-pencil\"></i></a>\n                                        <a href=\"/www/developers/dashboard?appId=WiG3zinFYLZqNUUn8dJC\" class=\"appButton small-button dashboard_button\" title=\"Panel de control\"><i class=\"fa fa-bar-chart-o\"></i></a>\n                </li>\n                    <!-- BEGIN REMOVE APPLICATION MODAL -->\n                    <div class=\"modal fade\" id=\"WiG3zinFYLZqNUUn8dJCRemoveModal\" tabindex=\"-1\" role=\"basic\" aria-hidden=\"false\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\"></button>\n                                    <h4 class=\"modal-title\">Eliminar aplicación</h4>\n                                </div>\n                                <div class=\"modal-body\" style=\"text-align: center\">\n                                    <form action=\"/www/developers/removeapplication\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                        <h5 class=\"overflow-hidden\">¿Estás seguro de que deseas eliminar la aplicación '<i>Latch UNIX example</i>'?</h5> <br>\n                                        <button type=\"submit\" class=\"btn2\">Sí, eliminar la aplicación</button>\n                                        <input type=\"hidden\" name=\"appId\" value=\"WiG3zinFYLZqNUUn8dJC\">\n                                    \n</form>                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <!-- REMOVE APPLICATION MODAL END -->\n                            <li><div class=\"service_logo\"><img src=\"https://s3-eu-west-1.amazonaws.com/latch-ireland/bJiUxMKywFU4LvBUvG2Z.png\" alt=\"\"/></div>\n                    <div title=\"Mac OS X\" class=\"service_name truncate\">Mac OS X</div>\n                    <div class=\"clearfix-btn-applications\"></div>\n                    <a class=\"appButton small-button remove_button\" data-toggle=\"modal\" href=\"#bJiUxMKywFU4LvBUvG2ZRemoveModal\" title=\"Eliminar aplicación\"><i class=\"fa fa-times\"></i></a>\n                    <a class=\"appButton small-button\" href=\"/www/developers/editapplication?appId=bJiUxMKywFU4LvBUvG2Z\" title=\"Editar\"><i class=\"fa fa-pencil\"></i></a>\n                                        <a href=\"/www/developers/dashboard?appId=bJiUxMKywFU4LvBUvG2Z\" class=\"appButton small-button dashboard_button\" title=\"Panel de control\"><i class=\"fa fa-bar-chart-o\"></i></a>\n                </li>\n                    <!-- BEGIN REMOVE APPLICATION MODAL -->\n                    <div class=\"modal fade\" id=\"bJiUxMKywFU4LvBUvG2ZRemoveModal\" tabindex=\"-1\" role=\"basic\" aria-hidden=\"false\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\"></button>\n                                    <h4 class=\"modal-title\">Eliminar aplicación</h4>\n                                </div>\n                                <div class=\"modal-body\" style=\"text-align: center\">\n                                    <form action=\"/www/developers/removeapplication\" method=\"post\" accept-charset=\"utf-8\" enctype=\"application/x-www-form-urlencoded\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                                        <h5 class=\"overflow-hidden\">¿Estás seguro de que deseas eliminar la aplicación '<i>Mac OS X</i>'?</h5> <br>\n                                        <button type=\"submit\" class=\"btn2\">Sí, eliminar la aplicación</button>\n                                        <input type=\"hidden\" name=\"appId\" value=\"bJiUxMKywFU4LvBUvG2Z\">\n                                    \n</form>                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <!-- REMOVE APPLICATION MODAL END -->\n                        </ul>\n                        <a class=\"sdk_btn create_service float-none\" href=\"/www/developers/register\"><div class=\"margin-bottom-25\"><i class=\"icon-plus iconsize\"></i> Añadir una nueva aplicación</div></a>\n\n\n    </div>\n    <div class=\"clearfix\"></div>\n\n    <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-10\">\n        <h2 class=\"margin-left-0\">Claves acceso API Usuario</h2>\n    </div>\n    <div class=\"clearfix\"></div>\n    <div class=\"col-lg-10\">\n                            <ul class=\"item_services_list\">\n                <li>Crear claves de acceso para la autenticación con la API de usuario de Latch.</li>\n            </ul>\n            <form action=\"/www/developers/adduserapicredentials\" method=\"post\" accept-charset=\"utf-8\" enctype=\"multipart/form-data\" id=\"add_api_credentials\" ><input type=\"hidden\" name=\"authenticityToken\" value=\"d0f547b43770f586d5e0883c48a98e3c73736ef2\">\n                <button class=\"submit pull-right api-submit\" type=\"submit\">\n                        <i class=\"icon-plus iconsize\"></i> Generar clave API Usuario\n                </button>\n            \n</form>        \n\n    </div>\n\n\n<div class=\"clearfix\"></div>\n</div>\n\t\t</div>\n\t\t<!-- END PAGE -->\n\t</div>\n\t<!-- BEGIN COPYRIGHT -->\n\t<div class=\"copyright\">\n\t\t<div class=\"footer-ribon\">\n\t\t\t<span>\n\t\t\t\t\t\t\t<a href=\"#\" onClick=\"zE.activate();\">\n\t\t\t\t\t¿Tienes algo que contarnos?\n\t\t\t\t</a>\n\t\t\t</span>\n\t\t</div>\n\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-8\">\n\t\t\t\t\t<p>\n\t\t\t\t\t\t<span class=\"margin-right-10\">2017 © <a href=\"http://www.elevenpaths.com/\" title=\"ElevenPaths\" target=\"_blank\">ElevenPaths</a>.\n\t\t\t\t\t\t\tTodos los derechos reservados.\n\t\t\t\t\t\t</span> <a href=\"/www/terms.html\">Privacidad y condiciones</a> | <a href=\"/www/cookies.html\">Cookies</a>\n\t\t\t\t\t</p>\n\t\t\t\t</div>\t\n\t\t\t\t<div class=\"col-md-4\">\n\t\t\t\t\t<ul class=\"social-footer\">\n\t\t\t\t\t\t<li><a href=\"http://blog.elevenpaths.com/\" title=\"Blog\" target=\"_blank\"><i class=\"icon-book\"></i></a></li>\n\t\t\t\t\t\t<li><a href=\"https://www.facebook.com/ElevenPaths\" title=\"Facebook\" target=\"_blank\"><i class=\"icon-facebook\"></i></a></li>\n\t\t\t\t\t\t<li><a href=\"http://twitter.com/ElevenPaths\" title=\"Twitter\" target=\"_blank\"><i class=\"icon-twitter\"></i></a></li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n\t\t\t</div>\n\t</div>\n\t<!-- END COPYRIGHT -->\n\t<script type=\"text/javascript\" language=\"javascript\"  src=\"/www/public/javascripts/../assets/plugins/jquery-1.11.2.min.js\"></script>\n\t<script type=\"text/javascript\" language=\"javascript\"  src=\"/www/public/javascripts/../plugins/bootstrap/js/bootstrap.min.js\"></script>\n\t\n\t<script type=\"text/javascript\" language=\"javascript\"  src=\"/www/public/javascripts/../plugins/jquery.cookie.min.js\"></script>\n\t<script type=\"text/javascript\" language=\"javascript\"  src=\"/www/public/javascripts/app.js\"></script>\n\t\n\t<!-- Start of elevenpaths Zendesk Widget script -->\n\t<script>/*<![CDATA[*/window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement(\"iframe\");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src=\"javascript:false\",r.title=\"\",r.role=\"presentation\",(r.frameElement||r).style.cssText=\"display: none\",d=document.getElementsByTagName(\"script\"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(e){n=document.domain,r.src='javascript:var d=document.open();d.domain=\"'+n+'\";void(0);',o=s}o.open()._l=function(){var o=this.createElement(\"script\");n&&(this.domain=n),o.id=\"js-iframe-async\",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write('<body onload=\"document._l();\">'),o.close()}(\"https://assets.zendesk.com/embeddable_framework/main.js\",\"elevenpaths.zendesk.com\");\n/*]]>*/</script>\n\t<!-- End of elevenpaths Zendesk Widget script -->\n\t<script>\n\t  zE(function() {\n\t\tzE.setLocale('es');\n\t  });\n\t</script>\n\t<!-- PAGE LEVEL SCRIPTS -->\n\t\n\n<script>\n    $(document).ready(function () {\n        // Tooltip help button\n        $('[data-toggle=\"tooltip\"]').tooltip();\n    });\n</script>\n<script src=\"/www/public/plugins/select2/select2.min.js\"></script>\n<script>\n    $(document).ready(function() {\n        $(\".js-select2\").select2();\n    });\n</script>\n\t<!-- END PAGE LEVEL SCRIPTS -->\n\t<script type=\"text/javascript\" language=\"javascript\"  src=\"/www/public/javascripts/../plugins/jquery.matchHeight.min.js\"></script>\n\t\n\t<script>\n\t\tjQuery(document).ready(function() {    \n\t\t\tApp.init();\n\t\t\t\t\t});\n\t</script>\n<!-- BEGIN GOOGLE ANALYTICS -->\n<script type=\"text/javascript\">\n\n  var _gaq = _gaq || [];\n  _gaq.push(['_setAccount', 'UA-41563013-3']);\n  _gaq.push(['_trackPageview']);\n\n  (function() {\n    var ga = document.createElement('script'); ga.type = 'text/javascript';\nga.async = true;\n    ga.src = ('https:' == document.location.protocol ? 'https://ssl' :\n'http://www') + '.google-analytics.com/ga.js';\n    var s = document.getElementsByTagName('script')[0];\ns.parentNode.insertBefore(ga, s);\n  })();\n\n</script>\n<!-- END GOOGLE ANALYTICS -->\n\n\n\t\t</body>\n</html>"
+          },
+          "redirectURL": "",
+          "headersSize": 1151,
+          "bodySize": 6068,
+          "_transferSize": 7219
+        },
+        "cache": {},
+        "timings": {
+          "blocked": 2.61099999988801,
+          "dns": -1,
+          "connect": -1,
+          "send": 0.13200000012148028,
+          "wait": 82.06199999995081,
+          "receive": 5.490000000008848,
+          "ssl": -1
+        },
+        "serverIPAddress": "52.30.153.108",
+        "connection": "31156",
+        "pageref": "page_2"
+      }
+    ]
+  }
+}

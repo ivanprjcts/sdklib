@@ -29,6 +29,24 @@ class AbstractBaseHTML(object):
         """
         return self.find_elements_by_xpath('//*[@id="%s"]' % id_)
 
+    def find_element_by_name(self, name):
+        """
+        Finds an element by name.
+
+        :param name: The name of the element to be found.
+        :return:
+        """
+        return self.find_element_by_xpath('//*[@name="%s"]' % name)
+
+    def find_elements_by_name(self, name):
+        """
+        Finds multiple elements by name.
+
+        :param name: The name of the elements to be found.
+        :return:
+        """
+        return self.find_elements_by_xpath('//*[@name="%s"]' % name)
+
     def find_element_by_xpath(self, xpath):
         """
         Finds an element by xpath.

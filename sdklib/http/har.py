@@ -4,6 +4,7 @@ from sdklib.compat import str
 from sdklib import http
 from sdklib.http import HttpRequestContext
 from sdklib.http.renderers import get_renderer
+from sdklib.http.response import Response as HttpResponse
 from sdklib.util.urls import urlsplit
 
 
@@ -160,6 +161,12 @@ class Response(object):
         c = self._dict.get("content", None)
         return None if c is None else Content(c)
 
+    def as_http_response(self):
+        return HttpResponse(
+            headers=self.headers, status_text=self.status_text, status=self.status, http_version=self.http_version,
+            body=self.content.text
+        )
+
 
 class Entry(object):
 
@@ -238,23 +245,25 @@ class HAR(object):
         return None if l is None else Log(l)
 
 
-def _find_elem_in_new_response_html(value, prev_response_ctx, new_response_ctx):
+def _find_value_in_new_response(value, prev_response_ctx, new_response_ctx):
     try:
         elem = prev_response_ctx.html.find_element_by_xpath("//*[@*='{}']".format(value))
+        name = elem.get("name")
+
+        new_elem = new_response_ctx.html.find_element_by_name(name)
+        return new_elem.get("value")
     except:
         pass
 
 
-def _find_elem_in_new_response(value, prev_response_ctx, new_response_ctx):
-    pass
-
-
 def _update_dynamic_elements(prev_response_ctx, response_ctx, request_ctx):
     ctx = copy.deepcopy(request_ctx)
-    ctx.headers["Cookie"] = response_ctx.cookie.as_cookie_header_value()
+    if response_ctx is not None and not response_ctx.cookie.is_empty():
+        ctx.headers["Cookie"] = response_ctx.cookie.as_cookie_header_value()
     for k, v in request_ctx.body_params.items():
-        if v in prev_response_ctx.raw:
-            elem = _find_elem_in_new_response(v, prev_response_ctx, response_ctx)
+        value = _find_value_in_new_response(v, prev_response_ctx, response_ctx)
+        if value is not None:
+            ctx.body_params[k] = value
 
     return ctx
 
@@ -274,7 +283,7 @@ def sequential_requests(entries, update_dynamic_elements=False, **kwargs):
         for k, v in kwargs.items():
             setattr(context, k, v)
         response = http.request_from_context(context=context)
-        prev_response_context = entry.response
+        prev_response_context = entry.response.as_http_response()
 
         req_res.append((context, response))
 
