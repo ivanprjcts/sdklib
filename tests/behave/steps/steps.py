@@ -1,6 +1,6 @@
+from behave import given, when, then
 from sdklib.behave.steps import *
 
-from behave import given, when, then
 
 @given('The cleanId as query param')
 def step_impl(context):
