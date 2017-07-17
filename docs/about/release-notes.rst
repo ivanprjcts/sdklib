@@ -10,8 +10,13 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
-Sdklib 1.8
-==========
+Sdklib 1.8.x series
+===================
+
+Sdklib 1.8.9
+------------
+
+- Fix 11paths authorization bug in some 'POST', 'PUT' requests.
 
 Sdklib 1.8.8
 ------------
@@ -95,8 +100,8 @@ Sdklib 1.8
 - Fix some bugs.
 
 
-Sdklib 1.7
-==========
+Sdklib 1.7.x series
+===================
 
 Sdklib 1.7.2
 ------------
@@ -117,8 +122,8 @@ Sdklib 1.7
 - Support xpath functions such as contains() using lxml.
 
 
-Sdklib 1.6
-==========
+Sdklib 1.6.x series
+===================
 
 Sdklib 1.6.6
 ------------
@@ -141,8 +146,8 @@ Sdklib 1.6
 - Add CustomRenderer.
 
 
-Sdklib 1.5
-==========
+Sdklib 1.5.x series
+===================
 
 Sdklib 1.5.2
 ------------
@@ -160,8 +165,8 @@ Sdklib 1.5
 - Add HTML parsed response.
 
 
-Sdklib 1.4
-==========
+Sdklib 1.4.x series
+===================
 
 Sdklib 1.4.2
 ------------
@@ -182,8 +187,8 @@ Sdklib 1.4
 - Allow to replace content-type header value.
 
 
-Sdklib 1.3
-==========
+Sdklib 1.3.x series
+===================
 
 - Add timeout decorator.
 - Add generate_url_path function.
@@ -193,14 +198,14 @@ Sdklib 1.3
 - Generate docs with sphinx.
 
 
-Sdklib 1.2
-==========
+Sdklib 1.2.x series
+===================
 
 - Add incognito mode.
 
 
-Sdklib 1.1
-==========
+Sdklib 1.1.x series
+===================
 
 - By default, no Content-type header in requests without body or files.
 - Add file attribute to sdk response.
@@ -208,13 +213,17 @@ Sdklib 1.1
 - Allow to add custom response_class.
 
 
-Sdklib 1.0
-==========
+Sdklib 1.0.x series
+===================
 
 Sdklib 1.0
 ----------
 
 - Use urllib3.
+
+
+Sdklib 0.x series
+=================
 
 Sdklib 0.5.2.1
 --------------

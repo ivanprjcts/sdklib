@@ -167,7 +167,7 @@ class HttpRequestContext(object):
 
     @method.setter
     def method(self, value):
-        self._method = value if value else GET_METHOD
+        self._method = value.upper() if value else GET_METHOD
 
     @property
     def url_path_params(self):

@@ -13,10 +13,11 @@ from sdklib.http.headers import (
     AUTHORIZATION_HEADER_NAME, X_11PATHS_DATE_HEADER_NAME, X_11PATHS_BODY_HASH_HEADER_NAME,
     X_11PATHS_FILE_HASH_HEADER_NAME
 )
-from sdklib.util.files import guess_filename_stream
 from sdklib.util.times import get_current_utc
 from sdklib.util.urls import ensure_url_path_starts_with_slash
 from sdklib.util.structures import to_key_val_list
+from sdklib.http.methods import PUT_METHOD, POST_METHOD
+from sdklib.http.headers import CONTENT_TYPE_HEADER_NAME
 
 
 X_11PATHS_HEADER_PREFIX = "X-11paths-"
@@ -127,10 +128,14 @@ class X11PathsAuthentication(AbstractAuthentication):
 
     def apply_authentication(self, context):
         context.headers[X_11PATHS_DATE_HEADER_NAME] = self.utc or _get_utc()
-        if isinstance(context.renderer, MultiPartRenderer):
-            context.headers[X_11PATHS_FILE_HASH_HEADER_NAME] = _hash_file(context)
-        elif isinstance(context.renderer, JSONRenderer) and context.body_params:
-            context.headers[X_11PATHS_BODY_HASH_HEADER_NAME] = _hash_body(context)
+        if context.method == POST_METHOD or context.method == PUT_METHOD:
+            if (context.files or context.body_params) and isinstance(context.renderer, MultiPartRenderer):
+                context.headers[X_11PATHS_FILE_HASH_HEADER_NAME] = _hash_file(context)
+            elif context.body_params and isinstance(context.renderer, JSONRenderer):
+                context.headers[X_11PATHS_BODY_HASH_HEADER_NAME] = _hash_body(context)
+            elif CONTENT_TYPE_HEADER_NAME not in context.headers and not context.body_params:
+                # 11paths bug: server validate that content-type header exists in POST and PUT requests
+                context.headers[CONTENT_TYPE_HEADER_NAME] = "application/x-www-form-urlencoded"
         context.headers[AUTHORIZATION_HEADER_NAME] = x_11paths_authorization(
             self.app_id,
             self.secret,
