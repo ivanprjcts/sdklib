@@ -36,6 +36,19 @@ class TestAuthorization(unittest.TestCase):
                                                           utc="2016-01-01 00:00:00")
         self.assertEqual("11PATHS 123456 kVXKo1ug8GRm0kyAjvruvtNDetU=", header_value)
 
+    def test_11paths_authentication_with_multiples_query_params(self):
+        context = HttpRequestContext(method="GET", url_path="/path/",
+                                     query_params={"param1": "value1", "param2": "value2"})
+        header_value1 = x_11paths_authorization(app_id="123456", secret="654321", context=context,
+                                                utc="2016-01-01 00:00:00")
+        self.assertEqual("11PATHS 123456 pof/ZVaAmmrbSOCJXiRWuQ5vrco=", header_value1)
+
+        context = HttpRequestContext(method="GET", url_path="/path/",
+                                     query_params={"param2": "value2", "param1": "value1"})
+        header_value2 = x_11paths_authorization(app_id="123456", secret="654321", context=context,
+                                                utc="2016-01-01 00:00:00")
+        self.assertEqual(header_value1, header_value2)
+
     def test_11paths_authentication_with_body(self):
         context = HttpRequestContext(method="POST", url_path="/path/",
                                      body_params={"param": "value"}, renderer=FormRenderer())

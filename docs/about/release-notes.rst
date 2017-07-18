@@ -13,6 +13,11 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.8.x series
 ===================
 
+Sdklib 1.8.10
+-------------
+
+- Fix 11paths authorization bug in requests with query params.
+
 Sdklib 1.8.9
 ------------
 
