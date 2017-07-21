@@ -129,9 +129,11 @@ class X11PathsAuthentication(AbstractAuthentication):
     def apply_authentication(self, context):
         context.headers[X_11PATHS_DATE_HEADER_NAME] = self.utc or _get_utc()
         if context.method == POST_METHOD or context.method == PUT_METHOD:
-            if (context.files or context.body_params) and isinstance(context.renderer, MultiPartRenderer):
+            if CONTENT_TYPE_HEADER_NAME in context.headers and \
+                    context.headers[CONTENT_TYPE_HEADER_NAME].lower().startswith("multipart/form-data"):
                 context.headers[X_11PATHS_FILE_HASH_HEADER_NAME] = _hash_file(context)
-            elif context.body_params and isinstance(context.renderer, JSONRenderer):
+            elif CONTENT_TYPE_HEADER_NAME in context.headers and \
+                    context.headers[CONTENT_TYPE_HEADER_NAME].lower() == "application/json":
                 context.headers[X_11PATHS_BODY_HASH_HEADER_NAME] = _hash_body(context)
             elif CONTENT_TYPE_HEADER_NAME not in context.headers and not context.body_params:
                 # 11paths bug: server validate that content-type header exists in POST and PUT requests

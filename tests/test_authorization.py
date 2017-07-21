@@ -84,7 +84,15 @@ class TestAuthorization(unittest.TestCase):
 
     def test_11paths_authentication_class_json(self):
         auth = X11PathsAuthentication(app_id="123456", secret="654321", utc="2016-01-01 00:00:00")
-        context = HttpRequestContext(method="POST", url_path="/path/",
+        context = HttpRequestContext(method="POST", url_path="/path/", headers={"Content-Type": "application/json"},
+                                     body_params={"param": "value"}, renderer=JSONRenderer())
+        res_context = auth.apply_authentication(context=context)
+        self.assertEqual("11PATHS 123456 6CFsVmrRxEz3Icz6U8SSHZ4RukE=", res_context.headers[AUTHORIZATION_HEADER_NAME])
+        self.assertEqual("f247c7579b452d08f38eec23c2d1a4a23daee0d2", res_context.headers[X_11PATHS_BODY_HASH_HEADER_NAME])
+
+    def test_11paths_authentication_class_json_ignorecase_header_name(self):
+        auth = X11PathsAuthentication(app_id="123456", secret="654321", utc="2016-01-01 00:00:00")
+        context = HttpRequestContext(method="POST", url_path="/path/", headers={"Content-type": "application/json"},
                                      body_params={"param": "value"}, renderer=JSONRenderer())
         res_context = auth.apply_authentication(context=context)
         self.assertEqual("11PATHS 123456 6CFsVmrRxEz3Icz6U8SSHZ4RukE=", res_context.headers[AUTHORIZATION_HEADER_NAME])
@@ -107,7 +115,8 @@ class TestAuthorization(unittest.TestCase):
                                       utc="2017-01-27 08:27:44")
         context = HttpRequestContext(method="POST", url_path="/ExternalApi/CleanFile",
                                      renderer=MultiPartRenderer(),
-                                     headers={"X-11paths-profile-id": "77ed609a-1a9b-4c16-97c2-ba32f72f5499"},
+                                     headers={"X-11paths-profile-id": "77ed609a-1a9b-4c16-97c2-ba32f72f5499",
+                                              "Content-Type": "multipart/form-data"},
                                      files={"file": "tests/resources/file.png"})
         res_context = auth.apply_authentication(context=context)
         self.assertEqual("11PATHS 2kNhWLEETQ46KWLnAg48 8/fuEv9NLn41ikh96hRHMFGs1ww=", res_context.headers["Authorization"])
@@ -122,3 +131,14 @@ class TestAuthorization(unittest.TestCase):
                          res_context.headers["Authorization"])
         self.assertNotIn(X_11PATHS_BODY_HASH_HEADER_NAME, res_context.headers)
         self.assertEqual("application/x-www-form-urlencoded", res_context.headers["Content-Type"])
+
+    def test_11paths_authentication_post_json_empty_body_params(self):
+        auth = X11PathsAuthentication(app_id="2kNhWLEETQ46KWLnAg48", secret="lBc4BSeqCGkidJZXictc3yiHbKBS87hjE05YrswJ",
+                                      utc="2017-01-27 08:27:44")
+        context = HttpRequestContext(method="POST", url_path="/ExternalApi/CleanFile",
+                                     headers={"Content-Type": "application/json"})
+        res_context = auth.apply_authentication(context=context)
+        self.assertEqual("11PATHS 2kNhWLEETQ46KWLnAg48 u/91oWtEs2qkco5v6JXcfWx+FJ0=",
+                         res_context.headers["Authorization"])
+        self.assertEqual("application/json", res_context.headers["Content-Type"])
+        self.assertEqual("da39a3ee5e6b4b0d3255bfef95601890afd80709", res_context.headers["X-11paths-body-hash"])

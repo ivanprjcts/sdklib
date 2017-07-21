@@ -13,6 +13,12 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.8.x series
 ===================
 
+Sdklib 1.8.11
+-------------
+
+- Fix 11paths authorization bug in 'POST'/'PUT' json requests without body.
+- Headers as case insensitive dictionary.
+
 Sdklib 1.8.10
 -------------
 

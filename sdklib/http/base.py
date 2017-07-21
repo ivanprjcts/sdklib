@@ -8,6 +8,7 @@ from sdklib.util.parser import parse_args
 from sdklib.util.urls import (
     get_hostname_parameters_from_url, ensure_url_path_starts_with_slash, ensure_url_path_format_suffix_starts_with_dot
 )
+from sdklib.util.structures import CaseInsensitiveDict
 from sdklib.http.response import HttpResponse
 from sdklib.http.methods import *
 from sdklib.util.logger import log_print_request, log_print_response
@@ -143,7 +144,7 @@ class HttpRequestContext(object):
 
     @headers.setter
     def headers(self, value):
-        self._headers = value or dict()
+        self._headers = CaseInsensitiveDict(value) or CaseInsensitiveDict()
 
     @property
     def renderer(self):
