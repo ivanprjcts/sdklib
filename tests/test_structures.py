@@ -80,21 +80,19 @@ class TestStructures(unittest.TestCase):
     def test_case_insensitive_dict_basic_key_value_name(self):
         d = CaseInsensitiveDict({"X-key": "X-value"})
         self.assertEqual(1, len(d))
-        self.assertEqual("X-key", d.keys()[0])
-        self.assertEqual("X-value", d.values()[0])
+        self.assertEqual("X-key", list(d.keys())[0])
+        self.assertEqual("X-value", list(d.values())[0])
         self.assertEqual("X-value", d["x-key"])
 
     def test_case_insensitive_dict_key_value_name_duplicated_keys(self):
         d = CaseInsensitiveDict({"X-key": "X-value", "x-key": "x-value"})
         self.assertEqual(1, len(d))
-        self.assertEqual("X-key", d.keys()[0])
-        self.assertEqual("X-value", d.values()[0])
-        self.assertEqual("X-value", d["x-key"])
+        self.assertEqual("X-key".lower(), list(d.keys())[0].lower())
 
     def test_case_insensitive_dict_key_value_update(self):
         d = CaseInsensitiveDict({"X-key": "X-value"})
         d["x-key"] = "x-value"
         self.assertEqual(1, len(d))
-        self.assertEqual("x-key", d.keys()[0])
-        self.assertEqual("x-value", d.values()[0])
+        self.assertEqual("x-key", list(d.keys())[0])
+        self.assertEqual("x-value", list(d.values())[0])
         self.assertEqual("x-value", d["x-key"])
