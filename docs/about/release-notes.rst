@@ -10,6 +10,15 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.9.x series
+===================
+
+Sdklib 1.9.0
+------------
+
+- Put 'incognito_mode' as class attribute.
+
+
 Sdklib 1.8.x series
 ===================
 

@@ -3,11 +3,15 @@ import unittest
 from sdklib.http import HttpSdk
 
 
+class MyIncognitoClass(HttpSdk):
+    incognito_mode = True
+
+
 class TestSdkBase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        pass
+        cls.my_incognito_class = MyIncognitoClass()
 
     @classmethod
     def tearDownClass(cls):
@@ -31,3 +35,10 @@ class TestSdkBase(unittest.TestCase):
         self.assertEqual(HttpSdk.DEFAULT_PROXY, "http://localhost:1234")
         HttpSdk.set_default_proxy(default_proxy)
         self.assertEqual(HttpSdk.DEFAULT_PROXY, default_proxy)
+
+    def test_incognito_mode_false_by_default(self):
+        my_class = HttpSdk()
+        self.assertFalse(my_class.incognito_mode)
+
+    def test_incognito_mode_as_class_attribute(self):
+        self.assertTrue(self.my_incognito_class.incognito_mode)

@@ -249,13 +249,13 @@ class HttpSdk(object):
     url_path_format = None
     authentication_instances = ()
     response_class = HttpResponse
+    incognito_mode = False
 
     def __init__(self, host=None, proxy=None, default_renderer=None):
         self.host = host or self.DEFAULT_HOST
         self.proxy = proxy or self.DEFAULT_PROXY
         self.default_renderer = default_renderer or self.DEFAULT_RENDERER
         self.cookie = None
-        self.incognito_mode = False
 
     @property
     def host(self):
