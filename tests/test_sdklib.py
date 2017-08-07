@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from sdklib.compat import bytes
+import pytest
+import time
+from sdklib.compat import bytes, is_py2, is_py3, exceptions
 from sdklib.util.files import guess_filename_stream
 
 from tests.sample_sdk import SampleHttpSdk
@@ -22,6 +24,27 @@ class TestSampleSdk(unittest.TestCase):
         response = self.api.get_items()
         self.assertEqual(response.status, 200)
         self.assertTrue(isinstance(response.data, list))
+
+    @pytest.mark.skipif(is_py2, reason="Cache not available in python 2.")
+    def test_get_items_with_cache_py3(self):
+        begin_timestamp = time.time()
+        response = self.api.get_items_with_cache()
+        elapsed_time = time.time() - begin_timestamp
+        self.assertEqual(response.status, 200)
+        self.assertTrue(isinstance(response.data, list))
+        self.assertGreater(elapsed_time, 8)
+
+        begin_timestamp = time.time()
+        response = self.api.get_items_with_cache()
+        elapsed_time = time.time() - begin_timestamp
+        self.assertEqual(response.status, 200)
+        self.assertTrue(isinstance(response.data, list))
+        self.assertLess(elapsed_time, 8)
+
+    @pytest.mark.skipif(is_py3, reason="Cache decorator raises exception in python 2.")
+    def test_get_items_with_cache_py2(self):
+        with self.assertRaises(exceptions.NotImplementedError):
+            self.api.get_items_with_cache()
 
     def test_get_items_with_empty_query_params_parameter(self):
         response = self.api.get_items_with_empty_query_params_parameter()

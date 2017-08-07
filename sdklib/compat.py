@@ -16,6 +16,7 @@ if is_py2:
     import SocketServer as socketserver
     import thread
     from StringIO import StringIO
+    import exceptions
 
     basestring = basestring
     bytes = str
@@ -24,6 +25,14 @@ if is_py2:
     convert_unicode_to_native_str = lambda x: x.encode("ISO-8859-1") if isinstance(x, unicode) else x
     convert_str_to_bytes = lambda x: x.encode("ISO-8859-1") if isinstance(x, basestring) else x
 
+    def cache(*args, **kargs):
+        def wrapper(f):
+            def real_wrapper(*args, **kwargs):
+                raise exceptions.NotImplementedError("Only available for python 3.2. or +.")
+            return real_wrapper
+        return wrapper
+
+
 elif is_py3:
     from urllib.parse import urlencode, quote_plus, urlsplit
     from urllib.parse import urlencode
@@ -31,6 +40,8 @@ elif is_py3:
     import socketserver
     import _thread as thread
     from io import StringIO
+    from functools import lru_cache as cache
+    from sdklib import _exceptions as exceptions
 
     basestring = (str, bytes)
     str = str

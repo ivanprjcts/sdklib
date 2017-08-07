@@ -17,6 +17,7 @@ Sdklib 1.9.0
 ------------
 
 - Put 'incognito_mode' as class attribute.
+- Add cache decorator for python 3+.
 
 
 Sdklib 1.8.x series

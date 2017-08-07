@@ -1,6 +1,9 @@
+import time
+
 from sdklib.http import HttpSdk
 from sdklib.util.parser import parse_args, safe_add_end_slash
 from sdklib.http.authorization import X11PathsAuthentication
+from sdklib.compat import cache
 
 
 class SampleHttpSdk(HttpSdk):
@@ -20,6 +23,16 @@ class SampleHttpSdk(HttpSdk):
 
         :return: SdkResponse
         """
+        return self.get(self.API_ITEMS_URL_PATH)
+
+    @cache(maxsize=None)
+    def get_items_with_cache(self):
+        """
+        Get all items.
+
+        :return: SdkResponse
+        """
+        time.sleep(8)
         return self.get(self.API_ITEMS_URL_PATH)
 
     def get_items_with_empty_query_params_parameter(self):
