@@ -9,6 +9,15 @@ class ElemLxml(HTMLLxmlMixin, AbstractBaseHTMLElem):
     def __init__(self, lxml_elem):
         self.html_obj = lxml_elem
 
+    def getparent(self, height=1):
+        parent = self.html_obj.getparent()
+        for _ in range(0, height):
+            if parent is None:
+                return
+            parent = parent.getparent()
+        if parent is not None:
+            return ElemLxml(parent)
+
 
 class Elem5lib(HTML5libMixin, AbstractBaseHTMLElem):
     """

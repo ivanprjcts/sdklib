@@ -13,6 +13,11 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.9.x series
 ===================
 
+Sdklib 1.9.1
+------------
+
+- Add getparent method to LxmlElem class.
+
 Sdklib 1.9.0
 ------------
 

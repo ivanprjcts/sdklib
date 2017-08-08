@@ -53,3 +53,16 @@ class TestHTMLElem(unittest.TestCase):
 
         elem = html.find_element_by_id('primary-nav')
         self.assertEqual("class", elem.get_attribute("nav-main mega-menu menu_float_left"))
+
+    def test_get_parent(self):
+        elem = self.html.find_element_by_id('child-elem')
+        self.assertEqual("dropdown-menu", elem.getparent().get("class"))
+
+    def test_get_parent_with_height(self):
+        elem = self.html.find_element_by_id('child-elem')
+        self.assertEqual("events-menu mega-menu-item mega-menu-fullwidth dropdown-submenu",
+                         elem.getparent(height=2).get("class"))
+
+    def test_get_non_existing_parent(self):
+        elem = self.html.find_element_by_id('child-elem')
+        self.assertIsNone(elem.getparent(height=20))
