@@ -3,7 +3,7 @@ import time
 from sdklib.http import HttpSdk
 from sdklib.util.parser import parse_args, safe_add_end_slash
 from sdklib.http.authorization import X11PathsAuthentication
-from sdklib.compat import cache
+from sdklib.shortcuts import cache
 
 
 class SampleHttpSdk(HttpSdk):
