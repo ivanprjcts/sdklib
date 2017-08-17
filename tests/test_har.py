@@ -47,7 +47,7 @@ class TestHAR(unittest.TestCase):
         self.assertEqual(4, len(request_responses))
         self.assertEqual("GET", request_responses[0][0].method)
         self.assertEqual("https://latch.elevenpaths.com", request_responses[0][0].host)
-        self.assertEqual("sdklib@hotmail.com", request_responses[1][0].body_params["username"])
+        self.assertEqual("sdklib.test@outlook.com", request_responses[1][0].body_params["username"])
         self.assertIsNotNone(request_responses[1][0].body_params["authenticityToken"])
         self.assertNotEqual(
             "d0f547b43770f586d5e0883c48a98e3c73736ef2", request_responses[1][0].body_params["authenticityToken"])

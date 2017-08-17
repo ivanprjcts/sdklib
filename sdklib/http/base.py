@@ -71,7 +71,8 @@ def request_from_context(context):
         convert_unicode_to_native_str(url),
         body=body,
         headers=HttpSdk.convert_headers_to_native_str(new_context.headers),
-        redirect=new_context.redirect
+        redirect=new_context.redirect,
+        timeout=new_context.timeout
     )
     log_print_response(r.status, r.data, r.headers)
     r = new_context.response_class(r)
@@ -90,7 +91,7 @@ class HttpRequestContext(object):
     def __init__(self, host=None, proxy=None, method=None, prefix_url_path=None, url_path=None, url_path_params=None,
                  url_path_format=None, headers=None, query_params=None, body_params=None, files=None, renderer=None,
                  authentication_instances=None, response_class=None, update_content_type=None, redirect=None,
-                 cookie=None):
+                 cookie=None, timeout=None):
         """
 
         :param host:
@@ -111,6 +112,7 @@ class HttpRequestContext(object):
             according to the rendered body. By default: True.
         :param redirect: redirect requests automatically. By default: False
         :param cookie:
+        :param timeout:
         """
         self.host = host
         self.proxy = proxy
@@ -129,6 +131,7 @@ class HttpRequestContext(object):
         self.update_content_type = update_content_type
         self.redirect = redirect
         self.cookie = cookie
+        self.timeout = timeout
 
     @property
     def headers(self):
@@ -217,6 +220,14 @@ class HttpRequestContext(object):
     @cookie.setter
     def cookie(self, value):
         self._cookie = value or Cookie()
+
+    @property
+    def timeout(self):
+        return self._timeout
+
+    @timeout.setter
+    def timeout(self, value):
+        self._timeout = value
 
     def clear(self, *args):
         """

@@ -17,6 +17,7 @@ Sdklib 1.9.2
 ------------
 
 - Fix bug in HAR requests (urlencoded params were encoded twice).
+- Add 'timeout' attribute to http_request_context.
 
 Sdklib 1.9.1
 ------------
