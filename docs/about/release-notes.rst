@@ -13,6 +13,11 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.9.x series
 ===================
 
+Sdklib 1.9.2
+------------
+
+- Fix bug in HAR requests (urlencoded params were encoded twice).
+
 Sdklib 1.9.1
 ------------
 
