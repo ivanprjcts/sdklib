@@ -17,6 +17,7 @@ Sdklib 1.9.3
 ------------
 
 - Allow to ignore warnings.
+- Fix bug in getparent htmlElem method.
 
 Sdklib 1.9.2
 ------------
