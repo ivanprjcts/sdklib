@@ -36,6 +36,9 @@ def request_from_context(context):
 
     :param context: request context.
     """
+    if context.ignore_warnings:
+        urllib3.disable_warnings()
+
     new_context = copy.deepcopy(context)
     assert new_context.method in ALLOWED_METHODS
 
@@ -91,7 +94,7 @@ class HttpRequestContext(object):
     def __init__(self, host=None, proxy=None, method=None, prefix_url_path=None, url_path=None, url_path_params=None,
                  url_path_format=None, headers=None, query_params=None, body_params=None, files=None, renderer=None,
                  authentication_instances=None, response_class=None, update_content_type=None, redirect=None,
-                 cookie=None, timeout=None):
+                 cookie=None, timeout=None, ignore_warnings=None):
         """
 
         :param host:
@@ -113,6 +116,7 @@ class HttpRequestContext(object):
         :param redirect: redirect requests automatically. By default: False
         :param cookie:
         :param timeout:
+        :param ignore_warnings
         """
         self.host = host
         self.proxy = proxy
@@ -132,6 +136,7 @@ class HttpRequestContext(object):
         self.redirect = redirect
         self.cookie = cookie
         self.timeout = timeout
+        self.ignore_warnings = ignore_warnings
 
     @property
     def headers(self):
@@ -229,6 +234,14 @@ class HttpRequestContext(object):
     def timeout(self, value):
         self._timeout = value
 
+    @property
+    def ignore_warnings(self):
+        return self._ignore_warnings
+
+    @ignore_warnings.setter
+    def ignore_warnings(self, value):
+        self._ignore_warnings = value if value is True else False
+
     def clear(self, *args):
         """
         Set default values to **self.fields_to_clear**. In addition, it is possible to pass extra fields to clear.
@@ -261,12 +274,15 @@ class HttpSdk(object):
     authentication_instances = ()
     response_class = HttpResponse
     incognito_mode = False
+    ignore_warnings = False
 
     def __init__(self, host=None, proxy=None, default_renderer=None):
         self.host = host or self.DEFAULT_HOST
         self.proxy = proxy or self.DEFAULT_PROXY
         self.default_renderer = default_renderer or self.DEFAULT_RENDERER
         self.cookie = None
+        if self.ignore_warnings:
+            urllib3.disable_warnings()
 
     @property
     def host(self):
