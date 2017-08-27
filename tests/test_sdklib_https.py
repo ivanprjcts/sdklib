@@ -1,4 +1,5 @@
 import unittest
+from sdklib import disable_warnings
 
 from tests.sample_sdk_https import SampleHttpsHttpSdk
 
@@ -18,6 +19,6 @@ class TestSampleSdk(unittest.TestCase):
         """
         Check that no warnings are printed
         """
-        SampleHttpsHttpSdk.ignore_warnings = True
+        disable_warnings()
         api = SampleHttpsHttpSdk()
         api.get_ivanprjcts()
