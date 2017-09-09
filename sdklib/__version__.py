@@ -1,1 +1,1 @@
-release = '1.9.3'
+release = '1.9.4'

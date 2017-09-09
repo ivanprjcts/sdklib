@@ -13,6 +13,11 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.9.x series
 ===================
 
+Sdklib 1.9.4
+------------
+
+- Move ignore warnings function to shortcuts.
+
 Sdklib 1.9.3
 ------------
 

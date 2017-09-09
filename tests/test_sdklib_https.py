@@ -1,5 +1,5 @@
 import unittest
-from sdklib import disable_warnings
+from sdklib.shortcuts import disable_warnings
 
 from tests.sample_sdk_https import SampleHttpsHttpSdk
 
