@@ -56,12 +56,12 @@ class TestHTMLElem(unittest.TestCase):
 
     def test_get_parent(self):
         elem = self.html.find_element_by_id('child-elem')
-        self.assertEqual("dropdown-menu", elem.getparent().get("class"))
+        self.assertEqual("hello", elem.getparent().get("class"))
 
     def test_get_parent_with_height(self):
         elem = self.html.find_element_by_id('child-elem')
         self.assertEqual("events-menu mega-menu-item mega-menu-fullwidth dropdown-submenu",
-                         elem.getparent(height=2).get("class"))
+                         elem.getparent(height=3).get("class"))
 
     def test_get_non_existing_parent(self):
         elem = self.html.find_element_by_id('child-elem')

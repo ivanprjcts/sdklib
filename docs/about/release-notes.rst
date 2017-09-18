@@ -13,6 +13,23 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.9.x series
 ===================
 
+Sdklib 1.9.4
+------------
+
+- Move ignore warnings function to shortcuts.
+
+Sdklib 1.9.3
+------------
+
+- Allow to ignore warnings.
+- Fix bug in getparent htmlElem method.
+
+Sdklib 1.9.2
+------------
+
+- Fix bug in HAR requests (urlencoded params were encoded twice).
+- Add 'timeout' attribute to http_request_context.
+
 Sdklib 1.9.1
 ------------
 

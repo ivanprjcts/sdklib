@@ -10,11 +10,10 @@ class ElemLxml(HTMLLxmlMixin, AbstractBaseHTMLElem):
         self.html_obj = lxml_elem
 
     def getparent(self, height=1):
-        parent = self.html_obj.getparent()
+        parent = self.html_obj
         for _ in range(0, height):
-            if parent is None:
-                return
-            parent = parent.getparent()
+            if parent is not None:
+                parent = parent.getparent()
         if parent is not None:
             return ElemLxml(parent)
 

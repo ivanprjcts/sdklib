@@ -12,7 +12,7 @@ EXCLUDE_FROM_PACKAGES = []
 
 setup(
     name='sdklib',
-    version=__version__,
+    version=__version__.release,
     description='SDK helper library',
     long_description=read_file('README.rst'),
     author='Ivan Martin',

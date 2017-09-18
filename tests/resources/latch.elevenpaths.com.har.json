@@ -261,7 +261,7 @@
         "time": 60.420999999678315,
         "request": {
           "method": "POST",
-          "url": "https://latch.elevenpaths.com/www/secure/authenticate",
+          "url": "https://elevenpaths.com/www/secure/authenticate",
           "httpVersion": "HTTP/1.1",
           "headers": [
             {
@@ -391,7 +391,7 @@
           "bodySize": 112,
           "postData": {
             "mimeType": "application/x-www-form-urlencoded",
-            "text": "authenticityToken=d0f547b43770f586d5e0883c48a98e3c73736ef2&username=sdklib%40hotmail.com&password=myPassword01",
+            "text": "authenticityToken=d0f547b43770f586d5e0883c48a98e3c73736ef2&username=sdklib.test%40outlook.com&password=123456",
             "params": [
               {
                 "name": "authenticityToken",
@@ -399,11 +399,11 @@
               },
               {
                 "name": "username",
-                "value": "sdklib%40hotmail.com"
+                "value": "sdklib.test%40outlook.com"
               },
               {
                 "name": "password",
-                "value": "myPassword01"
+                "value": "123456"
               }
             ]
           }

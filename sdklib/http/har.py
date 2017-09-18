@@ -1,6 +1,6 @@
 import json
 import copy
-from sdklib.compat import str
+from sdklib.compat import str, unquote_plus
 from sdklib import http
 from sdklib.http import HttpRequestContext
 from sdklib.http.renderers import get_renderer
@@ -59,12 +59,12 @@ class Request(object):
     @property
     def query_string(self):
         query_string = self._dict.get("queryString", None)
-        return {h["name"]: h["value"] for h in query_string}
+        return {unquote_plus(h["name"]): unquote_plus(h["value"]) for h in query_string}
 
     @property
     def post_data(self):
         post_data = self._dict.get("postData", {})
-        params = {h["name"]: h["value"] for h in post_data.get("params", [])}
+        params = {unquote_plus(h["name"]): unquote_plus(h["value"]) for h in post_data.get("params", [])}
         mime_type = post_data.get("mimeType", None)
         return params, get_renderer(mime_type=mime_type)
 
