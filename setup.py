@@ -1,10 +1,10 @@
+from io import open
 from setuptools import setup, find_packages
 from sdklib import __version__
 
 
 def read_file(filepath):
-    with open(filepath) as f:
-        return f.read()
+    return open(filepath, 'r', encoding='utf-8').read()
 
 
 EXCLUDE_FROM_PACKAGES = []
