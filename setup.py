@@ -32,5 +32,11 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
-    zip_safe=False
+    zip_safe=False,
+    extras_require={
+        'socks': [
+            'PySocks>=1.5.6,<2.0,!=1.5.7'
+        ]
+
+    },
 )

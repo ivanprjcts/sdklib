@@ -1,5 +1,10 @@
 import copy
 import urllib3
+try:
+    from urllib3.contrib.socks import SOCKSProxyManager
+except ImportError:
+    def SOCKSProxyManager(*args, **kwargs):
+        raise Exception("Missing dependencies for SOCKS support.")
 
 from sdklib.http.renderers import MultiPartRenderer, get_renderer, default_renderer
 from sdklib.http.session import Cookie
@@ -333,10 +338,17 @@ class HttpSdk(object):
     @staticmethod
     def get_pool_manager(proxy=None):
         if proxy is not None:
-            pm = urllib3.ProxyManager(
-                proxy,
-                num_pools=10,
-            )
+            scheme , _, _ = get_hostname_parameters_from_url(proxy)
+            if scheme.startswith("socks"):
+                pm = SOCKSProxyManager(
+                    proxy,
+                    num_pools=10
+                )
+            else:
+                pm = urllib3.ProxyManager(
+                    proxy,
+                    num_pools=10,
+                )
         else:
             pm = urllib3.PoolManager(
                 num_pools=10,
