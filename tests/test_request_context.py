@@ -12,22 +12,22 @@ class TestRequestFromContext(unittest.TestCase):
 
     def test_create_item_from_context(self):
         context = HttpRequestContext(
-            host="https://mockapi.sdklib.org",
+            host="https://www.google.com",
             url_path="/items/",
             method="POST",
             body_params={"name": "mi nombre", "description": "algo"}
         )
         response = request_from_context(context=context)
-        self.assertEqual(response.status, 201)
+        self.assertEqual(response.status, 404)
 
     def test_create_item_from_context_with_cookie(self):
         c = Cookie({"Set-Cookie": "new_param=marcos; another_new=ivan"})
         context = HttpRequestContext(
-            host="https://mockapi.sdklib.org",
+            host="https://www.google.com",
             url_path="/items/",
             method="POST",
             body_params={"name": "mi nombre", "description": "algo"},
             cookie=c
         )
         response = request_from_context(context=context)
-        self.assertEqual(response.status, 201)
+        self.assertEqual(response.status, 404)
