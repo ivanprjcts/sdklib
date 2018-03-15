@@ -10,6 +10,17 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.10.x series
+===================
+
+Sdklib 1.10.0
+-------------
+
+- Fix bug setting cookies after receiving several "Set-Cookie" headers.
+- Update urllib3 version.
+- Remove experimental support to proxy socks protocol.
+
+
 Sdklib 1.9.x series
 ===================
 
