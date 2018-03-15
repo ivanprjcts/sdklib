@@ -11,7 +11,7 @@ class SampleHttpSdk(HttpSdk):
     Sample Sdk for testing purposes.
     """
 
-    DEFAULT_HOST = "https://mockapi.sdklib.org"
+    DEFAULT_HOST = "https://www.google.es"
 
     LOGIN_URL_PATH = "/login/"  # not exist
     API_ITEMS_URL_PATH = "/items/"

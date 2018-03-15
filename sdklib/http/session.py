@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from urllib3._collections import HTTPHeaderDict
 from sdklib.compat import cookies
 
 
@@ -17,9 +18,11 @@ class Cookie(object):
     def load_from_headers(self, headers):
         if not headers:
             return
-        set_cookie_header = headers.get("Set-Cookie", None)
-        if set_cookie_header:
-            self._cookie.load(set_cookie_header)
+        elif not isinstance(headers, HTTPHeaderDict):
+            headers = HTTPHeaderDict(headers)
+        set_cookie_headers = headers.getlist("Set-Cookie")
+        if set_cookie_headers:
+            self._cookie.load("; ".join(set_cookie_headers))
 
     def as_cookie_header_value(self):
         if self.is_empty():

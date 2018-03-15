@@ -15,6 +15,12 @@ class TestSession(unittest.TestCase):
         self.assertIn("chips=ahoy", res)
         self.assertIn("vienna=finger", res)
 
+    def test_as_cookie_header_value_tuples(self):
+        cookie = Cookie([("Set-Cookie", "chips=ahoy; httpOnly"), ("Set-Cookie", "vienna=finger")])
+        res = cookie.as_cookie_header_value()
+        self.assertIn("chips=ahoy", res)
+        self.assertIn("vienna=finger", res)
+
     def test_as_cookie_header_value_none(self):
         cookie = Cookie(None)
         res = cookie.as_cookie_header_value()

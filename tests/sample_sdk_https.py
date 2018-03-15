@@ -3,7 +3,7 @@ from sdklib.http import HttpSdk
 
 class SampleHttpsHttpSdk(HttpSdk):
 
-    DEFAULT_HOST = "https://www.github.com"
+    DEFAULT_HOST = "https://www.google.com"
 
     API_IVANPRJCTS_PATH = "/ivanprjcts"
 
