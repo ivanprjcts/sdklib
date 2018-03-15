@@ -17,7 +17,7 @@ Feature: Test 11Paths APIs
 
   Scenario: Try to clean a File with Latch using an invalid secret
     # Enter steps here
-    Given The API endpoint "https://mockapi.sdklib.org"
+    Given The API endpoint "https://google.es"
       # And The API proxy "http://localhost:8080"
       And The API resource "/some/path/"
       And The headers
