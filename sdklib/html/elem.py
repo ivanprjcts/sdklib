@@ -9,6 +9,18 @@ class ElemLxml(HTMLLxmlMixin, AbstractBaseHTMLElem):
     def __init__(self, lxml_elem):
         self.html_obj = lxml_elem
 
+    @property
+    def text(self):
+        text_as_list = []
+
+        node_text = self.html_obj.text.strip()
+        text_from_children = [child.tail.strip() for child in self.html_obj.getchildren() if child.tail.strip()]
+
+        if node_text: text_as_list.append(node_text)
+        text_as_list.extend(text_from_children)
+
+        return " ".join(text_as_list)
+
     def getparent(self, height=1):
         parent = self.html_obj
         for _ in range(0, height):

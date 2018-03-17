@@ -74,3 +74,6 @@ class TestHTML(unittest.TestCase):
             self.assertTrue(False)
         except SyntaxError:
             pass
+
+    def test_text_in_div(self):
+        self.assertEqual("sabado, 17 de marzo de 2018", self.html.find_element_by_xpath("//div[@class='apu_fecha']").text)
