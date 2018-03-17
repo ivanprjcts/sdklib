@@ -13,11 +13,11 @@ class ElemLxml(HTMLLxmlMixin, AbstractBaseHTMLElem):
     def text(self):
         text_as_list = []
 
-        node_text = self.html_obj.text.strip()
-        text_from_children = [child.tail.strip() for child in self.html_obj.getchildren() if child.tail.strip()]
+        node_text = self.html_obj.text.strip() if self.html_obj.text else None
+        text_children = [child.tail.strip() for child in self.html_obj.getchildren() if child.tail and child.tail.strip()]
 
-        if node_text: text_as_list.append(node_text)
-        text_as_list.extend(text_from_children)
+        if node_text: text_as_list.append(node_text.strip())
+        text_as_list.extend(text_children)
 
         return " ".join(text_as_list)
 

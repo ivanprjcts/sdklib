@@ -13,6 +13,11 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.10.x series
 ===================
 
+Sdklib 1.10.2
+-------------
+
+- Fix bug.
+
 Sdklib 1.10.1
 -------------
 
