@@ -13,6 +13,11 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.10.x series
 ===================
 
+Sdklib 1.10.3
+-------------
+
+- New experimental feature: support socks proxy protocol.
+
 Sdklib 1.10.2
 -------------
 

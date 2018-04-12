@@ -332,7 +332,13 @@ class HttpSdk(object):
 
     @staticmethod
     def get_pool_manager(proxy=None):
-        if proxy is not None:
+        if proxy is not None and proxy.startswith("socks"):
+            from urllib3.contrib.socks import SOCKSProxyManager
+            pm = SOCKSProxyManager(
+                proxy,
+                num_pools=10,
+            )
+        elif proxy is not None:
             pm = urllib3.ProxyManager(
                 proxy,
                 num_pools=10,
