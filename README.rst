@@ -85,4 +85,3 @@ Authors
 
 - Ivan Martin Vedriel - `@ivanprjcts <https://github.com/ivanprjcts>`_
 - Rubén González Alonso - `@rgonalo <https://github.com/rgonalo>`_
-
