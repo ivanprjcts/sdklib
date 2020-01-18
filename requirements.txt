@@ -1,2 +1,2 @@
-urllib3 == 1.24.1
+urllib3>=1.24.1
 html5lib==1.0b10
