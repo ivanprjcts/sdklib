@@ -78,8 +78,11 @@ class TestJSONRender(unittest.TestCase):
         r = JSONRenderer()
         body, content_type = r.encode_params(data)
         self.assertEqual(content_type, "application/json")
-        self.assertEqual(b'[{"param1": "value 1", "param2": "value 2", "param3": "value 3"}, '
-                         b'{"param1": "value 1"}]', body)
+        self.assertIn(b'[{"', body)
+        self.assertIn(b'"param1": "value 1"', body)
+        self.assertIn(b'"param2": "value 2"', body)
+        self.assertIn(b'"param3": "value 3"', body)
+        self.assertIn(b', {"param1": "value 1"}]', body)
 
     def test_encode_json_data_array_of_2dictionaries(self):
         data = [
@@ -90,5 +93,9 @@ class TestJSONRender(unittest.TestCase):
         r = JSONRenderer()
         body, content_type = r.encode_params(data)
         self.assertEqual(content_type, "application/json")
-        self.assertEqual(b'[{"param1": "value 1", "param2": "value 2"}, '
-                         b'{"param3": "value 3", "param4": "value 4"}]', body)
+        self.assertIn(b'[{"', body)
+        self.assertIn(b'"}]', body)
+        self.assertIn(b'"param1": "value 1"', body)
+        self.assertIn(b'"param2": "value 2"', body)
+        self.assertIn(b'"param3": "value 3"', body)
+        self.assertIn(b'"param4": "value 4"', body)
