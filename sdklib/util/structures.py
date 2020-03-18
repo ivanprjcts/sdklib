@@ -51,7 +51,7 @@ def to_key_val_list(value, sort=False, insensitive=False):
 def to_key_val_dict(values):
     """
     Take an object and test to see if it can be represented as a
-    dictionary. If it can be, return a list of tuples, e.g.,
+    dictionary. If it can be, return a dict, e.g.,
     ::
         >>> to_key_val_dict([('key', 'val')])
         {'key': 'val'}
@@ -63,11 +63,11 @@ def to_key_val_dict(values):
     if values is None:
         return {}
 
-    if isinstance(values, (str, bytes, bool, int)):
-        raise ValueError('cannot encode objects that are not 2-tuples')
-
     if isinstance(values, collections.Mapping):
         values = values.items()
+    elif isinstance(values, (str, bytes, bool, int)) or \
+            not all([isinstance(value, (list, tuple)) and len(value) == 2 for value in values]):
+        raise ValueError('cannot encode objects that are not 2-tuples')
 
     dict_to_return = dict()
     for k, v in values:

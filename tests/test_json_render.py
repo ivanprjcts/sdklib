@@ -68,3 +68,27 @@ class TestJSONRender(unittest.TestCase):
         self.assertEqual(content_type, "application/json")
         self.assertIn(b'"param2": null', body)
         self.assertIn(b'"param1": "value 1"', body)
+
+    def test_encode_json_data_array_of_dictionaries(self):
+        data = [
+            {"param1": "value 1", "param2": "value 2", "param3": "value 3"},
+            {"param1": "value 1"}
+        ]
+
+        r = JSONRenderer()
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "application/json")
+        self.assertEqual(b'[{"param1": "value 1", "param2": "value 2", "param3": "value 3"}, '
+                         b'{"param1": "value 1"}]', body)
+
+    def test_encode_json_data_array_of_2dictionaries(self):
+        data = [
+            {"param1": "value 1", "param2": "value 2"},
+            {"param3": "value 3", "param4": "value 4"}
+        ]
+
+        r = JSONRenderer()
+        body, content_type = r.encode_params(data)
+        self.assertEqual(content_type, "application/json")
+        self.assertEqual(b'[{"param1": "value 1", "param2": "value 2"}, '
+                         b'{"param3": "value 3", "param4": "value 4"}]', body)

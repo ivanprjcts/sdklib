@@ -77,6 +77,20 @@ class TestStructures(unittest.TestCase):
         except ValueError:
             pass
 
+    def test_to_key_val_dict_invalid_array_of_dicts(self):
+        try:
+            to_key_val_dict([{"a": 1}, {"b": 2}])
+            self.assertTrue(False)
+        except ValueError:
+            pass
+
+    def test_to_key_val_dict_invalid_number_of_items(self):
+        try:
+            to_key_val_dict([(1, 2, 3), (1, 2, 3)])
+            self.assertTrue(False)
+        except ValueError:
+            pass
+
     def test_case_insensitive_dict_basic_key_value_name(self):
         d = CaseInsensitiveDict({"X-key": "X-value"})
         self.assertEqual(1, len(d))

@@ -296,7 +296,11 @@ class JSONRenderer(BaseRenderer):
         if data is None:
             return b"", self.content_type
 
-        fields = to_key_val_dict(data or "")
+        try:
+            fields = to_key_val_dict(data)
+        except:
+            fields = data
+
         try:
             body = json.dumps(fields)
         except:
