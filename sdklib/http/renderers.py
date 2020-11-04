@@ -79,7 +79,7 @@ def guess_file_name_stream_type_header(args):
 
 class MultiPartRenderer(BaseRenderer):
 
-    def __init__(self, boundary="----------ThIs_Is_tHe_bouNdaRY_$", output_str='javascript'):
+    def __init__(self, boundary="----------ThIs_Is_tHe_bouNdaRY", output_str='javascript'):
         self.boundary = boundary
         self.output_str = output_str
 
