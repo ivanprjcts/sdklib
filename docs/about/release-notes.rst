@@ -13,6 +13,11 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.10.x series
 ===================
 
+Sdklib 1.10.5
+-------------
+
+- Fix multipart boundary characters according to RFC (https://www.w3.org/Protocols/rfc1341/7_2_Multipart.html).
+
 Sdklib 1.10.3
 -------------
 
