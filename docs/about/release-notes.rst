@@ -10,6 +10,15 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.11.x series
+===================
+
+Sdklib 1.11.0
+-------------
+
+- Allow ssl_verify config param.
+
+
 Sdklib 1.10.x series
 ===================
 
