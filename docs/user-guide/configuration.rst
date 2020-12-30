@@ -99,3 +99,16 @@ Default: HttpResponse
 
 
 For more in depth information, see :ref:`response`.
+
+ssl_verify
+==========
+Default: None (undefined), validate certs (True)
+
+Define if certificates are required for the SSL connection. They will be validated, and
+if validation fails, the connection will also fail.
+
+Values: (bool) `True` or `False
+
+This value could also be defined using environment environment variable `SDKLIB_SSL_VERIFY`
+::
+    export SDKLIB_SSL_VERIFY=False
