@@ -1,5 +1,7 @@
 import copy
 import urllib3
+import ssl
+import os
 
 from sdklib.http.renderers import MultiPartRenderer, get_renderer, default_renderer
 from sdklib.http.session import Cookie
@@ -66,7 +68,7 @@ def request_from_context(context):
 
     log_print_request(new_context.method, url, new_context.query_params, new_context.headers, body)
     # ensure method and url are native str
-    r = HttpSdk.get_pool_manager(new_context.proxy).request(
+    r = HttpSdk.get_pool_manager(new_context.proxy, ssl_verify=new_context.ssl_verify).request(
         convert_unicode_to_native_str(new_context.method),
         convert_unicode_to_native_str(url),
         body=body,
@@ -91,7 +93,7 @@ class HttpRequestContext(object):
     def __init__(self, host=None, proxy=None, method=None, prefix_url_path=None, url_path=None, url_path_params=None,
                  url_path_format=None, headers=None, query_params=None, body_params=None, files=None, renderer=None,
                  authentication_instances=None, response_class=None, update_content_type=None, redirect=None,
-                 cookie=None, timeout=None):
+                 cookie=None, timeout=None, ssl_verify=None):
         """
 
         :param host:
@@ -113,6 +115,8 @@ class HttpRequestContext(object):
         :param redirect: redirect requests automatically. By default: False
         :param cookie:
         :param timeout:
+        :param ssl_verify: (bool) certificates are required for the SSL connection, and will be validated, and
+                           if validation fails, the connection will also fail
         """
         self.host = host
         self.proxy = proxy
@@ -132,6 +136,7 @@ class HttpRequestContext(object):
         self.redirect = redirect
         self.cookie = cookie
         self.timeout = timeout
+        self.ssl_verify = ssl_verify
 
     @property
     def headers(self):
@@ -228,6 +233,16 @@ class HttpRequestContext(object):
     @timeout.setter
     def timeout(self, value):
         self._timeout = value
+
+    @property
+    def ssl_verify(self):
+        # If ssl_verify is not defined (None), try to get config from env var SDKLIB_SSL_VERIFY
+        return self._ssl_verify if self._ssl_verify is not None \
+            else os.getenv('SDKLIB_SSL_VERIFY', "True").lower() == "true"
+
+    @ssl_verify.setter
+    def ssl_verify(self, value):
+        self._ssl_verify = value
 
     def clear(self, *args):
         """
@@ -331,7 +346,7 @@ class HttpSdk(object):
         return headers
 
     @staticmethod
-    def get_pool_manager(proxy=None):
+    def get_pool_manager(proxy=None, ssl_verify=True):
         if proxy is not None and proxy.startswith("socks"):
             from urllib3.contrib.socks import SOCKSProxyManager
             pm = SOCKSProxyManager(
@@ -346,6 +361,9 @@ class HttpSdk(object):
         else:
             pm = urllib3.PoolManager(
                 num_pools=10,
+                # CERT_REQUIRED if ssl_verify is True or None (undefined) << default behaviour
+                # CERT_NONE only if ssl_verify is False
+                cert_reqs=ssl.CERT_NONE if ssl_verify is False else ssl.CERT_REQUIRED,
             )
         return pm
 
