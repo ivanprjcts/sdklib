@@ -359,11 +359,11 @@ class HttpSdk(object):
                 num_pools=10,
             )
         else:
+            pool_kwargs = {"num_pools": 10}
+            if ssl_verify is False:
+                pool_kwargs["cert_reqs"] = ssl.CERT_NONE
             pm = urllib3.PoolManager(
-                num_pools=10,
-                # CERT_REQUIRED if ssl_verify is True or None (undefined) << default behaviour
-                # CERT_NONE only if ssl_verify is False
-                cert_reqs=ssl.CERT_NONE if ssl_verify is False else ssl.CERT_REQUIRED,
+                **pool_kwargs
             )
         return pm
 
