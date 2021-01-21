@@ -8,7 +8,7 @@ from hashlib import sha1
 
 from sdklib.compat import convert_str_to_bytes, convert_bytes_to_str
 from sdklib.http import url_encode
-from sdklib.http.renderers import FormRenderer, MultiPartRenderer, JSONRenderer, guess_file_name_stream_type_header
+from sdklib.http.renderers import FormRenderer, guess_file_name_stream_type_header
 from sdklib.http.headers import (
     AUTHORIZATION_HEADER_NAME, X_11PATHS_DATE_HEADER_NAME, X_11PATHS_BODY_HASH_HEADER_NAME,
     X_11PATHS_FILE_HASH_HEADER_NAME
@@ -76,7 +76,7 @@ def _sign_data(secret, data):
 
 def _hash_body(context):
     body, _ = context.renderer.encode_params(context.body_params, files=context.files)
-    return sha1(body).hexdigest()
+    return sha1(convert_str_to_bytes(body)).hexdigest()
 
 
 def _hash_file(context):
@@ -85,7 +85,7 @@ def _hash_file(context):
 
     for param in files:
         _, fdata, _, _ = guess_file_name_stream_type_header(files[param])
-        return sha1(fdata).hexdigest()
+        return sha1(convert_str_to_bytes(fdata)).hexdigest()
 
 
 def _get_utc():

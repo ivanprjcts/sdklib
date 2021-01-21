@@ -13,6 +13,11 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.11.x series
 ===================
 
+Sdklib 1.11.1
+-------------
+
+- Fix 11paths authorization using body in python3.
+
 Sdklib 1.11.0
 -------------
 

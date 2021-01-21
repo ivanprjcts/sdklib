@@ -56,6 +56,14 @@ class TestAuthorization(unittest.TestCase):
                                                utc="2016-01-01 00:00:00")
         self.assertEqual("11PATHS 123456 8Ok3S1xUFLtjRxRkWVoZAKXZc1A=", header_value)
 
+    def test_11paths_authentication_with_json_body(self):
+        context = HttpRequestContext(method="POST", url_path="/path/",
+                                     headers={"Content-Type": "application/json"},
+                                     body_params={"param": "value"}, renderer=JSONRenderer())
+        header_value = x_11paths_authorization(app_id="123456", secret="654321", context=context,
+                                               utc="2016-01-01 00:00:00")
+        self.assertEqual("11PATHS 123456 VXVXfFsBVfCIwheS/27C8DqqpfQ=", header_value)
+
     def test_11paths_authentication_class_with_static_time(self):
         auth = X11PathsAuthentication(app_id="123456", secret="654321", utc="2016-01-01 00:00:00")
         context = HttpRequestContext(method="POST", url_path="/path/",
@@ -142,3 +150,15 @@ class TestAuthorization(unittest.TestCase):
                          res_context.headers["Authorization"])
         self.assertEqual("application/json", res_context.headers["Content-Type"])
         self.assertEqual("da39a3ee5e6b4b0d3255bfef95601890afd80709", res_context.headers["X-11paths-body-hash"])
+
+    def test_11paths_authentication_post_json_body_params(self):
+        auth = X11PathsAuthentication(app_id="2kNhWLEETQ46KWLnAg48", secret="lBc4BSeqCGkidJZXictc3yiHbKBS87hjE05YrswJ",
+                                      utc="2017-01-27 08:27:44")
+        context = HttpRequestContext(method="POST", url_path="/ExternalApi/CleanFile",
+                                     body_params={"param": "value"},
+                                     headers={"Content-Type": "application/json"})
+        res_context = auth.apply_authentication(context=context)
+        self.assertEqual("11PATHS 2kNhWLEETQ46KWLnAg48 zvsWw6S2XZpke6rSvdpe0swlOIc=",
+                         res_context.headers["Authorization"])
+        self.assertEqual("application/json", res_context.headers["Content-Type"])
+        self.assertEqual("f247c7579b452d08f38eec23c2d1a4a23daee0d2", res_context.headers["X-11paths-body-hash"])
