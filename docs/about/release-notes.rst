@@ -13,6 +13,11 @@ To upgrade Sdklib to the latest version, use pip:
 Sdklib 1.11.x series
 ===================
 
+Sdklib 1.11.2
+-------------
+
+- Fix ssl_verify behaviour for old versions of urllib3.
+
 Sdklib 1.11.1
 -------------
 
