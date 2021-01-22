@@ -207,8 +207,8 @@ class PlainTextRenderer(BaseRenderer):
     VALID_COLLECTION_FORMATS = ['multi', 'csv', 'ssv', 'tsv', 'pipes', 'plain']
     COLLECTION_SEPARATORS = {"csv": ",", "ssv": " ", "tsv": "\t", "pipes": "|"}
 
-    def __init__(self, charset='utf-8', collection_format='multi', output_str='javascript'):
-        self.charset = charset
+    def __init__(self, charset=None, collection_format='multi', output_str='javascript'):
+        self.charset = charset or 'utf-8'
         self.collection_format = collection_format
         self.output_str = output_str
 

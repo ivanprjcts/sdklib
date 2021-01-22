@@ -56,7 +56,7 @@ class TestPlainTextRender(unittest.TestCase):
 
         r = PlainTextRenderer(charset=None)
         body, content_type = r.encode_params(data)
-        self.assertEqual(content_type, "text/plain")
+        self.assertEqual(content_type, "text/plain; charset=utf-8")
         self.assertIn(b"param1=value 1", body)
         self.assertIn(b"param2=value2", body)
 
@@ -65,7 +65,7 @@ class TestPlainTextRender(unittest.TestCase):
 
         r = PlainTextRenderer(charset=None)
         body, content_type = r.encode_params(data)
-        self.assertEqual(content_type, "text/plain")
+        self.assertEqual(content_type, "text/plain; charset=utf-8")
         self.assertEqual(b"Hello! I'm Iv\xc3\xa1n Mart\xc3\xadn!", body)
 
     def test_encode_plain_data_unicode_utf8(self):
