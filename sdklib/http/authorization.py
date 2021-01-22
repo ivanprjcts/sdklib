@@ -76,7 +76,7 @@ def _sign_data(secret, data):
 
 def _hash_body(context):
     body, _ = context.renderer.encode_params(context.body_params, files=context.files)
-    return sha1(convert_str_to_bytes(body)).hexdigest()
+    return sha1(body).hexdigest()
 
 
 def _hash_file(context):
@@ -85,7 +85,7 @@ def _hash_file(context):
 
     for param in files:
         _, fdata, _, _ = guess_file_name_stream_type_header(files[param])
-        return sha1(convert_str_to_bytes(fdata)).hexdigest()
+        return sha1(fdata).hexdigest()
 
 
 def _get_utc():

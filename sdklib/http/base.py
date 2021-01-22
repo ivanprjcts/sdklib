@@ -144,14 +144,6 @@ class HttpRequestContext(object):
 
     @headers.setter
     def headers(self, value):
-        self._headers = value or dict()
-
-    @property
-    def headers(self):
-        return self._headers
-
-    @headers.setter
-    def headers(self, value):
         self._headers = CaseInsensitiveDict(value) or CaseInsensitiveDict()
 
     @property

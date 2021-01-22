@@ -245,9 +245,11 @@ class PlainTextRenderer(BaseRenderer):
         output_str = kwargs.get("output_str", self.output_str)
 
         if data is None:
-            return "", self.get_content_type(charset)
-        elif isinstance(data, (str, bytes)):
+            return b"", self.get_content_type(charset)
+        elif isinstance(data, bytes):
             return data, self.get_content_type(charset)
+        elif isinstance(data, str):
+            return self._encode(data, charset), self.get_content_type(charset)
         elif hasattr(data, 'read'):
             return data, self.get_content_type(charset)
         elif collection_format == 'multi' and hasattr(data, '__iter__'):
