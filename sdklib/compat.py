@@ -18,12 +18,13 @@ if is_py2:
     from StringIO import StringIO
     import exceptions
 
+    py_bytes = bytes
     basestring = basestring
     bytes = str
     str = unicode
     convert_bytes_to_str = lambda x: x
     convert_unicode_to_native_str = lambda x: x.encode("ISO-8859-1") if isinstance(x, unicode) else x
-    convert_str_to_bytes = lambda x: x.encode("ISO-8859-1") if isinstance(x, basestring) else x
+    convert_str_to_bytes = lambda x: py_bytes(x)
 
     def cache(*args, **kargs):
         def wrapper(f):
