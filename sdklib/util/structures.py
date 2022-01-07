@@ -1,4 +1,8 @@
-import collections
+try:
+    from collections.abc import Mapping, MutableMapping
+except ImportError:
+    # Py2
+    from collections import Mapping, MutableMapping
 
 from sdklib.util.xmltodict import parse as parse_xml
 
@@ -36,7 +40,7 @@ def to_key_val_list(value, sort=False, insensitive=False):
     if isinstance(value, (str, bytes, bool, int)):
         raise ValueError('cannot encode objects that are not 2-tuples')
 
-    if isinstance(value, collections.Mapping):
+    if isinstance(value, Mapping):
         value = value.items()
 
     if sort and not insensitive:
@@ -63,7 +67,7 @@ def to_key_val_dict(values):
     if values is None:
         return {}
 
-    if isinstance(values, collections.Mapping):
+    if isinstance(values, Mapping):
         values = values.items()
     elif isinstance(values, (str, bytes, bool, int)) or \
             not all([isinstance(value, (list, tuple)) and len(value) == 2 for value in values]):
@@ -87,11 +91,11 @@ def xml_string_to_dict(xml_to_parse):
     return parse_xml(xml_to_parse)
 
 
-class CaseInsensitiveDict(collections.MutableMapping):
+class CaseInsensitiveDict(MutableMapping):
     """
     A case-insensitive ``dict``-like object.
     Implements all methods and operations of
-    ``collections.MutableMapping`` as well as dict's ``copy``. Also
+    ``MutableMapping`` as well as dict's ``copy``. Also
     provides ``lower_items``.
     All keys are expected to be strings. The structure remembers the
     case of the last key to be set, and ``iter(instance)``,
@@ -143,7 +147,7 @@ class CaseInsensitiveDict(collections.MutableMapping):
         )
 
     def __eq__(self, other):
-        if isinstance(other, collections.Mapping):
+        if isinstance(other, Mapping):
             other = CaseInsensitiveDict(other)
         else:
             return NotImplemented
