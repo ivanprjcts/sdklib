@@ -19,12 +19,13 @@ if is_py2:
     import exceptions
 
     py_bytes = bytes
-    basestring = basestring
+    basestring = basestring  # noqa: F821
     bytes = str
-    str = unicode
-    convert_bytes_to_str = lambda x: x
-    convert_unicode_to_native_str = lambda x: x.encode("ISO-8859-1") if isinstance(x, unicode) else x
-    convert_str_to_bytes = lambda x: py_bytes(x)
+    str = unicode  # noqa: F821
+    convert_bytes_to_str = lambda x: x  # noqa: E731
+    convert_unicode_to_native_str = lambda x: x.encode("ISO-8859-1") \
+        if isinstance(x, unicode) else x  # noqa: E731,F821
+    convert_str_to_bytes = lambda x: py_bytes(x)  # noqa: E731
 
     def cache(*args, **kargs):
         def wrapper(f):
@@ -35,26 +36,24 @@ if is_py2:
 
 
 elif is_py3:
-    from urllib.parse import urlencode, quote_plus, urlsplit, unquote_plus
-    from http import cookies
-    import socketserver
-    import _thread as thread
-    from io import StringIO
-    from functools import lru_cache as cache
+    from urllib.parse import urlencode, quote_plus, urlsplit, unquote_plus  # noqa: F401
+    from http import cookies  # noqa: F401
+    import socketserver  # noqa: F401
+    import _thread as thread  # noqa: F401
+    from io import StringIO  # noqa: F401
+    from functools import lru_cache as cache  # noqa: F401
     from sdklib import _exceptions as exceptions
 
     basestring = (str, bytes)
     str = str
     bytes = bytes
-    convert_bytes_to_str = lambda x: x.decode() if isinstance(x, bytes) else x
-    convert_unicode_to_native_str = lambda x: x
-    convert_str_to_bytes = lambda x: x.encode("ISO-8859-1") if isinstance(x, str) else x
+    convert_bytes_to_str = lambda x: x.decode() if isinstance(x, bytes) else x  # noqa: E731
+    convert_unicode_to_native_str = lambda x: x  # noqa: E731
+    convert_str_to_bytes = lambda x: x.encode("ISO-8859-1") \
+        if isinstance(x, str) else x  # noqa: E731
 
 try:
-    import lxml
+    import lxml  # noqa: F401
     html_lxml = True
-except:
+except Exception:
     html_lxml = False
-
-
-

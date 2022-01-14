@@ -12,11 +12,13 @@ from sdklib.http import HttpRequestContext, HttpSdk
 from sdklib.http.authorization import BasicAuthentication, X11PathsAuthentication
 from sdklib.http.renderers import FormRenderer, JSONRenderer
 
-__all__ = ('set_default_host', 'set_default_proxy', 'set_url_path', 'set_url_path_with_params',
-           'set_authorization_basic', 'set_11path_authorization', 'set_headers', 'set_query_parameters',
-           'set_body_parameters', 'set_form_parameters', 'set_body_files', 'send_http_request',
-           'send_http_request_with_query_parameters', 'send_http_request_with_form_parameters',
-           'send_http_request_with_body_parameters')
+__all__ = (
+    'set_default_host', 'set_default_proxy', 'set_url_path', 'set_url_path_with_params',
+    'set_authorization_basic', 'set_11path_authorization', 'set_headers', 'set_query_parameters',
+    'set_body_parameters', 'set_form_parameters', 'set_body_files', 'send_http_request',
+    'send_http_request_with_query_parameters', 'send_http_request_with_form_parameters',
+    'send_http_request_with_body_parameters'
+)
 
 
 def safe_add_http_request_context_to_behave_context(context):
@@ -64,13 +66,17 @@ def set_url_path_with_params(context, url_path_str_format):
 @given('Authorization-Basic with username "{username}" and password "{password}"')
 def set_authorization_basic(context, username, password):
     safe_add_http_request_context_to_behave_context(context)
-    context.http_request_context.authentication_instances.append(BasicAuthentication(username=username, password=password))
+    context.http_request_context.authentication_instances.append(
+        BasicAuthentication(username=username, password=password)
+    )
 
 
 @given('11Paths-Authorization with application id "{app_id}" and secret "{secret}"')
 def set_11path_authorization(context, app_id, secret):
     safe_add_http_request_context_to_behave_context(context)
-    context.http_request_context.authentication_instances.append(X11PathsAuthentication(app_id=app_id, secret=secret))
+    context.http_request_context.authentication_instances.append(
+        X11PathsAuthentication(app_id=app_id, secret=secret)
+    )
 
 
 @given('The headers')

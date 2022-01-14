@@ -14,10 +14,10 @@ def contains_subdict(d1, d2):
     return True
 
 
-def get_dict_from_list(l, **kwargs):
-    for e in l:
-        if contains_subdict(kwargs, e):
-            return e
+def get_dict_from_list(items, **kwargs):
+    for item in items:
+        if contains_subdict(kwargs, item):
+            return item
 
 
 def to_key_val_list(value, sort=False, insensitive=False):
@@ -113,7 +113,8 @@ class CaseInsensitiveDict(MutableMapping):
     operations are given keys that have equal ``.lower()``s, the
     behavior is undefined.
 
-    This class is a copy of `requests <https://github.com/kennethreitz/requests/blob/master/requests/structures.py>`_.
+    This class is a copy of `requests
+    <https://github.com/kennethreitz/requests/blob/master/requests/structures.py>`_.
     """
     def __init__(self, data=None, **kwargs):
         self._store = dict()

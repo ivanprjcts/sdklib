@@ -91,7 +91,7 @@ class HTMLLxmlMixin(object):
 
         :param xpath: The xpath locator of the element to find.
         :return: ElemLxml
-        
+
         See lxml xpath expressions `here <http://lxml.de/xpathxslt.html#xpath>`_
         """
         elems = self.find_elements_by_xpath(xpath)
@@ -104,7 +104,7 @@ class HTMLLxmlMixin(object):
 
         :param xpath: The xpath locator of the elements to be found.
         :return: list of ElemLxml
-        
+
         See lxml xpath expressions `here <http://lxml.de/xpathxslt.html#xpath>`_
         """
         from sdklib.html.elem import ElemLxml
@@ -125,7 +125,8 @@ class HTML5libMixin(object):
         :param xpath: The xpath locator of the element to find.
         :return:
 
-        See html5lib xpath expressions `here <https://docs.python.org/2/library/xml.etree.elementtree.html#supported-xpath-syntax>`_
+        See html5lib xpath expressions `here
+        <https://docs.python.org/2/library/xml.etree.elementtree.html#supported-xpath-syntax>`_
         """
         from sdklib.html.elem import Elem5lib
 
@@ -138,7 +139,8 @@ class HTML5libMixin(object):
         :param xpath: The xpath locator of the elements to be found.
         :return:
 
-        See html5lib xpath expressions `here <https://docs.python.org/2/library/xml.etree.elementtree.html#supported-xpath-syntax>`_
+        See html5lib xpath expressions `here
+        <https://docs.python.org/2/library/xml.etree.elementtree.html#supported-xpath-syntax>`_
         """
         from sdklib.html.elem import Elem5lib
 

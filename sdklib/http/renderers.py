@@ -1,7 +1,7 @@
 import json
 try:
     from exceptions import BaseException
-except:
+except Exception:
     pass
 from urllib3.filepost import encode_multipart_formdata
 from urllib3.fields import RequestField, guess_content_type
@@ -53,8 +53,8 @@ def guess_file_name_stream_type_header(args):
     """
     Guess filename, file stream, file type, file header from args.
 
-    :param args: may be string (filepath), 2-tuples (filename, fileobj), 3-tuples (filename, fileobj,
-    contentype) or 4-tuples (filename, fileobj, contentype, custom_headers).
+    :param args: may be string (filepath), 2-tuples (filename, fileobj), 3-tuples (filename,
+    fileobj, contentype) or 4-tuples (filename, fileobj, contentype, custom_headers).
     :return: filename, file stream, file type, file header
     """
     ftype = None
@@ -89,8 +89,8 @@ class MultiPartRenderer(BaseRenderer):
         Will successfully encode files when passed as a dict or a list of
         tuples. Order is retained if data is a list of tuples but arbitrary
         if parameters are supplied as a dict.
-        The tuples may be string (filepath), 2-tuples (filename, fileobj), 3-tuples (filename, fileobj, contentype)
-        or 4-tuples (filename, fileobj, contentype, custom_headers).
+        The tuples may be string (filepath), 2-tuples (filename, fileobj), 3-tuples
+        (filename, fileobj, contentype) or 4-tuples (filename, fileobj, contentype, custom_headers).
         """
         if isinstance(data, basestring):
             raise ValueError("Data must not be a string.")
@@ -181,9 +181,9 @@ class FormRenderer(BaseRenderer):
                 if isinstance(vs, basestring) or not hasattr(vs, '__iter__'):
                     vs = [vs]
                 for v in vs:
-                    result.append(
-                        (k.encode('utf-8') if isinstance(k, str) else k,
-                         v.encode('utf-8') if isinstance(v, str) else to_string(v, lang=output_str)))
+                    result.append((
+                        k.encode('utf-8') if isinstance(k, str) else k,
+                        v.encode('utf-8') if isinstance(v, str) else to_string(v, lang=output_str)))
             return urlencode(result, doseq=True), self.content_type
         elif collection_format == 'encoded' and hasattr(data, '__iter__'):
             return urlencode(data, doseq=False), self.content_type
@@ -191,7 +191,9 @@ class FormRenderer(BaseRenderer):
             results = []
             for k, vs in to_key_val_dict(data).items():
                 if isinstance(vs, list):
-                    v = self.COLLECTION_SEPARATORS[collection_format].join(quote_plus(e) for e in vs)
+                    v = self.COLLECTION_SEPARATORS[collection_format].join(
+                        quote_plus(e) for e in vs
+                    )
                     key = k + '[]'
                 else:
                     v = quote_plus(vs)
@@ -231,7 +233,8 @@ class PlainTextRenderer(BaseRenderer):
 
     @staticmethod
     def _encode(data, charset=None, output_str='javascript'):
-        return to_string(data, lang=output_str).encode(charset) if charset else to_string(data, lang=output_str).encode()
+        return to_string(data, lang=output_str).encode(charset) \
+            if charset else to_string(data, lang=output_str).encode()
 
     def encode_params(self, data=None, **kwargs):
         """
@@ -258,12 +261,16 @@ class PlainTextRenderer(BaseRenderer):
                 if isinstance(vs, basestring) or not hasattr(vs, '__iter__'):
                     vs = [vs]
                 for v in vs:
-                    result.append(b"=".join([self._encode(k, charset), self._encode(v, charset, output_str)]))
+                    result.append(
+                        b"=".join([self._encode(k, charset), self._encode(v, charset, output_str)])
+                    )
             return b'\n'.join(result), self.get_content_type(charset)
         elif collection_format == 'plain' and hasattr(data, '__iter__'):
             results = []
             for k, vs in to_key_val_dict(data).items():
-                results.append(b"=".join([self._encode(k, charset), self._encode(vs, charset, output_str)]))
+                results.append(
+                    b"=".join([self._encode(k, charset), self._encode(vs, charset, output_str)])
+                )
 
             return b'\n'.join(results), self.get_content_type(charset)
         elif hasattr(data, '__iter__'):
@@ -275,11 +282,14 @@ class PlainTextRenderer(BaseRenderer):
                 else:
                     v = vs
                     key = k
-                results.append(b"=".join([self._encode(key, charset), self._encode(v, charset, output_str)]))
+                results.append(
+                    b"=".join([self._encode(key, charset), self._encode(v, charset, output_str)])
+                )
 
             return b"\n".join(results), self.get_content_type(charset)
         else:
-            return str(data).encode(charset) if charset else str(data), self.get_content_type(charset)
+            return str(data).encode(charset) if charset else str(data),\
+                   self.get_content_type(charset)
 
 
 class JSONRenderer(BaseRenderer):
@@ -300,12 +310,12 @@ class JSONRenderer(BaseRenderer):
 
         try:
             fields = to_key_val_dict(data)
-        except:
+        except Exception:
             fields = data
 
         try:
             body = json.dumps(fields)
-        except:
+        except Exception:
             body = json.dumps(fields, encoding='latin-1')
 
         return str(body).encode(), self.content_type

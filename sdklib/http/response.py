@@ -15,7 +15,7 @@ class JsonResponseMixin(object):
     def json(self):
         try:
             return json.loads(convert_bytes_to_str(self._body))
-        except:
+        except Exception:
             return dict()
 
     @property
@@ -98,15 +98,15 @@ class Response(JsonResponseMixin):
         data = self.body
         try:
             data = data.decode()
-        except:
+        except Exception:
             pass
         try:
             return json.loads(data)
-        except:
+        except Exception:
             pass
         try:
             return xml_string_to_dict(data)
-        except:
+        except Exception:
             return data
 
 
@@ -169,7 +169,8 @@ class Error(object):
 
     @property
     def message(self):
-        return self.case_insensitive_dict['message'] if "message" in self.case_insensitive_dict else None
+        return self.case_insensitive_dict['message'] \
+            if "message" in self.case_insensitive_dict else None
 
     @property
     def json(self):
@@ -190,9 +191,9 @@ class Api11PathsResponse(AbstractBaseHttpResponse, JsonResponseMixin):
     """
     This class models a response from any of the endpoints in most of 11Paths APIs.
 
-    It consists of a "data" and an "error" elements. Although normally only one of them will be present, they are not
-    mutually exclusive, since errors can be non fatal, and therefore a response could have valid information in the data
-    field and at the same time inform of an error.
+    It consists of a "data" and an "error" elements. Although normally only one of them will be
+    present, they are not mutually exclusive, since errors can be non fatal, and therefore a
+    response could have valid information in the data field and at the same time inform of an error.
     """
     def __init__(self, resp):
         super(Api11PathsResponse, self).__init__(resp)
@@ -208,7 +209,8 @@ class Api11PathsResponse(AbstractBaseHttpResponse, JsonResponseMixin):
     @property
     def error(self):
         """
-        @return Error the error part of the API response, consisting of an error code and an error message
+        @return Error the error part of the API response, consisting of an error code and an error
+        message
         """
-        return Error(self.case_insensitive_dict["error"]) if self.case_insensitive_dict.get("error", None) is not None \
-            else None
+        return Error(self.case_insensitive_dict["error"]) \
+            if self.case_insensitive_dict.get("error", None) is not None else None

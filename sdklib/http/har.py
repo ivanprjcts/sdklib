@@ -11,7 +11,7 @@ from sdklib.util.urls import urlsplit
 class Cookie(object):
 
     def __init__(self, j):
-        self._dict =json.loads(j) if isinstance(j, str) else j
+        self._dict = json.loads(j) if isinstance(j, str) else j
 
     @property
     def name(self):
@@ -37,7 +37,7 @@ class Cookie(object):
 class Request(object):
 
     def __init__(self, j):
-        self._dict =json.loads(j) if isinstance(j, str) else j
+        self._dict = json.loads(j) if isinstance(j, str) else j
 
     @property
     def method(self):
@@ -64,7 +64,9 @@ class Request(object):
     @property
     def post_data(self):
         post_data = self._dict.get("postData", {})
-        params = {unquote_plus(h["name"]): unquote_plus(h["value"]) for h in post_data.get("params", [])}
+        params = {
+            unquote_plus(h["name"]): unquote_plus(h["value"]) for h in post_data.get("params", [])
+        }
         mime_type = post_data.get("mimeType", None)
         return params, get_renderer(mime_type=mime_type)
 
@@ -87,15 +89,15 @@ class Request(object):
             host += ":" + str(port)
         body_params, renderer = self.post_data
         return HttpRequestContext(
-            host=host, method=self.method, url_path=path, query_params=self.query_string, headers=self.headers,
-            renderer=renderer, body_params=body_params
+            host=host, method=self.method, url_path=path, query_params=self.query_string,
+            headers=self.headers, renderer=renderer, body_params=body_params
         )
 
 
 class Content(object):
 
     def __init__(self, j):
-        self._dict =json.loads(j) if isinstance(j, str) else j
+        self._dict = json.loads(j) if isinstance(j, str) else j
 
     @property
     def size(self):
@@ -117,7 +119,7 @@ class Content(object):
 class Response(object):
 
     def __init__(self, j):
-        self._dict =json.loads(j) if isinstance(j, str) else j
+        self._dict = json.loads(j) if isinstance(j, str) else j
 
     @property
     def status(self):
@@ -163,15 +165,15 @@ class Response(object):
 
     def as_http_response(self):
         return HttpResponse(
-            headers=self.headers, status_text=self.status_text, status=self.status, http_version=self.http_version,
-            body=self.content.text
+            headers=self.headers, status_text=self.status_text, status=self.status,
+            http_version=self.http_version, body=self.content.text
         )
 
 
 class Entry(object):
 
     def __init__(self, j):
-        self._dict =json.loads(j) if isinstance(j, str) else j
+        self._dict = json.loads(j) if isinstance(j, str) else j
 
     @property
     def started_date_time(self):
@@ -215,7 +217,7 @@ class Entry(object):
 class Log(object):
 
     def __init__(self, j):
-        self._dict =json.loads(j) if isinstance(j, str) else j
+        self._dict = json.loads(j) if isinstance(j, str) else j
 
     @property
     def version(self):
@@ -241,8 +243,8 @@ class HAR(object):
 
     @property
     def log(self):
-        l = self._dict.get("log", None)
-        return None if l is None else Log(l)
+        log_obj = self._dict.get("log", None)
+        return None if log_obj is None else Log(log_obj)
 
 
 def _find_value_in_new_response(value, prev_response_ctx, new_response_ctx):
@@ -252,7 +254,7 @@ def _find_value_in_new_response(value, prev_response_ctx, new_response_ctx):
 
         new_elem = new_response_ctx.html.find_element_by_name(name)
         return new_elem.get("value")
-    except:
+    except Exception:
         pass
 
 

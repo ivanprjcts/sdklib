@@ -1,5 +1,5 @@
 import urllib3
-from sdklib.compat import cache
+from sdklib.compat import cache  # noqa: F401
 
 
 def disable_warnings():

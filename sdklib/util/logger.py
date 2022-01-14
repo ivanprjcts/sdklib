@@ -29,7 +29,7 @@ def _get_pretty_body(headers, body):
                 decoded_body = body.decode('utf-8')
                 parsed = json.loads(decoded_body)
                 return json.dumps(parsed, sort_keys=True, indent=4)
-    except:
+    except Exception:
         pass
     finally:
         return body
@@ -57,7 +57,7 @@ def log_print_request(method, url, query_params=None, headers=None, body=None):
     if body is not None:
         try:
             log_msg += '\t> Payload sent:\n{}\n'.format(_get_pretty_body(headers, body))
-        except:
+        except Exception:
             log_msg += "\t> Payload could't be formatted"
 
     logger.debug(log_msg)
@@ -79,6 +79,6 @@ def log_print_response(status_code, response, headers=None):
         log_msg += '\t< Headers:\n{}\n'.format(json.dumps(dict(headers), sort_keys=True, indent=4))
     try:
         log_msg += '\t< Payload received:\n{}'.format(_get_pretty_body(headers, response))
-    except:
+    except Exception:
         log_msg += '\t< Payload received:\n{}'.format(response)
     logger.debug(log_msg)

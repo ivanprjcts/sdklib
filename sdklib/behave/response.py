@@ -8,9 +8,11 @@ import json
 
 from behave import then
 
-__all__ = ('http_status_code_should_be', 'http_status_code_not_should_be', 'http_reason_phrase_should_be',
-           'http_reason_phrase_should_not_be', 'http_reason_phrase_should_contain',
-           'http_response_body_should_be_this_json')
+__all__ = (
+    'http_status_code_should_be', 'http_status_code_not_should_be', 'http_reason_phrase_should_be',
+    'http_reason_phrase_should_not_be', 'http_reason_phrase_should_contain',
+    'http_response_body_should_be_this_json'
+)
 
 
 @then('The HTTP status code should be "{code:d}"')
@@ -31,12 +33,14 @@ def http_reason_phrase_should_be(context, reason):
 
 @then('The HTTP reason phrase should not be "{reason}"')
 def http_reason_phrase_should_not_be(context, reason):
-    assert context.api_response.reason != reason, "%s is equal to %s" % (context.api_response.reason, reason)
+    assert context.api_response.reason != reason, \
+        "%s is equal to %s" % (context.api_response.reason, reason)
 
 
 @then('The HTTP reason phrase should contain "{reason}"')
 def http_reason_phrase_should_contain(context, reason):
-    assert reason in context.api_response.reason, "%s should contain %s" % (context.api_response.reason, reason)
+    assert reason in context.api_response.reason, \
+        "%s should contain %s" % (context.api_response.reason, reason)
 
 
 @then('The response header "{header_name}" should be "{header_value}"')

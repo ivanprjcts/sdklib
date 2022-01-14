@@ -5,8 +5,8 @@ from sdklib.util.design_pattern import Singleton
 
 
 __all__ = [
-    'HttpSdk', 'HttpResponse', 'get_renderer', 'HttpRequestContext', 'api', 'HttpRequestContextSingleton', 'url_encode',
-    'generate_url_path', 'request_from_context'
+    'HttpSdk', 'HttpResponse', 'get_renderer', 'HttpRequestContext', 'api',
+    'HttpRequestContextSingleton', 'url_encode', 'generate_url_path', 'request_from_context'
 ]
 
 

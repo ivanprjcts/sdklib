@@ -55,10 +55,13 @@ def x_11paths_authorization(app_id, secret, context, utc=None):
                       url_path_query.strip())
 
     if context.body_params and isinstance(context.renderer, FormRenderer):
-        string_to_sign = string_to_sign + "\n" + url_encode(context.body_params, sort=True).replace("&", "")
+        string_to_sign = string_to_sign + "\n" + \
+                         url_encode(context.body_params, sort=True).replace("&", "")
 
-    authorization_header_value = (AUTHORIZATION_METHOD + AUTHORIZATION_HEADER_FIELD_SEPARATOR + app_id +
-                                  AUTHORIZATION_HEADER_FIELD_SEPARATOR + _sign_data(secret, string_to_sign))
+    authorization_header_value = (
+            AUTHORIZATION_METHOD + AUTHORIZATION_HEADER_FIELD_SEPARATOR + app_id +
+            AUTHORIZATION_HEADER_FIELD_SEPARATOR + _sign_data(secret, string_to_sign)
+    )
 
     return authorization_header_value
 
@@ -68,7 +71,8 @@ def _sign_data(secret, data):
     Sign data.
 
     :param data: the string to sign
-    :return: string base64 encoding of the HMAC-SHA1 hash of the data parameter using {@code secretKey} as cipher key.
+    :return: string base64 encoding of the HMAC-SHA1 hash of the data parameter using
+    {@code secretKey} as cipher key.
     """
     sha1_hash = hmac.new(secret.encode(), data.encode(), sha1)
     return binascii.b2a_base64(sha1_hash.digest())[:-1].decode('utf8')
@@ -95,11 +99,13 @@ def _get_utc():
 
 def _get_11paths_serialized_headers(x_headers):
     """
-    Prepares and returns a string ready to be signed from the 11-paths specific HTTP headers received.
+    Prepares and returns a string ready to be signed from the 11-paths specific HTTP headers
+    received.
 
-    :param x_headers: a non necessarily ordered map (array without duplicates) of the HTTP headers to be ordered.
-    :return: string The serialized headers, an empty string if no headers are passed, or None if there's a problem such
-    as non 11paths specific headers
+    :param x_headers: a non necessarily ordered map (array without duplicates) of the HTTP headers
+    to be ordered.
+    :return: string The serialized headers, an empty string if no headers are passed, or None if
+    there's a problem such as non 11paths specific headers
     """
     if x_headers:
         headers = to_key_val_list(x_headers, sort=True, insensitive=True)
@@ -107,7 +113,8 @@ def _get_11paths_serialized_headers(x_headers):
         for key, value in headers:
             if key.lower().startswith(X_11PATHS_HEADER_PREFIX.lower()) and \
                             key.lower() != X_11PATHS_DATE_HEADER_NAME.lower():
-                serialized_headers += key.lower() + X_11PATHS_HEADER_SEPARATOR + value.replace("\n", " ") + " "
+                serialized_headers += key.lower() + X_11PATHS_HEADER_SEPARATOR + \
+                                      value.replace("\n", " ") + " "
         return serialized_headers.strip()
     else:
         return ""
@@ -130,13 +137,16 @@ class X11PathsAuthentication(AbstractAuthentication):
         context.headers[X_11PATHS_DATE_HEADER_NAME] = self.utc or _get_utc()
         if context.method == POST_METHOD or context.method == PUT_METHOD:
             if CONTENT_TYPE_HEADER_NAME in context.headers and \
-                    context.headers[CONTENT_TYPE_HEADER_NAME].lower().startswith("multipart/form-data"):
+                    context.headers[CONTENT_TYPE_HEADER_NAME].lower().startswith(
+                        "multipart/form-data"
+                    ):
                 context.headers[X_11PATHS_FILE_HASH_HEADER_NAME] = _hash_file(context)
             elif CONTENT_TYPE_HEADER_NAME in context.headers and \
                     context.headers[CONTENT_TYPE_HEADER_NAME].lower() == "application/json":
                 context.headers[X_11PATHS_BODY_HASH_HEADER_NAME] = _hash_body(context)
             elif CONTENT_TYPE_HEADER_NAME not in context.headers and not context.body_params:
-                # 11paths bug: server validate that content-type header exists in POST and PUT requests
+                # 11paths bug: server validate that content-type header exists in POST and PUT
+                # requests
                 context.headers[CONTENT_TYPE_HEADER_NAME] = "application/x-www-form-urlencoded"
         context.headers[AUTHORIZATION_HEADER_NAME] = x_11paths_authorization(
             self.app_id,
@@ -153,5 +163,7 @@ class BasicAuthentication(AbstractAuthentication):
         self.password = password
 
     def apply_authentication(self, context):
-        context.headers[AUTHORIZATION_HEADER_NAME] = basic_authorization(self.username, self.password)
+        context.headers[AUTHORIZATION_HEADER_NAME] = basic_authorization(
+            self.username, self.password
+        )
         return context
