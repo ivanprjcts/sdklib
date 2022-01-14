@@ -14,8 +14,6 @@ Sdklib helps you to write you own client library which will consume a specific s
    :target: https://pypi.python.org/pypi/sdklib
 .. |Code Climate| image:: https://codeclimate.com/github/ivanprjcts/sdklib/badges/gpa.svg
    :target: https://codeclimate.com/github/ivanprjcts/sdklib
-.. |Requirements Status| image:: https://requires.io/github/ivanprjcts/sdklib/requirements.svg?branch=master
-   :target: https://requires.io/github/ivanprjcts/sdklib/requirements/?branch=master
 
 
 Highlights
