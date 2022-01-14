@@ -10,6 +10,14 @@ To upgrade Sdklib to the latest version, use pip:
     pip install -U sdklib
 
 
+Sdklib 1.12.x series
+===================
+
+Sdklib 1.12.0
+-------------
+
+- Support Python 3.10.
+
 Sdklib 1.11.x series
 ===================
 
